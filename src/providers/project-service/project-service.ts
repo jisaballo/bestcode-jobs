@@ -4,6 +4,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { User } from '../user-service/user-service';
 import { useAnimation } from '@angular/core/src/animation/dsl';
 import { forEach } from '@firebase/util/dist/src/obj';
+import { app } from 'firebase';
 
 export interface Project {
   id: string;
@@ -16,6 +17,7 @@ export interface Project {
   category: string;
   subcategory: string;
   applied: number;
+  userApplied: Array<string>;
 }
 
 @Injectable()
@@ -104,6 +106,10 @@ export class ProjectServiceProvider {
     }).catch(function(error) {
       console.error("Error removing document: ", error);
     });
+  }
+
+  applyProject(project: Project) {
+    this.afs.collection("projects").doc(project.id).update(project);
   }
 
 }

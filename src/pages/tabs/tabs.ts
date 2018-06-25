@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
 import { RecruitPage } from '../recruit/recruit';
-import { ProjectPage } from '../project/project';
 import { HomePage } from '../home/home';
 import { SettingsPage } from '../settings/settings'
 
@@ -11,9 +10,8 @@ import { SettingsPage } from '../settings/settings'
 export class TabsPage {
 
   tab1Root = HomePage;
-  tab2Root = ProjectPage;
-  tab3Root = RecruitPage;
-  tab4Root = SettingsPage;
+  tab2Root = RecruitPage;
+  tab3Root = SettingsPage;
 
   constructor() {
 

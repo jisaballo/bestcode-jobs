@@ -16,7 +16,6 @@ export class RecruitPage {
   }
   ionViewWillEnter() {
     this.LoadUsers();
-    console.log(this.filterUser);
   }
   async LoadUsers() {
     const result = await this.userService.getAllUser();

@@ -21,7 +21,7 @@ export class RegisterPage {
     //this.skills = [{name:'',level:''}];
     this.experience = [];
     this.skills =[];
-    this.user = {id:'', username:'', profesion: '', email:'', password:'', phone: '', about: '', country: '', experience: this.experience, skills: this.skills};
+    this.user = {id:'', username:'', profesion: '', email:'', password:'', phone: '', jobAvailability: '', jobInterested: '', jobSalary: '', jobSalaryFrecuency: '', about: '', country: '', experience: this.experience, skills: this.skills};
   }
 
   register(email: string, password: string) {

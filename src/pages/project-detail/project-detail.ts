@@ -38,12 +38,24 @@ export class ProjectDetailPage {
   async Load() {
     this.projectUser = await this.userService.getProjectUser(this.project.userID);
   }
+
   editProject(project) {
     //this.navCtrl.push(NewProjectPage, {project});
   }
+
   deleteProject() {
     this.projectService.deleteProjectByID(this.project.id)
     this.navCtrl.pop();
+  }
+
+  applyProject() {
+    this.project.applied = this.project.applied + 1;
+
+    if(typeof this.project.userApplied === 'undefined') {
+      this.project.userApplied = [];
+    }
+    this.project.userApplied.push(this.user)
+    this.projectService.applyProject(this.project);
   }
 
 }

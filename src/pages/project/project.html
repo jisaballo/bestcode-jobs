@@ -1,13 +1,13 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title text-center>Proyectos</ion-title>
+  <ion-navbar hideBackButton>
+    <ion-title text-center>Empleos</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <button ion-button full round color="primary" (click)="newProject()">Nuevo Proyecto</button>
+  <button ion-button full color="primary" (click)="newProject()">Agregar nuevo empleo</button>
   <br>
-  <div class="subtitulo">Mis Proyectos</div>
+  <div class="subtitulo">Mis empleos</div>
   <ion-list no-lines>
     <div *ngFor="let project of projects" (click)="projectDetail(project)">
       <ion-item text-wrap>
