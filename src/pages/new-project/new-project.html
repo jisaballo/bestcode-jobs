@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Crear Proyecto</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label floating>Titulo</ion-label>
+    <ion-input [(ngModel)]="project.name"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Categoría</ion-label>
+    <ion-select [(ngModel)]="project.category" (ionChange)="onChange(project.category)">
+      <ion-option *ngFor="let category of categories">{{category}}</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Subcategoría</ion-label>
+    <ion-select [(ngModel)]="project.subCategory">
+      <ion-option *ngFor="let subCategory of subCategories">{{subCategory}}</ion-option>
+      <ion-option>Otros</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+      <ion-label floating>Presupuesto</ion-label>
+      <ion-input [(ngModel)]="project.value"></ion-input>
+  </ion-item>
+  <ion-item>
+      <ion-label floating>Duracion en dias</ion-label>
+      <ion-input [(ngModel)]="project.time"></ion-input>
+  </ion-item>
+  <ion-item>
+      <ion-label floating>Descripcion</ion-label>
+      <ion-textarea rows="10" [(ngModel)]="project.description"></ion-textarea>
+  </ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-6><button ion-button full round color="primary" (click)="createProject()">Crear</button></ion-col>
+      <ion-col col-6><button ion-button full round color="danger" (click)="closePage()">Cancelar</button></ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

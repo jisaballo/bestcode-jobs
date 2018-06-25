@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Información del proyecto</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list no-lines>
+    <ion-item text-wrap><span class="header-project">{{project.name}}</span></ion-item>
+    <ion-item>
+      <p><span class="subheader-project">Categoría: </span>{{project.category}}</p>
+      <p><span class="subheader-project">Subcategoría: </span>{{project.subCategory}}</p>
+      <p><span class="subheader-project">Tiempo extimado: </span>{{project.time}} días</p>
+    </ion-item>
+    <ion-item text-wrap><span>{{project.description}}</span></ion-item>
+    <ion-item>
+      <ion-row>
+        <ion-col col-4 text-left><p><ion-icon color="primary" name="checkmark-circle"></ion-icon> {{project.applied}} Aplicados</p></ion-col>
+        <ion-col col-4 text-center><p><ion-icon color="primary" name="logo-usd"></ion-icon> {{project.value}}</p></ion-col>
+        <ion-col col-4 text-right><p><ion-icon color="primary" name="calendar"></ion-icon> Hace 3 dias</p></ion-col>
+      </ion-row>
+    </ion-item>
+    <div *ngIf="projectUser">
+      <div padding ion-text color="primary">Publicado por</div>
+      <ion-item *ngFor="let user of projectUser" (click)="openProfile()">
+        <ion-avatar item-start>
+          <img src="assets/imgs/perfil.png">
+        </ion-avatar>
+        <h2>{{user.username}}</h2>
+        <p>{{user.profesion}}</p>
+      </ion-item>
+    </div>
+  </ion-list>
+  <div padding *ngIf="owner">
+    <ion-row>
+      <ion-col col-6>
+        <button ion-button full round color="primary" (click)="editProject(project)">Editar Proyecto</button>
+      </ion-col>
+      <ion-col col-6>
+        <button ion-button full round color="danger" (click)="deleteProject()">Borrar Proyecto</button>
+      </ion-col>
+    </ion-row>
+  </div>
+  <div padding *ngIf="!owner">
+      <button ion-button full round color="primary">Aplicar</button>
+  </div>
+</ion-content>

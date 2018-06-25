@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Habilidades</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div>
+    <ion-item>
+      <ion-label floating>Habilidad</ion-label>
+      <ion-input [(ngModel)]="skillName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Nivel</ion-label>
+      <ion-select [(ngModel)]="level">
+        <ion-option *ngFor="let level of skillsLevel">{{level}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <br>
+    <button ion-button full round (click)="saveSkill()">Agregar Nueva</button>
+  </div>
+  <br>
+  <div class="subtitulo">
+    <p>Mis habilidades</p>
+  </div>
+  <hr>
+  <ion-list no-lines>
+    <ion-item *ngFor="let skill of skills; let i = index">
+      {{skill.name}}
+      <p>Nivel: {{skill.level}}</p>
+      <ion-icon color="danger" name="close-circle" item-end (click)="deleteSkill(i)"></ion-icon>
+    </ion-item>
+  </ion-list>
+</ion-content>

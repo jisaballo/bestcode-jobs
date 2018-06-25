@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Informacion Personal</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div padding>
+    <ion-item>
+      <ion-label floating>Nombre</ion-label>
+      <ion-input [(ngModel)]="user.username"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Profesion</ion-label>
+      <ion-input [(ngModel)]="user.profesion"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Telefono</ion-label>
+      <ion-input [(ngModel)]="user.phone"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Correo</ion-label>
+      <ion-input disabled="true" [(ngModel)]="user.email"></ion-input>
+    </ion-item>
+    <br>
+    <ion-list no-lines>
+      <ion-item>
+        <ion-label>Ubicación</ion-label>
+        <ion-select [(ngModel)]="user.country">
+          <ion-option value="Ecuador">Ecuador</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  </div>
+  <div padding>
+    <button ion-button full round (click)="saveProfile()">Guardar</button>
+  </div>
+</ion-content>

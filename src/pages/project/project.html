@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title text-center>Proyectos</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <button ion-button full round color="primary" (click)="newProject()">Nuevo Proyecto</button>
+  <br>
+  <div class="subtitulo">Mis Proyectos</div>
+  <ion-list no-lines>
+    <div *ngFor="let project of projects" (click)="projectDetail(project)">
+      <ion-item text-wrap>
+        <span class="header-project">{{project.name}}</span><br>
+        <p>{{project.description}}</p>
+      </ion-item>
+      <ion-item>
+        <p>Hace 3 dias</p>
+      </ion-item>
+      <hr>
+  </div>
+  </ion-list>
+</ion-content>

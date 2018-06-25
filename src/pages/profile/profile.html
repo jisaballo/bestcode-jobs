@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-navbar hideBackButton>
+    <ion-title text-center>Perfil</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <div *ngIf="user">
+    <img class="profile_img" src="assets/imgs/perfil.png">
+    <div class="username" text-center>{{user.username}}</div>
+    <div text-center>{{user.profesion}}</div>
+    <div>
+      <ion-item class="subtitulo">Personal
+        <ion-icon name="create" item-end (click)="editPersonal(user)"></ion-icon>
+      </ion-item>
+      <div class="linea"><ion-icon name="compass" item-start></ion-icon>{{user.country}}</div>
+      <div class="linea"><ion-icon name="call" item-start></ion-icon>{{user.phone}}</div>
+      <div class="linea"><ion-icon name="mail" item-start></ion-icon>{{user.email}}</div>
+
+      <ion-item class="subtitulo">Preferencias de empleo
+        <ion-icon name="create" item-end (click)="editJobPreferences(user)"></ion-icon>
+      </ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-12>Estado: {{user.jobAvailability}}</ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-12>Interes: {{user.jobInterested}}</ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-grid>
+        <ion-row>
+            <ion-col col-12>Expectativa salarial: {{user.jobSalary}} - {{user.jobSalaryFrecuency}}</ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-item class="subtitulo">Habilidades
+        <ion-icon name="create" item-end (click)="editSkills(user)"></ion-icon>
+      </ion-item>
+      <div *ngFor="let skill of this.user.skills">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-6>{{skill.name}}</ion-col>
+            <ion-col col-6 text-right>{{skill.level}}</ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+      
+      <div *ngIf="expertise">
+        <ion-item class="subtitulo">Experiencia
+          <ion-icon name="create" item-end (click)="editExpertise(user)"></ion-icon>
+        </ion-item>
+        <div *ngFor="let exp of expertise">
+          <ion-grid>
+            <ion-row>
+              <ion-col col-6>{{exp.position}}</ion-col>
+              <ion-col col-6 text-right>{{exp.monthStart}} {{exp.yearStart}} - {{exp.monthEnd}} {{exp.yearEnd}}</ion-col>
+            </ion-row>
+          </ion-grid>
+          <ion-grid>
+            <ion-row>
+              <ion-col col-6>{{exp.company}}</ion-col>
+              <ion-col col-6 text-right>{{exp.time}}</ion-col>
+            </ion-row>
+          </ion-grid>
+          <br>
+        </div>  
+      </div>
+
+      <ion-item class="subtitulo">Acerca de mi
+        <ion-icon name="create" item-end (click)="editAbout(user)"></ion-icon>
+      </ion-item>
+      <p text-wrap>{{user.about}}</p>
+    </div>
+  </div>
+</ion-content>

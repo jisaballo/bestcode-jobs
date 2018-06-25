@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Acerca de mi</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div padding>
+      <ion-textarea rows="10" class="paragraph" [(ngModel)]="user.about"></ion-textarea>
+  </div>
+  <div padding>
+    <button ion-button full round (click)="saveProfile()">Guardar</button>
+  </div>
+</ion-content>

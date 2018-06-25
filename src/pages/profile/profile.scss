@@ -1,0 +1,36 @@
+page-profile {
+    .backgroung {
+        background-color: lightgray;
+    }
+    .profile_img {
+        border-radius: 50%;
+        max-height: 100px;
+        max-width: 100px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .subtitulo {
+        color: #488aff;
+    }
+    .out_card {
+        margin-left: 2%;
+        margin-right: 2%;
+    }
+    .item {
+        padding: 1px;
+    }
+    .col {
+        padding: 0px;
+    }
+    .linea .icon {
+        margin-left: 2%;
+        margin-right: 3%;
+        margin-top: 2%;
+        margin-bottom: 2%;
+    }
+    .username {
+        font-weight: bold;
+        padding: 10px;
+    }
+}

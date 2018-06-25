@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Preferencias de empleo</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list no-lines>
+    <div class="header-preferences">Especifique su disponibilidad laboral</div>
+    <ion-item>
+      <ion-label>Estoy</ion-label>
+      <ion-select [(ngModel)]="user.jobAvailability">
+        <ion-option *ngFor="let status of statusJob">{{status}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <br>
+
+    <div class="header-preferences">Especifique su interes laboral</div>
+    <ion-item>
+      <ion-label>Busco</ion-label>
+      <ion-select [(ngModel)]="user.jobInterested">
+        <ion-option *ngFor="let interes of interested">{{interes}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <br>
+
+    <div class="header-preferences">Compensación deseada</div>
+    <ion-item>
+      <ion-icon name="logo-usd" small item-start></ion-icon>
+      <ion-input [(ngModel)]="user.jobSalary"></ion-input>
+      <ion-select [(ngModel)]="user.jobSalaryFrecuency">
+        <ion-option *ngFor="let frecuency of frecuencyPay">{{frecuency}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <br>
+  
+  <button ion-button full (click)="saveProfile()">Guardar</button>
+</ion-content>

@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Experiencia</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div>
+    <ion-item>
+      <ion-label floating>Cargo</ion-label>
+      <ion-input [(ngModel)]="position"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Empresa</ion-label>
+      <ion-input [(ngModel)]="company"></ion-input>
+    </ion-item>
+    <br>
+    <ion-list no-lines>
+      <ion-item>
+        <ion-label>Desde</ion-label>
+        <ion-select [(ngModel)]="monthStart">
+          <ion-option *ngFor="let month of months">{{month}}</ion-option>
+        </ion-select>
+        <ion-select [(ngModel)]="yearStart">
+          <ion-option *ngFor="let year of years">{{year}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Hasta</ion-label>
+        <ion-select [(ngModel)]="monthEnd">
+          <ion-option *ngFor="let month of months">{{month}}</ion-option>
+        </ion-select>
+        <ion-select [(ngModel)]="yearEnd">
+          <ion-option *ngFor="let year of years">{{year}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <button ion-button full round (click)="saveProfile()">Agregar Nueva</button>
+  </div>
+
+  <ion-item class="subtitulo">Empleos</ion-item>
+  <ion-list no-lines>
+    <ion-item *ngFor="let exp of expertise; let i = index">
+      {{exp.monthStart}} {{exp.yearStart}} - {{exp.monthEnd}} {{exp.yearEnd}}
+      <p>Posicion: {{exp.position}}</p>
+      <p>Empresa: {{exp.company}}</p>
+      <ion-icon color="danger" name="close-circle" item-end (click)="deleteExpertise(i)"></ion-icon>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,17 +1,33 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <ion-title text-center>BestCode Jobs</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+  <ion-list no-lines>
+    <div *ngFor="let project of projects" (click)="projectDetail(project)">
+      <ion-item text-wrap>
+        <span class="header-project">{{project.name}}</span>
+      </ion-item>
+      <ion-item>
+        <ion-row>
+            <ion-col col-7>
+              <p><span>{{project.category}}</span></p>
+            </ion-col>
+            <ion-col col-5 text-right>
+              <p><span>{{project.subCategory}}</span></p>
+            </ion-col>
+          </ion-row>
+      </ion-item>
+      <ion-item>
+        <ion-row>
+          <ion-col col-4 text-left><p><ion-icon color="primary" name="checkmark-circle"></ion-icon> {{project.applied}} Aplicados</p></ion-col>
+          <ion-col col-4 text-center><p><ion-icon color="primary" name="logo-usd"></ion-icon> {{project.value}}</p></ion-col>
+          <ion-col col-4 text-right><p><ion-icon color="primary" name="calendar"></ion-icon> Hace 3 dias</p></ion-col>
+        </ion-row>
+      </ion-item>
+      <hr>
+  </div>
+  </ion-list>
 </ion-content>
