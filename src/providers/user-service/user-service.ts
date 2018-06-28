@@ -1,10 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 
 export interface User {
   id: string;
   username: string;
+  urlImage: string;
   profesion: string;
   email: string;
   password: string;
@@ -36,6 +38,9 @@ export interface Skill {
 @Injectable()
 export class UserServiceProvider {
 
+  task: AngularFireUploadTask;
+  image: string;
+
   usersCollection: AngularFirestoreCollection;
   private users: User[];
 
@@ -44,14 +49,14 @@ export class UserServiceProvider {
   private profileDoc: AngularFirestoreDocument;
   private profile: User;
 
-  constructor(public afs: AngularFirestore, public http: HttpClient) {
+  constructor(private afs: AngularFirestore, public http: HttpClient, private afStorage: AngularFireStorage) {
     
   }
 
   async LoadProfile(username: string) {
     let experience: Experience[];
     let skills: Skill[];
-    this.profile =  {id: '', username: '', profesion: '', email: '', password: '', phone: '', country: '',
+    this.profile =  {id: '', username: '', urlImage:'', profesion: '', email: '', password: '', phone: '', country: '',
     jobAvailability: '', jobInterested: '', jobSalary: '', jobSalaryFrecuency: '', skills: skills, 
     experience: experience, about: ''};
 
@@ -70,6 +75,13 @@ export class UserServiceProvider {
 
   async getProfile() {
     return this.profile;
+  }
+  
+  async addUser(user: User) {
+    user.password = '';
+    this.usersCollection = await this.afs.collection('users');
+
+    this.usersCollection.add(user);
   }
 
   async getProjectUser(username: string) {
@@ -93,7 +105,7 @@ export class UserServiceProvider {
         let new_user: User;
         let experience: Experience[];
         let skills: Skill[];
-        new_user = {id:'', username: '', profesion: '', email: '', password: '', phone: '', country: '', 
+        new_user = {id:'', username: '', urlImage:'', profesion: '', email: '', password: '', phone: '', country: '', 
         jobAvailability: '', jobInterested: '', jobSalary: '', jobSalaryFrecuency: '', skills: skills, 
         experience: experience, about: ''};
         
@@ -111,4 +123,31 @@ export class UserServiceProvider {
     })
     return this.users;
   }
+
+  uploadImage(file: string) {
+    
+    let filePath = 'imgs/profile/' + new Date().getTime() +'.jpg';
+    const storageRef: AngularFireStorageReference = this.afStorage.ref(filePath);
+
+    if(this.profile.urlImage != '') {
+      this.deletePreviousImage(this.profile.urlImage);
+    }
+
+    this.profile.urlImage = filePath;
+    this.UpdateProfile(this.profile);
+
+    this.image = 'data:image/jpg;base64,' + file;
+    return storageRef.putString(this.image, 'data_url');
+  }
+
+  getUrlImage(filePath) {
+    const storageRef: AngularFireStorageReference = this.afStorage.ref(filePath);
+    return storageRef.getDownloadURL();
+  }
+
+  deletePreviousImage(filePath) {
+    const storageRef: AngularFireStorageReference = this.afStorage.ref(filePath);
+    storageRef.delete();
+  }
+
 }

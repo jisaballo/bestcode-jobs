@@ -6,6 +6,7 @@ import { ProjectServiceProvider, Project } from '../../providers/project-service
 import { ProjectPage } from '../project/project';
 import { ProjectDetailPage } from '../project-detail/project-detail';
 import { LoginPage } from '../login/login';
+import { App } from 'ionic-angular/components/app/app';
 
 @Component({
   selector: 'page-home',
@@ -17,7 +18,7 @@ export class HomePage {
   message : string;
 
   projects: Project[];
-  constructor(private userService: UserServiceProvider, public projectService: ProjectServiceProvider, private authService: AuthServiceProvider, public navCtrl: NavController) {
+  constructor(private userService: UserServiceProvider, public projectService: ProjectServiceProvider, private authService: AuthServiceProvider, public navCtrl: NavController, private app: App) {
     this.message = 'Fail';
 
   }
@@ -29,7 +30,7 @@ export class HomePage {
       this.userService.LoadProfile(username);
     }
     else {
-      
+      this.app.getRootNav().setRoot(LoginPage);
     }
   }
   async LoadProjects() {

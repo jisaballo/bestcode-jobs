@@ -23,7 +23,7 @@
 
     <ion-item>
       <ion-label floating>Repetir contraseña</ion-label>
-      <ion-input type="password" [(ngModel)]="password"></ion-input>
+      <ion-input type="password" [(ngModel)]="repassword"></ion-input>
     </ion-item>
 
     <div padding>Al crear una cuenta acepto los terminos y condiciones de BestCode Jobs</div>
@@ -32,7 +32,7 @@
       <ion-checkbox color="dark" checked="true"></ion-checkbox>
       <button ion-button item-end clear (click)="terms()">Terminos y Condiciones</button>
     </ion-item>
-    <button ion-button full (click)="register(email,password)">Continuar</button>
+    <button ion-button full (click)="register()">Continuar</button>
     <ion-item no-lines text-right>
         <ion-label>Ya tienes cuenta?</ion-label>
         <button ion-button item-end clear (click)="login()">Ingresar</button>

@@ -8,6 +8,7 @@ import { EditExpertisePage } from '../edit-expertise/edit-expertise';
 import { DateServiceProvider } from '../../providers/date-service/date-service';
 import { EditSkillsPage } from '../edit-skills/edit-skills';
 import { EditJobPreferencesPage } from '../edit-job-preferences/edit-job-preferences';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 @IonicPage()
 @Component({
@@ -19,7 +20,8 @@ export class ProfilePage {
   user: User;
   myUser: string;
   expertise: any;
-  constructor(public dateService: DateServiceProvider , public authService: AuthServiceProvider, public userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
+  urlImageProfile: string;
+  constructor(private camera: Camera, public dateService: DateServiceProvider , public authService: AuthServiceProvider, public userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.expertise = [];
   }
 
@@ -28,6 +30,15 @@ export class ProfilePage {
   }
   async Load() {
     this.user = await this.userService.getProfile();
+    if(this.user.urlImage != '') {
+      this.userService.getUrlImage(this.user.urlImage).subscribe(res => {
+        this.urlImageProfile = res;
+      });
+    }
+    else {
+      this.urlImageProfile = '';
+    }
+    //console.log(this.user.urlImage);
   }
   editPersonal(user: User) {
     this.navCtrl.push(EditPersonalPage, {user});
@@ -75,5 +86,23 @@ export class ProfilePage {
 
       return {position, company, monthStart, yearStart, monthEnd, yearEnd, time};
     })
+  }
+
+  async takePicture() {
+
+    const options: CameraOptions = {
+      quality: 100,
+      targetHeight: 200,
+      targetWidth: 200,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: this.camera.PictureSourceType.CAMERA,
+      correctOrientation: true
+    }
+    
+    let base64Image = await this.camera.getPicture(options);
+    await this.userService.uploadImage(base64Image);
+    this.Load();
   }
 }

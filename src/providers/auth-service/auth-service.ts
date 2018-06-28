@@ -2,15 +2,16 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth} from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { User } from '../user-service/user-service';
+import { User } from '@firebase/auth-types';
 
 @Injectable()
 export class AuthServiceProvider {
 
   userCollection: AngularFirestoreCollection<any>;
-  user = {} as User;
   myUser: string;
   logged: boolean;
+
+  currentUser: User;
 
   constructor(private afAuth: AngularFireAuth, private afStore: AngularFirestore, public http: HttpClient) {
     this.logged = false;
@@ -19,12 +20,13 @@ export class AuthServiceProvider {
   }
 
   //register
-  async register(user: User) {
+  async register(email: string, password: string) {
     try {
-      const result = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
+      const result = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
       if(result) {
-        
-        this.userCollection.add(user);
+        this.currentUser = await this.afAuth.auth.currentUser;
+        this.currentUser.sendEmailVerification();
+        this.logged = true;
         return result;
       }
     }
@@ -37,11 +39,12 @@ export class AuthServiceProvider {
   // Login a user
   // Normally make a server request and store
   // e.g. the auth token
-  async login(user: User) {
+  async login(email, password) {
     let result: string[];
     result = [];
       try {
-        await this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password);
+        console.log(email + ' ' + password);
+        await this.afAuth.auth.signInWithEmailAndPassword(email, password);
         result.push('OK');
         result.push('Succes');
         this.logged = true;

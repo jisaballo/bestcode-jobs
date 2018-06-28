@@ -34,6 +34,8 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { ProjectServiceProvider } from '../providers/project-service/project-service';
 import { UserServiceProvider } from '../providers/user-service/user-service';
 import { DateServiceProvider } from '../providers/date-service/date-service';
+import { AngularFireStorageModule } from 'angularfire2/storage';
+import { Camera } from '@ionic-native/camera';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,8 @@ import { DateServiceProvider } from '../providers/date-service/date-service';
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AngularFireStorageModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -92,6 +95,7 @@ import { DateServiceProvider } from '../providers/date-service/date-service';
     AuthServiceProvider,
     ProjectServiceProvider,
     UserServiceProvider,
+    Camera,
     DateServiceProvider
   ]
 })

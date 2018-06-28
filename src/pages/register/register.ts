@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
-import { User, Experience, Skill } from '../../providers/user-service/user-service';
+import { User, Experience, Skill, UserServiceProvider } from '../../providers/user-service/user-service';
 import { TabsPage } from '../tabs/tabs';
 import { TermsPage } from '../terms/terms';
 
@@ -16,21 +16,39 @@ export class RegisterPage {
   experience: Experience[];
   skills: Skill[];
   alert: any;
-  constructor(private authService: AuthServiceProvider, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+
+  email: string;
+  username: string;
+  password: string;
+  repassword: string;
+
+  constructor(private authService: AuthServiceProvider, private userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
     //this.experience = [{position: '', company: '', monthStart: '', yearStart: '', monthEnd: '', yearEnd: ''}];
     //this.skills = [{name:'',level:''}];
     this.experience = [];
     this.skills =[];
-    this.user = {id:'', username:'', profesion: '', email:'', password:'', phone: '', jobAvailability: '', jobInterested: '', jobSalary: '', jobSalaryFrecuency: '', about: '', country: '', experience: this.experience, skills: this.skills};
+    this.user = {id:'', username:'', urlImage: '', profesion: '', email:'', password:'', phone: '', jobAvailability: '', jobInterested: '', jobSalary: '', jobSalaryFrecuency: '', about: '', country: '', experience: this.experience, skills: this.skills};
   }
 
-  register(email: string, password: string) {
+  register() {
     try {
-      this.user.email = email;
-      this.user.password = password;
-      this.user.username = this.user.email.substring(0, this.user.email.lastIndexOf("@"));
+      this.user.email = this.email;
+      this.user.password = this.password;
+      if(this.username == '') {
+        this.user.username = this.user.email.substring(0, this.user.email.lastIndexOf("@"));
+      }
+      else {
+        this.user.username = this.username;
+      }
 
-      const result = this.authService.register(this.user);
+      if(this.password != this.repassword){
+        this.showAlert('Contraseña incorrecta','Las contraseñas ingresadas deben ser iguales');
+        this.alert.present();
+        return
+      }
+      
+      const result = this.authService.register(this.user.email, this.user.password);
+      this.userService.addUser(this.user);
       result.then(a => {
         console.log(a);
         if(a.code == 'auth/email-already-in-use') {

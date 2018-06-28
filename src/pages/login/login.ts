@@ -19,16 +19,16 @@ export class LoginPage {
   constructor(private authService: AuthServiceProvider, public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams) {
     this.tabsHideOnSubPages = false;
     //se debe guardar y leer del storage
-    //this.user.email = 'jisaballo@outlook.com';
-    //this.user.password = 'lolo1986';
-    //this.login(this.user);
+    this.user.email = 'jisaballo@outlook.com';
+    this.user.password = 'lolo1986';
+    this.login(this.user);
     //this.navCtrl.setRoot(TabsPage);
     
   }
 
   async login(user: User) {
     
-    let result = await this.authService.login(user);
+    let result = await this.authService.login(user.email, user.password);
     if(result[0]== 'OK') {
       this.navCtrl.push(TabsPage);
     }
