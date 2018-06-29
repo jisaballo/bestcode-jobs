@@ -5,6 +5,7 @@ import { User } from '../user-service/user-service';
 import { useAnimation } from '@angular/core/src/animation/dsl';
 import { forEach } from '@firebase/util/dist/src/obj';
 import { app } from 'firebase';
+import { DateServiceProvider } from '../date-service/date-service';
 
 export interface Project {
   id: string;
@@ -20,6 +21,10 @@ export interface Project {
   userApplied: Array<string>;
 }
 
+export interface ProjectExt extends Project {
+  timeElapsed: string;
+}
+
 @Injectable()
 export class ProjectServiceProvider {
 
@@ -27,12 +32,12 @@ export class ProjectServiceProvider {
   categoryCol: AngularFirestoreCollection<any>;
   projectDoc: AngularFirestoreDocument<any>;
 
-  projects: Project[];
+  projects: ProjectExt[];
   myProjects: Project[];
 
   categories: string[];
   subCategories: string[][];
-  constructor(public afs: AngularFirestore, public http: HttpClient) {
+  constructor(private dateService: DateServiceProvider, public afs: AngularFirestore, public http: HttpClient) {
   }
 
   async getCategories() {
@@ -69,8 +74,9 @@ export class ProjectServiceProvider {
     await this.projectsCol.snapshotChanges().subscribe(res => {
       res.map(a => {
 
-        let data = a.payload.doc.data() as Project;
+        let data = a.payload.doc.data() as ProjectExt;
         data.id = a.payload.doc.id;
+        data.timeElapsed = this.dateService.differenceTime(data.pubDate);
         
         this.projects.push(data);
       })
@@ -84,6 +90,10 @@ export class ProjectServiceProvider {
   }
 
   addProject(project: Project) {
+    //time pub
+    let pubDate = new Date().getTime().toString();
+    project.pubDate = pubDate;
+
     this.projectsCol.add(project);
   }
   async getProjectsByUser(user: String) {
@@ -92,8 +102,9 @@ export class ProjectServiceProvider {
     await this.projectsCol.snapshotChanges().subscribe(res => {
       res.map(a => {
 
-        let data = a.payload.doc.data() as Project;
+        let data = a.payload.doc.data() as ProjectExt;
         data.id = a.payload.doc.id;
+        data.timeElapsed = this.dateService.differenceTime(data.pubDate);
         
         this.myProjects.push(data);
       })

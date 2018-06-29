@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { ProjectServiceProvider, Project } from '../../providers/project-service/project-service';
+import { ProjectServiceProvider, Project, ProjectExt } from '../../providers/project-service/project-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { NewProjectPage } from '../new-project/new-project';
 import { User, UserServiceProvider } from '../../providers/user-service/user-service';
@@ -14,7 +14,7 @@ import { Observable } from '@firebase/util/dist/src/subscribe';
 })
 export class ProjectDetailPage {
 
-  project: Project;
+  project: ProjectExt;
   projectUser: User;
   user: string;
   owner: boolean;
@@ -63,15 +63,6 @@ export class ProjectDetailPage {
         })
       })
     });
-
-    /* if(this.projectUser.urlImage != '') {
-      this.userService.getUrlImage(this.projectUser[0].urlImage).subscribe(res => {
-        this.urlImageProfile = res;
-      });
-    }
-    else {
-      this.urlImageProfile = '';
-    } */
   }
 
   editProject(project) {

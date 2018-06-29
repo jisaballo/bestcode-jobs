@@ -16,8 +16,8 @@
     <ion-item>
       <ion-row>
         <ion-col col-4 text-left><p><ion-icon color="primary" name="checkmark-circle"></ion-icon> {{project.applied}} Aplicados</p></ion-col>
-        <ion-col col-4 text-center><p><ion-icon color="primary" name="logo-usd"></ion-icon> {{project.value}}</p></ion-col>
-        <ion-col col-4 text-right><p><ion-icon color="primary" name="calendar"></ion-icon> Hace 3 dias</p></ion-col>
+        <ion-col col-3 text-center><p><ion-icon color="primary" name="logo-usd"></ion-icon> {{project.value}}</p></ion-col>
+        <ion-col col-5 text-right><p><ion-icon color="primary" name="calendar"></ion-icon> {{project.timeElapsed}}</p></ion-col>
       </ion-row>
     </ion-item>
     <div padding *ngIf="projectUser">

@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 
 import { NewProjectPage } from '../new-project/new-project';
 import { ProjectDetailPage } from '../project-detail/project-detail';
-import { ProjectServiceProvider, Project } from '../../providers/project-service/project-service';
+import { ProjectServiceProvider, Project, ProjectExt } from '../../providers/project-service/project-service';
 import { SettingsPage } from '../settings/settings';
 
 @Component({
@@ -15,7 +15,7 @@ import { SettingsPage } from '../settings/settings';
 export class ProjectPage {
 
   
-  projects: Project[];
+  projects: ProjectExt[];
   user: string;
 
   constructor(public authService: AuthServiceProvider, public projectService: ProjectServiceProvider, public navCtrl: NavController) {
