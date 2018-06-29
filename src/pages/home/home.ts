@@ -35,7 +35,6 @@ export class HomePage {
   }
   async LoadProjects() {
     this.projects = await this.projectService.getProjectsWithID();
-    console.log(this.projects);
   }
 
   projectDetail(project: Project) {

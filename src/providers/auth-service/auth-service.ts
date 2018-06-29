@@ -43,7 +43,6 @@ export class AuthServiceProvider {
     let result: string[];
     result = [];
       try {
-        console.log(email + ' ' + password);
         await this.afAuth.auth.signInWithEmailAndPassword(email, password);
         result.push('OK');
         result.push('Succes');

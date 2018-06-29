@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
+import { Base64 } from '@ionic-native/base64';
 
 export interface User {
   id: string;
@@ -49,7 +50,7 @@ export class UserServiceProvider {
   private profileDoc: AngularFirestoreDocument;
   private profile: User;
 
-  constructor(private afs: AngularFirestore, public http: HttpClient, private afStorage: AngularFireStorage) {
+  constructor(private base64: Base64, private afs: AngularFirestore, public http: HttpClient, private afStorage: AngularFireStorage) {
     
   }
 
@@ -136,13 +137,21 @@ export class UserServiceProvider {
     this.profile.urlImage = filePath;
     this.UpdateProfile(this.profile);
 
-    this.image = 'data:image/jpg;base64,' + file;
-    return storageRef.putString(this.image, 'data_url');
+    return this.base64.encodeFile(file).then((base64File: string) => {
+      return storageRef.putString(base64File, 'data_url');
+    }, (err) => {
+      console.log(err);
+    });
   }
 
   getUrlImage(filePath) {
-    const storageRef: AngularFireStorageReference = this.afStorage.ref(filePath);
-    return storageRef.getDownloadURL();
+    try {
+      const storageRef: AngularFireStorageReference = this.afStorage.ref(filePath);
+      return storageRef.getDownloadURL();
+    }
+    catch (e){
+      console.error(e);
+    }
   }
 
   deletePreviousImage(filePath) {

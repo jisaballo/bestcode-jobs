@@ -36,6 +36,8 @@ import { UserServiceProvider } from '../providers/user-service/user-service';
 import { DateServiceProvider } from '../providers/date-service/date-service';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 import { Camera } from '@ionic-native/camera';
+import { Crop } from '@ionic-native/crop';
+import { Base64 } from '@ionic-native/base64';
 
 @NgModule({
   declarations: [
@@ -96,6 +98,8 @@ import { Camera } from '@ionic-native/camera';
     ProjectServiceProvider,
     UserServiceProvider,
     Camera,
+    Crop,
+    Base64,
     DateServiceProvider
   ]
 })

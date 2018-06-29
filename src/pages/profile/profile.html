@@ -7,8 +7,12 @@
 <ion-content padding>
 
   <div *ngIf="user">
-    <img class="profile_img" src="{{urlImageProfile}}">
-    <button ion-button (click)="takePicture()">Cambiar foto</button>
+    <img (click)="modifyPicture()" class="profile_img" src="{{urlImageProfile}}">
+    <ion-item text-center no-lines icon-start *ngIf="urlImageProfile == ''">
+      <button ion-button outline (click)="modifyPicture()">
+        <ion-icon name="camera"></ion-icon>Foto
+      </button>
+    </ion-item>
     <div class="username" text-center>{{user.username}}</div>
     <div text-center>{{user.profesion}}</div>
     <div>

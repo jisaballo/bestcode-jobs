@@ -18,6 +18,9 @@ export class ProjectDetailPage {
   projectUser: User[];
   user: string;
   owner: boolean;
+
+  urlImageProfile: string;
+
   constructor(public userService: UserServiceProvider, public authService: AuthServiceProvider, public projectService: ProjectServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.user = authService.getMyUser();
     this.project = this.navParams.get('project');
@@ -36,7 +39,18 @@ export class ProjectDetailPage {
   }
 
   async Load() {
-    this.projectUser = await this.userService.getProjectUser(this.project.userID);
+    this.userService.getProjectUser(this.project.userID).then(res => {
+
+    });
+
+    /* if(this.projectUser.urlImage != '') {
+      this.userService.getUrlImage(this.projectUser[0].urlImage).subscribe(res => {
+        this.urlImageProfile = res;
+      });
+    }
+    else {
+      this.urlImageProfile = '';
+    } */
   }
 
   editProject(project) {

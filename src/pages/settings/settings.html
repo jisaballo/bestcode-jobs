@@ -10,7 +10,7 @@
     <ion-list-header>Perfil</ion-list-header>
     <ion-item (click)="openProfile()" *ngIf="user">
       <ion-avatar item-start>
-        <img src="assets/imgs/perfil.png">
+        <img src="{{urlImageProfile}}">
       </ion-avatar>
       <h2>{{user.username}}</h2>
       <p>Ingeniero en Sistemas</p>

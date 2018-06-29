@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
 import { EditPersonalPage } from '../edit-personal/edit-personal';
 import { UserServiceProvider, User } from '../../providers/user-service/user-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
@@ -9,6 +9,7 @@ import { DateServiceProvider } from '../../providers/date-service/date-service';
 import { EditSkillsPage } from '../edit-skills/edit-skills';
 import { EditJobPreferencesPage } from '../edit-job-preferences/edit-job-preferences';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Crop } from '@ionic-native/crop';
 
 @IonicPage()
 @Component({
@@ -21,7 +22,8 @@ export class ProfilePage {
   myUser: string;
   expertise: any;
   urlImageProfile: string;
-  constructor(private camera: Camera, public dateService: DateServiceProvider , public authService: AuthServiceProvider, public userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
+  
+  constructor(private crop: Crop, public actionSheetCtrl: ActionSheetController, private camera: Camera, public dateService: DateServiceProvider , public authService: AuthServiceProvider, public userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.expertise = [];
   }
 
@@ -92,17 +94,54 @@ export class ProfilePage {
 
     const options: CameraOptions = {
       quality: 100,
-      targetHeight: 200,
-      targetWidth: 200,
-      destinationType: this.camera.DestinationType.DATA_URL,
+      destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       sourceType: this.camera.PictureSourceType.CAMERA,
       correctOrientation: true
     }
     
-    let base64Image = await this.camera.getPicture(options);
-    await this.userService.uploadImage(base64Image);
-    this.Load();
+    this.camera.getPicture(options).then(url => {
+      this.crop.crop(url, {quality: 50}).then(
+        newImage => {
+          this.userService.uploadImage(newImage).then(res => {
+            this.Load();
+          });
+        },
+        error => console.error('Error cropping', error)
+      )
+    });
+  }
+
+  modifyPicture() {
+    this.presentActionSheet();
+  }
+  
+  presentActionSheet() {
+    const actionSheet = this.actionSheetCtrl.create({
+      title: 'Modificar foto de perfil',
+      buttons: [
+        {
+          text: 'Cámara',
+          icon: 'camera',
+          handler: () => {
+            this.takePicture();
+          }
+        },{
+          text: 'Galeria',
+          icon: 'images',
+          handler: () => {
+            console.log('Archive clicked');
+          }
+        },{
+          text: 'Cancel',
+          icon: 'close-circle',
+          role: 'cancel',
+          handler: () => {
+          }
+        }
+      ]
+    });
+    actionSheet.present();
   }
 }
