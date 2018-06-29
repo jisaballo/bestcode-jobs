@@ -15,9 +15,7 @@ export class EditPersonalPage {
     console.log(this.user);
   }
   saveProfile() {
-    console.log(this.user);
     this.userService.UpdateProfile(this.user);
     this.navCtrl.pop();
-    console.log(this.user);
   }
 }

@@ -1,29 +1,48 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { SettingsPage } from '../settings/settings';
-import { UserServiceProvider, User, Experience, Skill } from '../../providers/user-service/user-service';
+import { UserServiceProvider, User, Experience, Skill, UserExt } from '../../providers/user-service/user-service';
 import { Observable } from 'rxjs/internal/Observable';
 
+interface extUser extends User {
+  uriImage: string;
+}
 @Component({
   selector: 'page-recruit',
   templateUrl: 'recruit.html'
 })
 export class RecruitPage {
 
-  users: User[];
-  filterUser: User[];
+  users: UserExt[];
+  filterUser: UserExt[];
   constructor(public userService: UserServiceProvider , public navCtrl: NavController) {
   }
   ionViewWillEnter() {
     this.LoadUsers();
   }
-  async LoadUsers() {
-    const result = await this.userService.getAllUser();
-    this.users = result;
-    this.filterUser = result;
+
+  LoadUsers() {
+    this.userService.getAllUser().subscribe(res => {
+      this.filterUser = [];
+      res.map(element => {
+        let new_user: UserExt = element as UserExt;
+        
+        if(typeof new_user.urlImage != 'undefined') {
+          this.userService.getUrlImage(new_user.urlImage).subscribe(res => {
+            new_user.uriImage = res;
+          });
+        }
+        else {
+          new_user.uriImage = 'assets/imgs/default_profile.png';
+        }
+
+        this.filterUser.push(new_user);
+      })
+    });
   }
 
   getUsers(ev: any) {
+    console.log('pepe');
     this.filterUser = this.users;
     const val = ev.target.value;
 

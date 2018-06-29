@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title text-center>Reclutar</ion-title>
+    <ion-title>Reclutar</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -23,7 +23,7 @@
     <ion-list no-lines>
       <ion-item *ngFor="let user of filterUser">
         <ion-avatar item-start>
-          <img src="assets/imgs/perfil.png">
+          <img src="{{user.uriImage}}">
         </ion-avatar>
         <h2>{{user.username}}</h2>
         <p>{{user.profesion}}</p>

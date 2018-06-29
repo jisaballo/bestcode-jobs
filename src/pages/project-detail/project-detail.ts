@@ -15,15 +15,24 @@ import { Observable } from '@firebase/util/dist/src/subscribe';
 export class ProjectDetailPage {
 
   project: Project;
-  projectUser: User[];
+  projectUser: User;
   user: string;
   owner: boolean;
-
+  ifApplied: boolean;
   urlImageProfile: string;
 
   constructor(public userService: UserServiceProvider, public authService: AuthServiceProvider, public projectService: ProjectServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.user = authService.getMyUser();
     this.project = this.navParams.get('project');
+    this.ifApplied = false;
+    //validar si puede aplicar por este empleo
+    if(typeof this.project.userApplied != 'undefined') {
+      this.project.userApplied.map(data => {
+        if(data == this.user) {
+          this.ifApplied = false;
+        }
+      });
+    }
   }
 
   ionViewWillEnter() {
@@ -39,8 +48,20 @@ export class ProjectDetailPage {
   }
 
   async Load() {
-    this.userService.getProjectUser(this.project.userID).then(res => {
-
+    this.userService.getProjectUser(this.project.userID).then(even => {
+      even.subscribe(res => {
+        res.map(data => {
+          this.projectUser = data as User;
+          if(typeof this.projectUser.urlImage != 'undefined') {
+            this.userService.getUrlImage(this.projectUser.urlImage).subscribe(res => {
+              this.urlImageProfile = res;
+            });
+          }
+          else {
+            this.urlImageProfile = 'assets/imgs/default_profile.png';
+          }
+        })
+      })
     });
 
     /* if(this.projectUser.urlImage != '') {

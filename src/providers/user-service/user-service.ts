@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import { Base64 } from '@ionic-native/base64';
+import { Observable } from 'rxjs/internal/Observable';
 
 export interface User {
   id: string;
@@ -36,6 +37,10 @@ export interface Skill {
   level: string;
 }
 
+export interface UserExt extends User {
+  uriImage: string;
+}
+
 @Injectable()
 export class UserServiceProvider {
 
@@ -43,7 +48,7 @@ export class UserServiceProvider {
   image: string;
 
   usersCollection: AngularFirestoreCollection;
-  private users: User[];
+  private users: UserExt[];
 
   //own user
   private profileCollection: AngularFirestoreCollection;
@@ -87,42 +92,15 @@ export class UserServiceProvider {
 
   async getProjectUser(username: string) {
     let auxCollection: AngularFirestoreCollection;
-    let result: User[];
-    result = [];
+    let result: User;
     auxCollection = await this.afs.collection('users', ref => ref.where('email','==', username));
-    await auxCollection.valueChanges().subscribe(res => {
-      res.map(data => {
-        result.push(data as User);
-      })
-    });
-    return result;
+    return await auxCollection.valueChanges();
   }
 
-  async getAllUser() {
+  getAllUser() {
     this.users = [];
-    this.usersCollection = await this.afs.collection('users');
-    await this.usersCollection.valueChanges().subscribe(data => {
-      data.map(element => {
-        let new_user: User;
-        let experience: Experience[];
-        let skills: Skill[];
-        new_user = {id:'', username: '', urlImage:'', profesion: '', email: '', password: '', phone: '', country: '', 
-        jobAvailability: '', jobInterested: '', jobSalary: '', jobSalaryFrecuency: '', skills: skills, 
-        experience: experience, about: ''};
-        
-        new_user.username = element.username;
-        new_user.profesion = element.profesion;
-        new_user.email = element.email;
-        new_user.phone = element.phone;
-        new_user.country = element.country;
-        new_user.skills = element.skills;
-        new_user.experience = element.experience;
-        new_user.about = element.about;
-        
-        this.users.push(new_user);
-      })
-    })
-    return this.users;
+    this.usersCollection = this.afs.collection('users');
+    return this.usersCollection.valueChanges();
   }
 
   uploadImage(file: string) {

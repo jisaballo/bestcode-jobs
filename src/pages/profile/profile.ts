@@ -113,6 +113,29 @@ export class ProfilePage {
     });
   }
 
+  async selectPicture() {
+
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      correctOrientation: true
+    }
+    
+    this.camera.getPicture(options).then(url => {
+      this.crop.crop(url, {quality: 50}).then(
+        newImage => {
+          this.userService.uploadImage(newImage).then(res => {
+            this.Load();
+          });
+        },
+        error => console.error('Error cropping', error)
+      )
+    });
+  }
+
   modifyPicture() {
     this.presentActionSheet();
   }
@@ -131,7 +154,7 @@ export class ProfilePage {
           text: 'Galeria',
           icon: 'images',
           handler: () => {
-            console.log('Archive clicked');
+            this.selectPicture();
           }
         },{
           text: 'Cancel',
