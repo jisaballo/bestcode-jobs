@@ -17,10 +17,27 @@ export class NewProjectPage {
   categories: string[];
   subCategories: string[];
   category: string;
-  indexCategory: number;
+  subCategory: string;
+
+  ifNew: boolean;
+  saveButton: string;
+  title: string;
 
   constructor(public authService: AuthServiceProvider, public projectService: ProjectServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.user = authService.getMyUser();
+    this.project = this.navParams.get('project');
+    if(typeof this.project == 'undefined') {
+      this.ifNew = true;
+      this.saveButton = 'Crear';
+      this.title = 'Nuevo empleo';
+      this.project = {id: '', name: '', description: '', value: '', durationTime: '', pubDate: '', userID: ''
+      ,category: '', subCategory: '', applied: 0, userApplied: []};
+    }
+    else {
+      this.ifNew = false;
+      this.saveButton = 'Actualizar';
+      this.title = 'Actualizar empleo';
+    }
   }
 
   ionViewWillEnter() {
@@ -28,19 +45,28 @@ export class NewProjectPage {
   }
 
   async Load() {
-    this.categories = await this.projectService.getCategories();
+    this.projectService.getCategories().then(res => {
+      this.categories = res;
+      if(!this.ifNew) {
+        this.subCategories = [];
+        this.category = this.project.category;
+        this.subCategories.push(this.project.subCategory);
+        this.subCategory = this.project.subCategory;
+      }
+    });
   }
   createProject() {
     this.project.userID = this.user;
     this.project.applied = 0;
-    this.projectService.addProject(this.project);
+    this.project.category = this.category;
+    this.project.subCategory = this.subCategory;
+
+    this.projectService.addProject(this.project, this.ifNew);
     this.navCtrl.pop();
   }
 
   onChange(category: string) {
-    console.log('Hola:' + category);
     this.subCategories = this.projectService.getSubCategories(category);
-    console.log(this.subCategories);
   }
 
   closePage() {

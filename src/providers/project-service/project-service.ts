@@ -13,10 +13,10 @@ export interface Project {
   description: string;
   value: string;
   durationTime: string;
-  pubDate: string;
+  pubDate: number;
   userID: string;
   category: string;
-  subcategory: string;
+  subCategory: string;
   applied: number;
   userApplied: Array<string>;
 }
@@ -33,7 +33,7 @@ export class ProjectServiceProvider {
   projectDoc: AngularFirestoreDocument<any>;
 
   projects: ProjectExt[];
-  myProjects: Project[];
+  myProjects: ProjectExt[];
 
   categories: string[];
   subCategories: string[][];
@@ -55,6 +55,7 @@ export class ProjectServiceProvider {
     })
     return this.categories;
   }
+
   getSubCategories(catergory: string) {
     let result: any;
     let count: number;
@@ -65,9 +66,9 @@ export class ProjectServiceProvider {
       }
       count++;
     });
-
     return result;
   }
+
   async getProjectsWithID() {
     this.projects = [];
     this.projectsCol = await this.afs.collection('projects');
@@ -76,6 +77,7 @@ export class ProjectServiceProvider {
 
         let data = a.payload.doc.data() as ProjectExt;
         data.id = a.payload.doc.id;
+        console.log(data.pubDate);
         data.timeElapsed = this.dateService.differenceTime(data.pubDate);
         
         this.projects.push(data);
@@ -89,13 +91,20 @@ export class ProjectServiceProvider {
     return this.projectDoc.valueChanges();
   }
 
-  addProject(project: Project) {
-    //time pub
-    let pubDate = new Date().getTime().toString();
-    project.pubDate = pubDate;
+  addProject(project: Project, ifNew: boolean) {
+    console.log(ifNew);
+    if(ifNew) {
+      //time pub
+      let pubDate = new Date().getTime().toString();
+      project.pubDate = pubDate;
 
-    this.projectsCol.add(project);
+      this.projectsCol.add(project);
+    }
+    else {
+      this.projectsCol.doc(project.id).update(project);
+    }
   }
+
   async getProjectsByUser(user: String) {
     this.myProjects = [];
     this.projectsCol = await this.afs.collection('projects', ref => ref.where('userID','==', user));

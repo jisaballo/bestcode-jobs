@@ -12,7 +12,6 @@ export class EditPersonalPage {
   user: User;
   constructor(public userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.user = this.navParams.get('user');
-    console.log(this.user);
   }
   saveProfile() {
     this.userService.UpdateProfile(this.user);

@@ -6,6 +6,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { NewProjectPage } from '../new-project/new-project';
 import { User, UserServiceProvider } from '../../providers/user-service/user-service';
 import { Observable } from '@firebase/util/dist/src/subscribe';
+import { DateServiceProvider } from '../../providers/date-service/date-service';
 
 @IonicPage()
 @Component({
@@ -21,7 +22,7 @@ export class ProjectDetailPage {
   ifApplied: boolean;
   urlImageProfile: string;
 
-  constructor(public userService: UserServiceProvider, public authService: AuthServiceProvider, public projectService: ProjectServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public dateService: DateServiceProvider, public userService: UserServiceProvider, public authService: AuthServiceProvider, public projectService: ProjectServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.user = authService.getMyUser();
     this.project = this.navParams.get('project');
     this.ifApplied = false;
@@ -48,6 +49,7 @@ export class ProjectDetailPage {
   }
 
   async Load() {
+    //load creator
     this.userService.getProjectUser(this.project.userID).then(even => {
       even.subscribe(res => {
         res.map(data => {
@@ -63,10 +65,16 @@ export class ProjectDetailPage {
         })
       })
     });
+
+    //load timeElapsed
+    console.log(this.project.pubDate);
+    this.project.timeElapsed = this.dateService.differenceTime(this.project.pubDate);
+    console.log(this.project.timeElapsed);
   }
 
   editProject(project) {
-    //this.navCtrl.push(NewProjectPage, {project});
+    delete this.project.timeElapsed;
+    this.navCtrl.push(NewProjectPage, {project});
   }
 
   deleteProject() {

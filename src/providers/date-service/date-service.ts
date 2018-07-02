@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { REQUIRED_VALIDATOR } from '@angular/forms/src/directives/validators';
+import { validateArgCount } from '@firebase/util/dist/src/validation';
 
 @Injectable()
 export class DateServiceProvider {
@@ -40,11 +41,12 @@ export class DateServiceProvider {
     return month;
   }
 
-  differenceTime(time: string) {
+  differenceTime(time: number) {
     let result: string;
 
     if(typeof time != 'undefined') {
       let timeElapsed = new Date().getTime() - (Number)(new Date(time));
+      console.log(new Date(time));
 
       var msecPerMinute = 1000 * 60;
       var msecPerHour = msecPerMinute * 60;
@@ -57,13 +59,28 @@ export class DateServiceProvider {
         result = 'Hace ' + (timeElapsed/1000/60).toFixed(0) + ' minutos';
       }
       if(timeElapsed > msecPerHour && timeElapsed < msecPerDay) {
-        result = 'Hace ' + (timeElapsed/1000/60/24).toFixed(0) + ' horas';
+        let value = (timeElapsed/1000/60/60).toFixed(0);
+        if(value == '1'){
+          result = 'Hace ' + value + ' hora';
+        }
+        else {
+          result = 'Hace ' + value + ' horas';
+        }
+      }
+      if(timeElapsed > msecPerDay) {
+        let value = (timeElapsed/1000/60/60/24).toFixed(0);
+        if(value == '1') {
+          result = 'Hace ' + value + ' día';  
+        }
+        else {
+          result = 'Hace ' + value + ' días';
+        }
       }
     } 
     else {
       result = 'Hace 0 segundos';
     }
-
+    console.log(result);
     return result;
   }
 
