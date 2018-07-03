@@ -1,7 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { REQUIRED_VALIDATOR } from '@angular/forms/src/directives/validators';
-import { validateArgCount } from '@firebase/util/dist/src/validation';
 
 @Injectable()
 export class DateServiceProvider {
@@ -46,7 +44,7 @@ export class DateServiceProvider {
 
     if(typeof time != 'undefined') {
       let timeElapsed = new Date().getTime() - (Number)(new Date(time));
-      console.log(new Date(time));
+      //console.log(new Date(time));
 
       var msecPerMinute = 1000 * 60;
       var msecPerHour = msecPerMinute * 60;
@@ -80,7 +78,6 @@ export class DateServiceProvider {
     else {
       result = 'Hace 0 segundos';
     }
-    console.log(result);
     return result;
   }
 

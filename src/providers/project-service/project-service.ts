@@ -77,7 +77,6 @@ export class ProjectServiceProvider {
 
         let data = a.payload.doc.data() as ProjectExt;
         data.id = a.payload.doc.id;
-        console.log(data.pubDate);
         data.timeElapsed = this.dateService.differenceTime(data.pubDate);
         
         this.projects.push(data);
@@ -92,10 +91,9 @@ export class ProjectServiceProvider {
   }
 
   addProject(project: Project, ifNew: boolean) {
-    console.log(ifNew);
     if(ifNew) {
       //time pub
-      let pubDate = new Date().getTime().toString();
+      let pubDate = new Date().getTime();
       project.pubDate = pubDate;
 
       this.projectsCol.add(project);
@@ -130,6 +128,7 @@ export class ProjectServiceProvider {
 
   applyProject(project: Project) {
     this.afs.collection("projects").doc(project.id).update(project);
+    
   }
 
 }

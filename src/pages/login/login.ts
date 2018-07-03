@@ -17,7 +17,7 @@ export class LoginPage {
   user = {} as User;
   tabsHideOnSubPages: boolean;
   constructor(private authService: AuthServiceProvider, public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams) {
-    this.tabsHideOnSubPages = false;
+
     //se debe guardar y leer del storage
     this.user.email = 'jisaballo@outlook.com';
     this.user.password = 'lolo1986';

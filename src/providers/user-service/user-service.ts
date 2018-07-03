@@ -19,6 +19,7 @@ export interface User {
   jobInterested: string;
   jobSalary: string;
   jobSalaryFrecuency: string;
+  idChat: Array<string>;
   experience: Array<Experience>;
   skills: Array<Skill>;
 }
@@ -63,7 +64,7 @@ export class UserServiceProvider {
     let experience: Experience[];
     let skills: Skill[];
     this.profile =  {id: '', username: '', urlImage:'', profesion: '', email: '', password: '', phone: '', country: '',
-    jobAvailability: '', jobInterested: '', jobSalary: '', jobSalaryFrecuency: '', skills: skills, 
+    jobAvailability: '', jobInterested: '', jobSalary: '', jobSalaryFrecuency: '', idChat: [], skills: skills, 
     experience: experience, about: ''};
 
     this.profileCollection = await this.afs.collection('users', ref => ref.where('email','==', username));
@@ -135,6 +136,14 @@ export class UserServiceProvider {
   deletePreviousImage(filePath) {
     const storageRef: AngularFireStorageReference = this.afStorage.ref(filePath);
     storageRef.delete();
+  }
+
+  addIDChat(id: string) {
+    if(typeof this.profile.idChat == 'undefined') {
+      this.profile.idChat = [];
+    }
+    this.profile.idChat.push(id);
+    this.UpdateProfile(this.profile);
   }
 
 }

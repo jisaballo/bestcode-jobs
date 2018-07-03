@@ -28,6 +28,7 @@ import { EditSkillsPage } from '../pages/edit-skills/edit-skills';
 import { EditJobPreferencesPage } from '../pages/edit-job-preferences/edit-job-preferences';
 import { SupportPage } from '../pages/support/support';
 import { TermsPage } from '../pages/terms/terms';
+import { ConversationPage } from '../pages/conversation/conversation';
 
 import { FIREBASE_CONFIG } from './app.firebase.config';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
@@ -38,6 +39,7 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
 import { Camera } from '@ionic-native/camera';
 import { Crop } from '@ionic-native/crop';
 import { Base64 } from '@ionic-native/base64';
+import { MessagesServiceProvider } from '../providers/messages-service/messages-service';
 
 @NgModule({
   declarations: [
@@ -58,6 +60,7 @@ import { Base64 } from '@ionic-native/base64';
     EditSkillsPage,
     EditJobPreferencesPage,
     SupportPage,
+    ConversationPage,
     TermsPage
   ],
   imports: [
@@ -88,6 +91,7 @@ import { Base64 } from '@ionic-native/base64';
     EditSkillsPage,
     EditJobPreferencesPage,
     SupportPage,
+    ConversationPage,
     TermsPage
   ],
   providers: [
@@ -100,7 +104,8 @@ import { Base64 } from '@ionic-native/base64';
     Camera,
     Crop,
     Base64,
-    DateServiceProvider
+    DateServiceProvider,
+    MessagesServiceProvider
   ]
 })
 export class AppModule {}

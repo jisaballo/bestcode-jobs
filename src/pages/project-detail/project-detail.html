@@ -42,12 +42,12 @@
     </ion-row>
   </div>
   <div *ngIf="!owner">
-    <ion-row *ngIf="ifApplied">
+    <ion-row *ngIf="canApply">
       <ion-col col-12>
         <button ion-button block color="primary" (click)="applyProject()">Aplicar</button>
       </ion-col>
     </ion-row>
-    <div class="span-text" *ngIf="!ifApplied">
+    <div class="span-text" *ngIf="!canApply">
       <span>Ya has aplicado para este empleo. espera a que el empleador se comunique.</span>
     </div>
   </div>

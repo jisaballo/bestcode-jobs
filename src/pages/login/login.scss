@@ -1,13 +1,13 @@
 page-login {
-    .content {
-     }
-    .title {
-        color: #488aff;
-        font-size: 36px;
-        text-align: center;
-        margin-top: 30%;
-        margin-bottom: 10%;
+    .form_login {
+        margin-top: 50%;
+        position: relative;
     }
+    .content {
+        background-image: url('/assets/imgs/login_backgroung.jpg');
+        background-repeat: no-repeat;
+        background-size:cover;
+     }
     .mail {
         background-color: #f53d3d;
     }

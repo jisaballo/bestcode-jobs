@@ -1,23 +1,19 @@
-<ion-content class="login">
-  <div padding>
-
-      <div class="title">
-        BestCode Jobs
-      </div>
+<ion-content>
+  <div class="form_login" padding>
       
-      <ion-item>
-        <ion-label stacked color="primary">Correo electronico</ion-label>
-        <ion-input type="text" autofocus [(ngModel)]="user.email"></ion-input>
-      </ion-item>
-    
-      <ion-item>
-        <ion-label stacked color="primary">Contraseña</ion-label>
-        <ion-input type="password" [(ngModel)]="user.password"></ion-input>
-      </ion-item>
+    <ion-item>
+      <ion-label stacked color="primary">Correo electronico</ion-label>
+      <ion-input type="text" autofocus [(ngModel)]="user.email"></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label stacked color="primary">Contraseña</ion-label>
+      <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+    </ion-item>
 
-      <ion-item no-lines>
-        <div item-end ion-button clear>Olvido su contraseña?</div>
-      </ion-item>
+    <ion-item no-lines>
+      <div item-end ion-button clear>Olvido su contraseña?</div>
+    </ion-item>
 
     <ion-row>
       <ion-col col-1></ion-col>

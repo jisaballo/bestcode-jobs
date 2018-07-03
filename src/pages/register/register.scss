@@ -1,7 +1,11 @@
 page-register {
-    .title {
-        color: #488aff;
-        font-size: 30px;
-        text-align: center;
+    .form_login {
+        margin-top: 30%;
+        position: relative;
     }
+    .content {
+        background-image: url('/assets/imgs/login_backgroung.jpg');
+        background-repeat: no-repeat;
+        background-size:cover;
+     }
 }

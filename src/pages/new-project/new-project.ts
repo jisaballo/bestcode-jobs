@@ -30,7 +30,7 @@ export class NewProjectPage {
       this.ifNew = true;
       this.saveButton = 'Crear';
       this.title = 'Nuevo empleo';
-      this.project = {id: '', name: '', description: '', value: '', durationTime: '', pubDate: '', userID: ''
+      this.project = {id: '', name: '', description: '', value: '', durationTime: '', pubDate: 0, userID: ''
       ,category: '', subCategory: '', applied: 0, userApplied: []};
     }
     else {
