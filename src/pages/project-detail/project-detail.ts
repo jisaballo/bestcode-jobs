@@ -7,6 +7,7 @@ import { NewProjectPage } from '../new-project/new-project';
 import { User, UserServiceProvider } from '../../providers/user-service/user-service';
 import { Observable } from '@firebase/util/dist/src/subscribe';
 import { DateServiceProvider } from '../../providers/date-service/date-service';
+import { NotifyServiceProvider } from '../../providers/notify-service/notify-service';
 
 @IonicPage()
 @Component({
@@ -22,7 +23,10 @@ export class ProjectDetailPage {
   canApply: boolean;
   urlImageProfile: string;
 
-  constructor(public dateService: DateServiceProvider, public userService: UserServiceProvider, public authService: AuthServiceProvider, public projectService: ProjectServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public dateService: DateServiceProvider, public userService: UserServiceProvider, 
+    public authService: AuthServiceProvider, public projectService: ProjectServiceProvider, 
+    public navCtrl: NavController, public navParams: NavParams, private notifyService: NotifyServiceProvider) {
+
     this.user = authService.getMyUser();
     this.project = this.navParams.get('project');
     this.canApply = true;
@@ -89,7 +93,9 @@ export class ProjectDetailPage {
     this.project.userApplied.push(this.user)
     this.projectService.applyProject(this.project);
 
+    this.notifyService.applyProject(this.project);
 
+    this.canApply = false;
   }
 
 }

@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the NotificationPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { UserServiceProvider, User } from '../../providers/user-service/user-service';
+import { NotifyServiceProvider, Notify } from '../../providers/notify-service/notify-service';
 
 @IonicPage()
 @Component({
@@ -15,11 +10,19 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class NotificationPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  notification: Notify[];
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserServiceProvider, 
+  private notifyService: NotifyServiceProvider) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad NotificationPage');
   }
 
+  ionViewWillEnter() {
+    this.notifyService.getNotification().then(res => {
+      this.notification = res;
+    });
+  }
 }
