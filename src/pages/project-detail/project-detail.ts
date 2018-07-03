@@ -7,7 +7,6 @@ import { NewProjectPage } from '../new-project/new-project';
 import { User, UserServiceProvider } from '../../providers/user-service/user-service';
 import { Observable } from '@firebase/util/dist/src/subscribe';
 import { DateServiceProvider } from '../../providers/date-service/date-service';
-import { MessagesServiceProvider, Message } from '../../providers/messages-service/messages-service';
 
 @IonicPage()
 @Component({
@@ -23,13 +22,12 @@ export class ProjectDetailPage {
   canApply: boolean;
   urlImageProfile: string;
 
-  constructor(private messageService: MessagesServiceProvider, public dateService: DateServiceProvider, public userService: UserServiceProvider, public authService: AuthServiceProvider, public projectService: ProjectServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public dateService: DateServiceProvider, public userService: UserServiceProvider, public authService: AuthServiceProvider, public projectService: ProjectServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.user = authService.getMyUser();
     this.project = this.navParams.get('project');
     this.canApply = true;
     //validar si puede aplicar por este empleo
     if(typeof this.project.userApplied != 'undefined') {
-      console.log(this.project.userApplied);
       this.project.userApplied.map(data => {
         if(data == this.user) {
           this.canApply = false;
@@ -91,12 +89,7 @@ export class ProjectDetailPage {
     this.project.userApplied.push(this.user)
     this.projectService.applyProject(this.project);
 
-    //send new message
-    let new_message: Message;
-    new_message = {send: this.user, text: 'Me gustaria aplicar por el proyecto tal', timestamp: 0}
-    this.messageService.newMessage(new_message, this.projectUser.email);
 
-    this.canApply = false;
   }
 
 }

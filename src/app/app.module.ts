@@ -28,7 +28,7 @@ import { EditSkillsPage } from '../pages/edit-skills/edit-skills';
 import { EditJobPreferencesPage } from '../pages/edit-job-preferences/edit-job-preferences';
 import { SupportPage } from '../pages/support/support';
 import { TermsPage } from '../pages/terms/terms';
-import { ConversationPage } from '../pages/conversation/conversation';
+import { NotificationPage } from '../pages/notification/notification';
 
 import { FIREBASE_CONFIG } from './app.firebase.config';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
@@ -39,7 +39,7 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
 import { Camera } from '@ionic-native/camera';
 import { Crop } from '@ionic-native/crop';
 import { Base64 } from '@ionic-native/base64';
-import { MessagesServiceProvider } from '../providers/messages-service/messages-service';
+import { NotifyServiceProvider } from '../providers/notify-service/notify-service';
 
 @NgModule({
   declarations: [
@@ -60,8 +60,8 @@ import { MessagesServiceProvider } from '../providers/messages-service/messages-
     EditSkillsPage,
     EditJobPreferencesPage,
     SupportPage,
-    ConversationPage,
-    TermsPage
+    TermsPage,
+    NotificationPage
   ],
   imports: [
     BrowserModule,
@@ -91,8 +91,8 @@ import { MessagesServiceProvider } from '../providers/messages-service/messages-
     EditSkillsPage,
     EditJobPreferencesPage,
     SupportPage,
-    ConversationPage,
-    TermsPage
+    TermsPage,
+    NotificationPage
   ],
   providers: [
     StatusBar,
@@ -105,7 +105,7 @@ import { MessagesServiceProvider } from '../providers/messages-service/messages-
     Crop,
     Base64,
     DateServiceProvider,
-    MessagesServiceProvider
+    NotifyServiceProvider
   ]
 })
 export class AppModule {}

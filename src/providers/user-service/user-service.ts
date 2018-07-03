@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import { Base64 } from '@ionic-native/base64';
-import { Observable } from 'rxjs/internal/Observable';
 
 export interface User {
   id: string;
@@ -19,7 +18,6 @@ export interface User {
   jobInterested: string;
   jobSalary: string;
   jobSalaryFrecuency: string;
-  idChat: Array<string>;
   experience: Array<Experience>;
   skills: Array<Skill>;
 }
@@ -49,7 +47,6 @@ export class UserServiceProvider {
   image: string;
 
   usersCollection: AngularFirestoreCollection;
-  private users: UserExt[];
 
   //own user
   private profileCollection: AngularFirestoreCollection;
@@ -64,7 +61,7 @@ export class UserServiceProvider {
     let experience: Experience[];
     let skills: Skill[];
     this.profile =  {id: '', username: '', urlImage:'', profesion: '', email: '', password: '', phone: '', country: '',
-    jobAvailability: '', jobInterested: '', jobSalary: '', jobSalaryFrecuency: '', idChat: [], skills: skills, 
+    jobAvailability: '', jobInterested: '', jobSalary: '', jobSalaryFrecuency: '', skills: skills, 
     experience: experience, about: ''};
 
     this.profileCollection = await this.afs.collection('users', ref => ref.where('email','==', username));
@@ -93,13 +90,11 @@ export class UserServiceProvider {
 
   async getProjectUser(username: string) {
     let auxCollection: AngularFirestoreCollection;
-    let result: User;
     auxCollection = await this.afs.collection('users', ref => ref.where('email','==', username));
     return await auxCollection.valueChanges();
   }
 
   getAllUser() {
-    this.users = [];
     this.usersCollection = this.afs.collection('users');
     return this.usersCollection.valueChanges();
   }
@@ -136,14 +131,6 @@ export class UserServiceProvider {
   deletePreviousImage(filePath) {
     const storageRef: AngularFireStorageReference = this.afStorage.ref(filePath);
     storageRef.delete();
-  }
-
-  addIDChat(id: string) {
-    if(typeof this.profile.idChat == 'undefined') {
-      this.profile.idChat = [];
-    }
-    this.profile.idChat.push(id);
-    this.UpdateProfile(this.profile);
   }
 
 }
