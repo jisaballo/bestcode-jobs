@@ -8,6 +8,7 @@ import { User, UserServiceProvider } from '../../providers/user-service/user-ser
 import { Observable } from '@firebase/util/dist/src/subscribe';
 import { DateServiceProvider } from '../../providers/date-service/date-service';
 import { NotifyServiceProvider } from '../../providers/notify-service/notify-service';
+import { TabsPage } from '../tabs/tabs';
 
 @IonicPage()
 @Component({
@@ -25,7 +26,8 @@ export class ProjectDetailPage {
 
   constructor(public dateService: DateServiceProvider, public userService: UserServiceProvider, 
     public authService: AuthServiceProvider, public projectService: ProjectServiceProvider, 
-    public navCtrl: NavController, public navParams: NavParams, private notifyService: NotifyServiceProvider) {
+    public navCtrl: NavController, public navParams: NavParams, private notifyService: NotifyServiceProvider, 
+    private tabsPage: TabsPage) {
 
     this.user = authService.getMyUser();
     this.project = this.navParams.get('project');
@@ -94,7 +96,7 @@ export class ProjectDetailPage {
     this.projectService.applyProject(this.project);
 
     this.notifyService.applyProject(this.project);
-
+    this.tabsPage.incrementBadgeCount();
     this.canApply = false;
   }
 

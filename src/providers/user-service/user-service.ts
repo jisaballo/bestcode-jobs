@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import { Base64 } from '@ionic-native/base64';
+import { NotifyServiceProvider } from '../notify-service/notify-service';
 
 export interface User {
   id: string;
@@ -70,9 +71,10 @@ export class UserServiceProvider {
         this.profile = data.payload.doc.data() as User;
         this.profile.id = data.payload.doc.id;
         this.profileDoc = this.afs.collection('users').doc(this.profile.id);
-      })
+      });
     });
   }
+  
   async UpdateProfile(user: User) {
     await this.profileDoc.update(user);
   }

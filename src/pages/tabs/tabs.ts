@@ -15,7 +15,21 @@ export class TabsPage {
   tab3Root = NotificationPage;
   tab4Root = SettingsPage;
 
+  tab3BadgeCount : number = 0; // default 0
+
   constructor() {
 
+  }
+
+  incrementBadgeCount() {
+    this.tab3BadgeCount = this.tab3BadgeCount+1;
+  }
+
+  decrementBadgeCount() {
+    this.tab3BadgeCount = this.tab3BadgeCount-1;
+  }
+
+  deleteBadgeCount() {
+    this.tab3BadgeCount = 0;
   }
 }

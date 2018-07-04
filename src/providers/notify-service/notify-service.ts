@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Project } from '../project-service/project-service';
 import { UserServiceProvider, User } from '../user-service/user-service';
-import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 export interface Notify {
   text: string;
@@ -11,37 +10,36 @@ export interface Notify {
   timestamp: number;
 }
 
-interface MyNotify {
-  notification: Notify[];
-}
-
 @Injectable()
 export class NotifyServiceProvider {
 
   notifyCol: AngularFirestoreCollection<any>;
+  notifyDoc: AngularFirestoreDocument<any>;
+
+  notification: Notify[];
 
   constructor(private afs: AngularFirestore, private userService: UserServiceProvider, public http: HttpClient) {
     console.log('Hello NotifyServiceProvider Provider');
+
+    this.notifyCol = this.afs.collection('notification');
   }
 
-  async getNotification() {
-    let result: Notify[];
-    result = [];
-    this.notifyCol = await this.afs.collection('notification');
+  async loadNotification(userID: string) {
+    this.notifyDoc = this.notifyCol.doc(userID);
+    this.notification = [];
 
-    await this.userService.getProfile().then(res => {
-      let user = res as User;
-      this.notifyCol.doc(user.id).valueChanges().subscribe(res => {
+    await this.notifyDoc.valueChanges().subscribe(res => {
+      if(typeof res != 'undefined') {
         res['notify'].map(data => {
-          let notificacion = data as Notify;
-          result.push(notificacion);
+          let event = data as Notify;
+          this.notification.push(event);
         })
-      })
-    })
-    return result;
+      }
+    });
+    return this.notification;
   }
 
-  applyProject(project: Project) {
+  async applyProject(project: Project) {
     let new_notify: Notify;
     new_notify = {
       text: 'Aplicate al proyecto ' + project.name,
@@ -49,25 +47,12 @@ export class NotifyServiceProvider {
       timestamp: new Date().getTime()
     };
 
-    this.notifyCol = this.afs.collection('notification');
+    console.log(new_notify);
+    
+    this.notification.push(new_notify);
 
-    this.userService.getProfile().then(res => {
-      let user = res as User;
-      this.notifyCol.doc(user.id).valueChanges().subscribe(res => {
-        if(typeof res == 'undefined') {
-          this.notifyCol.doc(user.id).set({
-            notify: [new_notify]
-          })
-        }
-        else {
-          let notification = res['notify'];
-          console.log(notification);
-
-          this.notifyCol.doc(user.id).update({
-            notify: [new_notify]
-          })
-        }
-      });
-    })
+    this.notifyDoc.update({
+      notify: this.notification
+    });
   }
 }

@@ -14,25 +14,28 @@ import { App } from 'ionic-angular/components/app/app';
 })
 export class HomePage {
 
-  user = {} as User;
+  user: User;
   message : string;
+  username: string;
 
   projects: Project[];
-  constructor(private userService: UserServiceProvider, public projectService: ProjectServiceProvider, private authService: AuthServiceProvider, public navCtrl: NavController, private app: App) {
+  constructor(private userService: UserServiceProvider, public projectService: ProjectServiceProvider, 
+    private authService: AuthServiceProvider, public navCtrl: NavController, private app: App) {
     this.message = 'Fail';
 
   }
   
   ionViewWillEnter() {
     if(this.authService.authenticated()) {
+      this.username = this.authService.getMyUser();
+      this.userService.LoadProfile(this.username);
       this.LoadProjects();
-      let username = this.authService.getMyUser();
-      this.userService.LoadProfile(username);
     }
     else {
       this.app.getRootNav().setRoot(LoginPage);
     }
   }
+
   async LoadProjects() {
     this.projects = await this.projectService.getProjectsWithID();
   }
