@@ -17,12 +17,12 @@ export interface Project {
   userID: string;
   category: string;
   subCategory: string;
-  applied: number;
   userApplied: Array<string>;
 }
 
 export interface ProjectExt extends Project {
   timeElapsed: string;
+  applied: number;
 }
 
 @Injectable()
@@ -77,6 +77,12 @@ export class ProjectServiceProvider {
 
         let data = a.payload.doc.data() as ProjectExt;
         data.id = a.payload.doc.id;
+        if(typeof data.userApplied != 'undefined') {
+          data.applied = data.userApplied.length;
+        }
+        else {
+          data.applied = 0;
+        }
         data.timeElapsed = this.dateService.differenceTime(data.pubDate);
         
         this.projects.push(data);
@@ -128,7 +134,6 @@ export class ProjectServiceProvider {
 
   applyProject(project: Project) {
     this.afs.collection("projects").doc(project.id).update(project);
-    
   }
 
 }
