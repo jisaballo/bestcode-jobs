@@ -57,7 +57,6 @@ export class NewProjectPage {
   }
   createProject() {
     this.project.userID = this.user;
-    this.project.applied = 0;
     this.project.category = this.category;
     this.project.subCategory = this.subCategory;
 

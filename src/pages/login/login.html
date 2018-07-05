@@ -15,25 +15,14 @@
       <div item-end ion-button clear>Olvido su contraseña?</div>
     </ion-item>
 
-    <ion-row>
-      <ion-col col-1></ion-col>
-      <ion-col col-10>
-        <button ion-button block (click)="login(user)">Ingresar</button>
-      </ion-col>
-      <ion-col col-1></ion-col>
-    </ion-row>
-    <div ion-text text-center>O</div>
-    <div>
-      <ion-row>
-        <ion-col col-1></ion-col>
-        <ion-col col-10>
-          <button block class="mail" ion-button (click)="register()" icon-start><ion-icon name="mail"></ion-icon>Correo</button>
-          <!--<button class="likedin" ion-button full icon-start><ion-icon name="logo-linkedin"></ion-icon>LikedIn</button>
-          <button class="facebook" ion-button full icon-start><ion-icon name="logo-facebook"></ion-icon>Facebook</button>-->
-        </ion-col>
-        <ion-col col-1></ion-col>
-      </ion-row>
-    </div>
+    <button ion-button block color="primary" (click)="login(user)">Ingresar</button>
+
+    <br>
+    
+    <button ion-button block color="light" (click)="register()" icon-start><ion-icon name="mail"></ion-icon>Accede con tu Email</button>
+    
+    <!--<button class="likedin" ion-button full icon-start><ion-icon name="logo-linkedin"></ion-icon>LikedIn</button>
+    <button class="facebook" ion-button full icon-start><ion-icon name="logo-facebook"></ion-icon>Facebook</button>-->
 
   </div>
 </ion-content>
