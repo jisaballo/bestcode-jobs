@@ -12,11 +12,10 @@ import { TabsPage } from '../tabs/tabs';
 export class NotificationPage {
 
   user: User;
-  notification: Notify[];
+  notificationUI: Notify[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserServiceProvider, 
   private notifyService: NotifyServiceProvider) {
-
   }
 
   ionViewDidLoad() {
@@ -24,13 +23,16 @@ export class NotificationPage {
   }
 
   ionViewWillEnter() {
-    this.userService.getProfile().then(res => {
-      this.user = res as User;
-      this.notifyService.loadNotification(this.user.id).then(res => {
-        this.notification = res as Notify[];
-      });
-    });
+    this.notificationUI = this.notifyService.getNotification();
+    console.log(this.notificationUI);
+  }
 
-    //this.tabsPage.deleteBadgeCount();
+  deleteNotification(index: number) {
+    this.notifyService.deleteNotification(index);
+    this.ionViewWillEnter();
+  }
+
+  deleteAll() {
+    this.notifyService.deleteAllNotification();
   }
 }

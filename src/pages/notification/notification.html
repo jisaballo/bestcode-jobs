@@ -7,9 +7,9 @@
 <ion-content>
   <ion-list>
     <ion-item no-lines>
-      <button ion-button color="danger" clear item-end>Eliminar todas</button></ion-item>
-    <ion-card *ngFor="let item of notification">
-      <ion-item text-wrap>{{item.text}}<ion-icon color="danger" name="trash" item-end></ion-icon></ion-item>
+      <button ion-button color="danger" clear item-end (click)="deleteAll()">Eliminar todas</button></ion-item>
+    <ion-card *ngFor="let item of notificationUI; let i = index">
+      <ion-item text-wrap>{{item.text}}<ion-icon color="danger" name="trash" item-end (click)="deleteNotification(i)"></ion-icon></ion-item>
     </ion-card>
   </ion-list>
 </ion-content>

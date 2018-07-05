@@ -26,9 +26,8 @@ export class NotifyServiceProvider {
 
   async loadNotification(userID: string) {
     this.notifyDoc = this.notifyCol.doc(userID);
-    this.notification = [];
-
     await this.notifyDoc.valueChanges().subscribe(res => {
+      this.notification = [];
       if(typeof res != 'undefined') {
         res['notify'].map(data => {
           let event = data as Notify;
@@ -39,18 +38,33 @@ export class NotifyServiceProvider {
     return this.notification;
   }
 
-  async applyProject(project: Project) {
+  getNotification() {
+    return this.notification;
+  }
+
+  applyProject(project: Project) {
     let new_notify: Notify;
     new_notify = {
-      text: 'Aplicate al proyecto ' + project.name,
+      text: 'Aplicaste al proyecto ' + project.name,
       state: true,
       timestamp: new Date().getTime()
     };
 
-    console.log(new_notify);
-    
     this.notification.push(new_notify);
+    this.UpdateNotificationDoc();
+  }
 
+  deleteNotification(index: number) {
+    this.notification.splice(index,1);
+    this.UpdateNotificationDoc();
+  }
+
+  deleteAllNotification() {
+    this.notification = [];
+    this.UpdateNotificationDoc();
+  }
+
+  async UpdateNotificationDoc() {
     this.notifyDoc.update({
       notify: this.notification
     });

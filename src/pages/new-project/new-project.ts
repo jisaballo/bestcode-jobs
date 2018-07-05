@@ -31,7 +31,7 @@ export class NewProjectPage {
       this.saveButton = 'Crear';
       this.title = 'Nuevo empleo';
       this.project = {id: '', name: '', description: '', value: '', durationTime: '', pubDate: 0, userID: ''
-      ,category: '', subCategory: '', applied: 0, userApplied: []};
+      ,category: '', subCategory: '', userApplied: []};
     }
     else {
       this.ifNew = false;

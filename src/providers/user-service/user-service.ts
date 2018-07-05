@@ -53,9 +53,14 @@ export class UserServiceProvider {
   private profileCollection: AngularFirestoreCollection;
   private profileDoc: AngularFirestoreDocument;
   private profile: User;
+  private userID: string;
 
   constructor(private base64: Base64, private afs: AngularFirestore, public http: HttpClient, private afStorage: AngularFireStorage) {
     
+  }
+
+  getUserID() {
+    return '4avmUKAcY7uuOPQWr6kV';
   }
 
   async LoadProfile(username: string) {
