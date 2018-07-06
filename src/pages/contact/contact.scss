@@ -1,0 +1,35 @@
+page-contact {
+    .div_image {
+        background-image: url('/assets/imgs/user_detail_backgroung.jpeg');
+        background-repeat: no-repeat;
+        background-size:cover;
+        //background-image: url('/assets/imgs/login_backgroung.jpg');
+    }
+    .div_2 {
+        //padding-top: 5%;
+        //padding-bottom: 5%;
+    }
+    .profile_img {
+
+        border-radius: 50%;
+        max-height: 150px;
+        max-width: 150px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        border: solid 1px white;
+    }
+    .text_name {
+        padding: 3%;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        color: white;
+    }
+    .text_title {
+        padding-bottom: 3%;
+        font-size: 14px;
+        text-align: center;
+        color: white;
+    }
+}

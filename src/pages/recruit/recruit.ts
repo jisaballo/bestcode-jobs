@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { SettingsPage } from '../settings/settings';
 import { UserServiceProvider, User, Experience, Skill, UserExt } from '../../providers/user-service/user-service';
 import { Observable } from 'rxjs/internal/Observable';
+import { ContactPage } from '../contact/contact';
 
 interface extUser extends User {
   uriImage: string;
@@ -55,8 +56,13 @@ export class RecruitPage {
   avanceFilter() {
     console.log('hi');
   }
+
   onCancel() {
     console.log('lolo');
     this.filterUser = this.users;
+  }
+
+  openContact(user: UserExt) {
+    this.navCtrl.push(ContactPage, {user});
   }
 }

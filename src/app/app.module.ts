@@ -29,6 +29,7 @@ import { EditJobPreferencesPage } from '../pages/edit-job-preferences/edit-job-p
 import { SupportPage } from '../pages/support/support';
 import { TermsPage } from '../pages/terms/terms';
 import { NotificationPage } from '../pages/notification/notification';
+import { ContactPage } from '../pages/contact/contact';
 
 import { FIREBASE_CONFIG } from './app.firebase.config';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
@@ -61,7 +62,8 @@ import { NotifyServiceProvider } from '../providers/notify-service/notify-servic
     EditJobPreferencesPage,
     SupportPage,
     TermsPage,
-    NotificationPage
+    NotificationPage,
+    ContactPage
   ],
   imports: [
     BrowserModule,
@@ -92,7 +94,8 @@ import { NotifyServiceProvider } from '../providers/notify-service/notify-servic
     EditJobPreferencesPage,
     SupportPage,
     TermsPage,
-    NotificationPage
+    NotificationPage,
+    ContactPage
   ],
   providers: [
     StatusBar,

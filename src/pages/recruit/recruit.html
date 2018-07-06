@@ -21,7 +21,7 @@
 
   <div padding *ngIf="filterUser">
     <ion-list no-lines>
-      <ion-item *ngFor="let user of filterUser">
+      <ion-item *ngFor="let user of filterUser" (click)="openContact(user)">
         <ion-avatar item-start>
           <img src="{{user.uriImage}}">
         </ion-avatar>

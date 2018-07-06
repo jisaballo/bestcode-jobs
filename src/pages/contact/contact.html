@@ -1,0 +1,38 @@
+<!--<ion-header>
+  <ion-navbar>
+    <ion-title>Información de contacto</ion-title>
+  </ion-navbar>
+</ion-header>-->
+
+<ion-content>
+  <div class="div_image">
+    <button ion-button icon-start large clear color="light">
+      <ion-icon name="arrow-back"></ion-icon>
+    </button>
+    <div class="div_2">
+      <img class="profile_img" src="{{userDetail.uriImage}}">
+    </div>
+    <div class="text_name">{{userDetail.username}}</div>
+    <div class="text_title">{{userDetail.profesion}}</div>
+  </div>
+
+  <ion-list no-lines>
+    <div padding>Preferencias<hr>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-6>Estado: {{userDetail.jobAvailability}}</ion-col>
+          <ion-col col-6>Interes: {{userDetail.jobInterested}}</ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-6>Salario: {{userDetail.jobSalary}}</ion-col>
+          <ion-col col-6>Frecuencia: {{userDetail.jobSalaryFrecuency}}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-6></ion-col>
+          <ion-col col-6></ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-list>
+  
+</ion-content>

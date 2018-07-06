@@ -12,7 +12,7 @@ import { TabsPage } from '../tabs/tabs';
 export class NotificationPage {
 
   user: User;
-  notificationUI: Notify[];
+  notification: Notify[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserServiceProvider, 
   private notifyService: NotifyServiceProvider) {
@@ -23,8 +23,7 @@ export class NotificationPage {
   }
 
   ionViewWillEnter() {
-    this.notificationUI = this.notifyService.getNotification();
-    console.log(this.notificationUI);
+    this.notification = this.notifyService.getNotification();
   }
 
   deleteNotification(index: number) {

@@ -19,9 +19,9 @@ export class LoginPage {
   constructor(private authService: AuthServiceProvider, public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams) {
 
     //se debe guardar y leer del storage
-    //this.user.email = 'jisaballo@outlook.com';
-    //this.user.password = 'lolo1986';
-    //this.login(this.user);
+    this.user.email = 'jisaballo@outlook.com';
+    this.user.password = 'lolo1986';
+    this.login(this.user);
     //this.navCtrl.setRoot(TabsPage);
     
   }

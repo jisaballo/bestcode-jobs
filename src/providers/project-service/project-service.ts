@@ -97,6 +97,7 @@ export class ProjectServiceProvider {
   }
 
   addProject(project: Project, ifNew: boolean) {
+    console.log(project);
     if(ifNew) {
       //time pub
       let pubDate = new Date().getTime();

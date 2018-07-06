@@ -20,6 +20,7 @@ export class HomePage {
   username: string;
 
   projects: Project[];
+  
   constructor(private userService: UserServiceProvider, public projectService: ProjectServiceProvider, 
     private authService: AuthServiceProvider, public navCtrl: NavController, private app: App, private notifyService: NotifyServiceProvider) {
     this.message = 'Fail';

@@ -21,7 +21,7 @@ export class NotifyServiceProvider {
   constructor(private afs: AngularFirestore, private userService: UserServiceProvider, public http: HttpClient) {
     console.log('Hello NotifyServiceProvider Provider');
 
-    this.notifyCol = this.afs.collection('notification');
+    this.notifyCol = this.afs.collection('notification', ref => ref.orderBy('timestamp'));
   }
 
   async loadNotification(userID: string) {
