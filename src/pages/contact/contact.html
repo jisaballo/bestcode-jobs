@@ -6,9 +6,18 @@
 
 <ion-content>
   <div class="div_image">
-    <button ion-button icon-start large clear color="light">
-      <ion-icon name="arrow-back"></ion-icon>
-    </button>
+    <ion-row>
+      <ion-col col-6>
+        <button ion-button icon-start large clear color="light" (click)="closePage()">
+          <ion-icon name="arrow-back"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col col-6 text-right>
+      <button ion-button icon-end large clear color="light" (click)="closePage()">
+        <ion-icon name="heart-outline"></ion-icon>
+      </button>
+      </ion-col>
+    </ion-row>
     <div class="div_2">
       <img class="profile_img" src="{{userDetail.uriImage}}">
     </div>
@@ -16,23 +25,53 @@
     <div class="text_title">{{userDetail.profesion}}</div>
   </div>
 
-  <ion-list no-lines>
-    <div padding>Preferencias<hr>
-      <ion-grid>
+  <ion-card>
+    <ion-card-header color="primary">Contacto</ion-card-header>
+    <ion-card-content>
+      <div class="linea"><ion-icon name="compass" item-start></ion-icon>{{userDetail.country}}</div>
+      <div class="linea"><ion-icon name="call" item-start></ion-icon>{{userDetail.phone}}</div>
+      <div class="linea"><ion-icon name="mail" item-start></ion-icon>{{userDetail.email}}</div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header color="primary">Preferencias de empleo</ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col col-6>Estado: {{userDetail.jobAvailability}}</ion-col>
+        <ion-col col-6>Tipo: {{userDetail.jobInterested}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12>Salario: {{userDetail.jobSalary}} {{userDetail.jobSalaryFrecuency}}</ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="userDetail.skills">
+    <ion-card-header color="primary">Habilidades</ion-card-header>
+    <ion-card-content>
+      <div *ngFor="let skill of userDetail.skills">
         <ion-row>
-          <ion-col col-6>Estado: {{userDetail.jobAvailability}}</ion-col>
-          <ion-col col-6>Interes: {{userDetail.jobInterested}}</ion-col>
+          <ion-col col-6>{{skill.name}}</ion-col>
+          <ion-col col-6 text-right>{{skill.level}}</ion-col>
         </ion-row>
-        <ion-row>
-            <ion-col col-6>Salario: {{userDetail.jobSalary}}</ion-col>
-          <ion-col col-6>Frecuencia: {{userDetail.jobSalaryFrecuency}}</ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col col-6></ion-col>
-          <ion-col col-6></ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
-  </ion-list>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="userDetail.experience">
+    <ion-card-header color="primary">Experiencia</ion-card-header>
+    <ion-card-content>
+      <p></p>
+      <p></p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="userDetail.about">
+    <ion-card-header color="primary">Resumen</ion-card-header>
+    <ion-card-content>
+      <p>{{userDetail.about}}</p>
+    </ion-card-content>
+  </ion-card>
   
 </ion-content>

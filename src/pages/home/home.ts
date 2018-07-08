@@ -31,7 +31,15 @@ export class HomePage {
     if(this.authService.authenticated()) {
       this.username = this.authService.getMyUser();
       this.userService.LoadProfile(this.username);
-      this.notifyService.loadNotification(this.userService.getUserID());
+      
+      this.userService.getUserID().subscribe(res => {
+        res.map(data => {
+          let userID = data.payload.doc.id;
+          
+          this.notifyService.loadNotification(userID);
+        })
+      });
+      //
       this.LoadProjects();
     }
     else {

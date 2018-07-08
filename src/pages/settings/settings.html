@@ -1,13 +1,6 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>Cuenta</ion-title>
-  </ion-navbar>
-</ion-header>
-
 <ion-content padding>
-
   <ion-list no-lines>
-    <ion-list-header>Perfil</ion-list-header>
+    <div ion-text color="primary">Perfil</div>
     <ion-item (click)="openProfile()" *ngIf="user">
       <ion-avatar item-start>
         <img src="{{urlImageProfile}}">
@@ -16,6 +9,7 @@
       <p>Ingeniero en Sistemas</p>
     </ion-item>
     <hr>
+    <ion-item (click)="openNotification()"><ion-icon name="notifications" item-start></ion-icon>Notificaciones<ion-badge item-end>{{notification}}</ion-badge></ion-item>
     <ion-item><ion-icon name="pricetags" item-start></ion-icon>Suscripción</ion-item>
     <ion-item><ion-icon name="settings" item-start></ion-icon>Ajustes</ion-item>
     <ion-item><ion-icon name="help" item-start></ion-icon>Ayuda</ion-item>

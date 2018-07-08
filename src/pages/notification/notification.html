@@ -1,15 +1,17 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>Notificaciones</ion-title>
-  </ion-navbar>
-</ion-header>
-
 <ion-content>
-  <ion-list>
-    <ion-item no-lines>
-      <button ion-button color="danger" clear item-end (click)="deleteAll()">Eliminar todas</button></ion-item>
-    <ion-card *ngFor="let item of notification; let i = index">
-      <ion-item text-wrap>{{item.text}}<ion-icon color="danger" name="trash" item-end (click)="deleteNotification(i)"></ion-icon></ion-item>
-    </ion-card>
-  </ion-list>
+  <ion-row>
+    <ion-col col-6>
+      <button ion-button icon-start clear color="dark" (click)="closePage()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col col-6 text-right>
+    <button ion-button round clear color="danger" (click)="closePage()">
+      Borrar todo
+    </button>
+    </ion-col>
+  </ion-row>
+  <div *ngFor="let item of notification; let i = index">
+    <ion-item text-wrap>{{item.text}}<ion-icon color="danger" name="trash" item-end (click)="deleteNotification(i)"></ion-icon></ion-item>
+  </div>
 </ion-content>

@@ -1,12 +1,8 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>Perfil</ion-title>
-  </ion-navbar>
-</ion-header>
-
-<ion-content padding>
-
-  <div *ngIf="user">
+<ion-content>
+  <button ion-button icon-start large clear color="dark" (click)="closePage()">
+    <ion-icon name="arrow-back"></ion-icon>
+  </button>
+  <div *ngIf="user" padding>
     <img (click)="modifyPicture()" class="profile_img" src="{{urlImageProfile}}">
     <ion-item text-center no-lines icon-start *ngIf="urlImageProfile == ''">
       <button ion-button outline (click)="modifyPicture()">

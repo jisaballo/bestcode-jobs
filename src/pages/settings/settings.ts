@@ -6,6 +6,7 @@ import { UserServiceProvider, User } from '../../providers/user-service/user-ser
 import { SupportPage } from '../support/support';
 import { LoginPage } from '../login/login';
 import { App } from 'ionic-angular/components/app/app';
+import { NotificationPage } from '../notification/notification';
 
 @IonicPage()
 @Component({
@@ -17,9 +18,10 @@ export class SettingsPage {
   user: User;
   userID: string;
   urlImageProfile: string;
+  notification: number;
 
   constructor(private app: App,private authService: AuthServiceProvider, public userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
-    
+    this.notification = 0;
   }
   ionViewWillEnter() {
     this.Load();
@@ -38,13 +40,32 @@ export class SettingsPage {
       this.urlImageProfile = '';
     }
   }
+
+  openNotification() {
+    this.navCtrl.push(NotificationPage);
+  }
+
   openProfile() {
     this.navCtrl.push(ProfilePage, this.user);
   }
+
   openSupport() {
     this.navCtrl.push(SupportPage);
   }
+
   logOut() {
     this.app.getRootNav().setRoot(LoginPage);
+  }
+
+  incrementBadgeCount() {
+    this.notification = this.notification+1;
+  }
+
+  decrementBadgeCount() {
+    this.notification = this.notification-1;
+  }
+
+  deleteBadgeCount() {
+    this.notification = 0;
   }
 }

@@ -1,13 +1,19 @@
 page-contact {
-    .div_image {
-        background-image: url('/assets/imgs/user_detail_backgroung.jpeg');
-        background-repeat: no-repeat;
-        background-size:cover;
-        //background-image: url('/assets/imgs/login_backgroung.jpg');
+    .content {
+        background-color: #c7c6cb;
     }
-    .div_2 {
-        //padding-top: 5%;
-        //padding-bottom: 5%;
+    .div_image {
+        //background-image: url('/assets/imgs/user_detail_backgroung.jpeg');
+        //background-repeat: no-repeat;
+        //background-size:cover;
+        //background-image: url('/assets/imgs/login_backgroung.jpg');
+        background-color: #5f6263;
+    }
+    .linea .icon {
+        margin-left: 2%;
+        margin-right: 3%;
+        margin-top: 2%;
+        margin-bottom: 2%;
     }
     .profile_img {
 
@@ -19,6 +25,7 @@ page-contact {
         margin-right: auto;
         border: solid 1px white;
     }
+    
     .text_name {
         padding: 3%;
         font-size: 18px;
@@ -31,5 +38,9 @@ page-contact {
         font-size: 14px;
         text-align: center;
         color: white;
+    }
+    .fab[mini] {
+        margin-top: 470%;
+        margin-right: 10px;
     }
 }

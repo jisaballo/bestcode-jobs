@@ -13,11 +13,16 @@ export class ContactPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.userDetail = this.navParams.get('user');
-    console.log(this.userDetail);
+    if(this.userDetail.experience.length == 0) {
+      this.userDetail.experience = null;
+    }
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ContactPage');
   }
 
+  closePage() {
+    this.navCtrl.pop();
+  }
 }

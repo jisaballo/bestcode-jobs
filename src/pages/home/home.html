@@ -1,14 +1,3 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>BestCode Jobs</ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only (click)="openProjects()">
-        <ion-icon color="primary" name="add-circle"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
-</ion-header>
-
 <ion-content padding>
   <ion-list no-lines>
     <div *ngFor="let project of projects" (click)="projectDetail(project)">

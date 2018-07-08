@@ -34,6 +34,11 @@ export class NotifyServiceProvider {
           this.notification.push(event);
         })
       }
+      else {
+        this.notifyDoc.set({
+          notify: []
+        });
+      }
     });
     return this.notification;
   }

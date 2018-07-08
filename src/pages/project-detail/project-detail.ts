@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { ProjectServiceProvider, Project, ProjectExt } from '../../providers/project-service/project-service';
+import { ProjectServiceProvider, ProjectExt } from '../../providers/project-service/project-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { NewProjectPage } from '../new-project/new-project';
 import { User, UserServiceProvider } from '../../providers/user-service/user-service';
-import { Observable } from '@firebase/util/dist/src/subscribe';
 import { DateServiceProvider } from '../../providers/date-service/date-service';
 import { NotifyServiceProvider } from '../../providers/notify-service/notify-service';
-import { TabsPage } from '../tabs/tabs';
 
 @IonicPage()
 @Component({
@@ -26,8 +24,7 @@ export class ProjectDetailPage {
 
   constructor(public dateService: DateServiceProvider, public userService: UserServiceProvider, 
     public authService: AuthServiceProvider, public projectService: ProjectServiceProvider, 
-    public navCtrl: NavController, public navParams: NavParams, private notifyService: NotifyServiceProvider, 
-    private tabsPage: TabsPage) {
+    public navCtrl: NavController, public navParams: NavParams, private notifyService: NotifyServiceProvider) {
 
     this.user = authService.getMyUser();
     this.project = this.navParams.get('project');
@@ -96,7 +93,6 @@ export class ProjectDetailPage {
     this.projectService.applyProject(this.project);
 
     this.notifyService.applyProject(this.project);
-    this.tabsPage.incrementBadgeCount();
     this.canApply = false;
   }
 

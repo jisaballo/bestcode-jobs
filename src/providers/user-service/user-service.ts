@@ -4,6 +4,7 @@ import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection 
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import { Base64 } from '@ionic-native/base64';
 import { NotifyServiceProvider } from '../notify-service/notify-service';
+import { useAnimation } from '@angular/core/src/animation/dsl';
 
 export interface User {
   id: string;
@@ -60,7 +61,8 @@ export class UserServiceProvider {
   }
 
   getUserID() {
-    return '4avmUKAcY7uuOPQWr6kV';
+    return this.afs.collection('users', ref => ref.where('email','==', 'jisaballo@outlook.com'))
+    .snapshotChanges();
   }
 
   async LoadProfile(username: string) {
@@ -101,9 +103,25 @@ export class UserServiceProvider {
     return await auxCollection.valueChanges();
   }
 
-  getAllUser() {
-    this.usersCollection = this.afs.collection('users');
-    return this.usersCollection.valueChanges();
+  async getAllUser() {
+    let users: UserExt[];
+    users = [];
+    this.usersCollection = await this.afs.collection('users');
+    await this.usersCollection.valueChanges().subscribe(res => {
+      let array = res as UserExt[];
+      array.map(user => {
+        if(typeof user.urlImage != 'undefined' && user.urlImage != '') {
+          this.getUrlImage(user.urlImage).subscribe(res => {
+            user.uriImage = res;
+          });
+        }
+        else {
+          user.uriImage = 'assets/imgs/default_profile.png';
+        }
+        users.push(user);
+      });
+    });
+    return users;
   }
 
   uploadImage(file: string) {

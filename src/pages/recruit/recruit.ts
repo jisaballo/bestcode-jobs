@@ -23,22 +23,9 @@ export class RecruitPage {
   }
 
   LoadUsers() {
-    this.userService.getAllUser().subscribe(res => {
-      this.filterUser = [];
-      res.map(element => {
-        let new_user: UserExt = element as UserExt;
-        
-        if(typeof new_user.urlImage != 'undefined') {
-          this.userService.getUrlImage(new_user.urlImage).subscribe(res => {
-            new_user.uriImage = res;
-          });
-        }
-        else {
-          new_user.uriImage = 'assets/imgs/default_profile.png';
-        }
-
-        this.filterUser.push(new_user);
-      })
+    this.userService.getAllUser().then(res => {
+      this.users = res;
+      this.filterUser = res;
     });
   }
 

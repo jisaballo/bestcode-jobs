@@ -26,6 +26,10 @@ export class NotificationPage {
     this.notification = this.notifyService.getNotification();
   }
 
+  closePage() {
+    this.navCtrl.pop();
+  }
+
   deleteNotification(index: number) {
     this.notifyService.deleteNotification(index);
     this.ionViewWillEnter();
