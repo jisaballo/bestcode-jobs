@@ -16,7 +16,7 @@ export class AuthServiceProvider {
   constructor(private afAuth: AngularFireAuth, private afStore: AngularFirestore, public http: HttpClient) {
     this.logged = false;
     this.userCollection = this.afStore.collection('users');
-    this.myUser = 'jisaballo@outlook.com';
+    this.myUser = 'josesaballo13@outlook.com';
   }
 
   //register

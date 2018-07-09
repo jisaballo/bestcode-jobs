@@ -6,7 +6,6 @@ import { useAnimation } from '@angular/core/src/animation/dsl';
 import { forEach } from '@firebase/util/dist/src/obj';
 import { app } from 'firebase';
 import { DateServiceProvider } from '../date-service/date-service';
-import { Direction } from '@ionic-native/camera';
 
 export interface Project {
   id: string;

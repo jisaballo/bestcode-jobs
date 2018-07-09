@@ -4,7 +4,6 @@ import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection 
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import { Base64 } from '@ionic-native/base64';
 import { NotifyServiceProvider } from '../notify-service/notify-service';
-import { useAnimation } from '@angular/core/src/animation/dsl';
 
 export interface User {
   id: string;
@@ -53,7 +52,7 @@ export class UserServiceProvider {
   //own user
   private profileCollection: AngularFirestoreCollection;
   private profileDoc: AngularFirestoreDocument;
-  private profile: User;
+  private profile: UserExt;
   private userID: string;
 
   constructor(private base64: Base64, private afs: AngularFirestore, public http: HttpClient, private afStorage: AngularFireStorage) {
@@ -61,24 +60,23 @@ export class UserServiceProvider {
   }
 
   getUserID() {
-    return this.afs.collection('users', ref => ref.where('email','==', 'jisaballo@outlook.com'))
-    .snapshotChanges();
+    return this.afs.collection('users', ref => ref.where('email','==', 'josesaballo13@gmail.com')).snapshotChanges();
   }
 
-  async LoadProfile(username: string) {
-    let experience: Experience[];
-    let skills: Skill[];
-    this.profile =  {id: '', username: '', urlImage:'', profesion: '', email: '', password: '', phone: '', country: '',
-    jobAvailability: '', jobInterested: '', jobSalary: '', jobSalaryFrecuency: '', skills: skills, 
-    experience: experience, about: ''};
+  async LoadProfile(userID: string) {
+    this.profileDoc = await this.afs.collection('users').doc(userID);
+    await this.profileDoc.valueChanges().subscribe(res => {
+      this.profile = res as UserExt;
 
-    this.profileCollection = await this.afs.collection('users', ref => ref.where('email','==', username));
-    await this.profileCollection.snapshotChanges().subscribe(res => {
-      res.map(data => {
-        this.profile = data.payload.doc.data() as User;
-        this.profile.id = data.payload.doc.id;
-        this.profileDoc = this.afs.collection('users').doc(this.profile.id);
-      });
+      if(typeof this.profile.urlImage != 'undefined' && this.profile.urlImage != '') {
+        this.getUrlImage(this.profile.urlImage).subscribe(res => {
+          this.profile.uriImage = res;
+        });
+      }
+      else {
+        this.profile.uriImage = 'assets/imgs/default_profile.png';
+      }
+
     });
   }
   

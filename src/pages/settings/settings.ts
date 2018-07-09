@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ProfilePage } from '../profile/profile';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
-import { UserServiceProvider, User } from '../../providers/user-service/user-service';
+import { UserServiceProvider, User, UserExt } from '../../providers/user-service/user-service';
 import { SupportPage } from '../support/support';
 import { LoginPage } from '../login/login';
 import { App } from 'ionic-angular/components/app/app';
@@ -15,7 +15,7 @@ import { NotificationPage } from '../notification/notification';
 })
 export class SettingsPage {
 
-  user: User;
+  user: UserExt;
   userID: string;
   urlImageProfile: string;
   notification: number;
@@ -31,14 +31,6 @@ export class SettingsPage {
     this.userID = await this.authService.getMyUser();
     //get data from user
     this.user = await this.userService.getProfile();
-    if(this.user.urlImage != '') {
-      this.userService.getUrlImage(this.user.urlImage).subscribe(res => {
-        this.urlImageProfile = res;
-      });
-    }
-    else {
-      this.urlImageProfile = '';
-    }
   }
 
   openNotification() {

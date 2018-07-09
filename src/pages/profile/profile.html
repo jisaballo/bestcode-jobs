@@ -5,11 +5,6 @@
         <ion-icon name="arrow-back"></ion-icon>
       </button>
       <img (click)="modifyPicture()" class="profile_img" src="{{urlImageProfile}}">
-      <ion-item text-center no-lines icon-start *ngIf="urlImageProfile == ''">
-        <button ion-button outline (click)="modifyPicture()">
-          <ion-icon name="camera"></ion-icon>Foto
-        </button>
-      </ion-item>
       <div class="username" text-center>{{user.username}}</div>
       <div text-center>{{user.profesion}}</div>
     </div>

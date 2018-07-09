@@ -30,16 +30,15 @@ export class HomePage {
   ionViewWillEnter() {
     if(this.authService.authenticated()) {
       this.username = this.authService.getMyUser();
-      this.userService.LoadProfile(this.username);
       
       this.userService.getUserID().subscribe(res => {
         res.map(data => {
           let userID = data.payload.doc.id;
           
+          this.userService.LoadProfile(userID);
           this.notifyService.loadNotification(userID);
         })
       });
-      //
       this.LoadProjects();
     }
     else {

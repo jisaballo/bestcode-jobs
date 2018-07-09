@@ -3,10 +3,10 @@
     <div ion-text color="primary">Perfil</div>
     <ion-item (click)="openProfile()" *ngIf="user">
       <ion-avatar item-start>
-        <img src="{{urlImageProfile}}">
+        <img src="{{user.uriImage}}">
       </ion-avatar>
       <h2>{{user.username}}</h2>
-      <p>Ingeniero en Sistemas</p>
+      <p>{{user.profesion}}</p>
     </ion-item>
     <hr>
     <ion-item (click)="openNotification()"><ion-icon name="notifications" item-start></ion-icon>Notificaciones<ion-badge item-end>{{notification}}</ion-badge></ion-item>
