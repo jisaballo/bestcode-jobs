@@ -6,6 +6,7 @@ import { useAnimation } from '@angular/core/src/animation/dsl';
 import { forEach } from '@firebase/util/dist/src/obj';
 import { app } from 'firebase';
 import { DateServiceProvider } from '../date-service/date-service';
+import { Direction } from '@ionic-native/camera';
 
 export interface Project {
   id: string;
@@ -71,7 +72,7 @@ export class ProjectServiceProvider {
 
   async getProjectsWithID() {
     this.projects = [];
-    this.projectsCol = await this.afs.collection('projects');
+    this.projectsCol = await this.afs.collection('projects', ref => ref.orderBy('pubDate', "desc"));
     await this.projectsCol.snapshotChanges().subscribe(res => {
       res.map(a => {
 
@@ -97,7 +98,6 @@ export class ProjectServiceProvider {
   }
 
   addProject(project: Project, ifNew: boolean) {
-    console.log(project);
     if(ifNew) {
       //time pub
       let pubDate = new Date().getTime();

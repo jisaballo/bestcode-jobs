@@ -32,6 +32,7 @@ export class ProfilePage {
   }
   async Load() {
     this.user = await this.userService.getProfile();
+    this.fixExpertice(this.user);
     if(this.user.urlImage != '') {
       this.userService.getUrlImage(this.user.urlImage).subscribe(res => {
         this.urlImageProfile = res;
@@ -42,6 +43,11 @@ export class ProfilePage {
     }
     //console.log(this.user.urlImage);
   }
+
+  closePage() {
+    this.navCtrl.pop();
+  }
+
   editPersonal(user: User) {
     this.navCtrl.push(EditPersonalPage, {user});
   }
@@ -56,8 +62,8 @@ export class ProfilePage {
   }
   editJobPreferences(user: User) {
     this.navCtrl.push(EditJobPreferencesPage, {user});
-    console.log(user);
   }
+  
   fixExpertice(user: User) {
     this.expertise = user.experience.map(data => {
       //console.log(data);
@@ -87,7 +93,7 @@ export class ProfilePage {
       }
 
       return {position, company, monthStart, yearStart, monthEnd, yearEnd, time};
-    })
+    });
   }
 
   async takePicture() {

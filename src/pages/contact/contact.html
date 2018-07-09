@@ -1,19 +1,13 @@
-<!--<ion-header>
-  <ion-navbar>
-    <ion-title>Información de contacto</ion-title>
-  </ion-navbar>
-</ion-header>-->
-
 <ion-content>
   <div class="div_image">
     <ion-row>
       <ion-col col-6>
-        <button ion-button icon-start large clear color="light" (click)="closePage()">
+        <button ion-button large icon-start clear color="light" (click)="closePage()">
           <ion-icon name="arrow-back"></ion-icon>
         </button>
       </ion-col>
       <ion-col col-6 text-right>
-      <button ion-button icon-end large clear color="light" (click)="closePage()">
+      <button ion-button large icon-end clear color="light" (click)="closePage()">
         <ion-icon name="heart-outline"></ion-icon>
       </button>
       </ion-col>
@@ -59,11 +53,19 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card *ngIf="userDetail.experience">
+  <ion-card *ngIf="expertise">
     <ion-card-header color="primary">Experiencia</ion-card-header>
     <ion-card-content>
-      <p></p>
-      <p></p>
+      <div *ngFor="let exp of expertise">
+        <ion-row>
+          <ion-col col-6>{{exp.position}}</ion-col>
+          <ion-col col-6 text-right>{{exp.monthStart}} {{exp.yearStart}} - {{exp.monthEnd}} {{exp.yearEnd}}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-6>{{exp.company}}</ion-col>
+          <ion-col col-6 text-right>{{exp.time}}</ion-col>
+        </ion-row>
+      </div>
     </ion-card-content>
   </ion-card>
 
