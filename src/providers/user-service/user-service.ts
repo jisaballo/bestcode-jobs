@@ -47,7 +47,9 @@ export class UserServiceProvider {
   task: AngularFireUploadTask;
   image: string;
 
+  //all users
   usersCollection: AngularFirestoreCollection;
+  users: UserExt[];
 
   //own user
   private profileCollection: AngularFirestoreCollection;
@@ -56,7 +58,8 @@ export class UserServiceProvider {
   private userID: string;
 
   constructor(private base64: Base64, private afs: AngularFirestore, public http: HttpClient, private afStorage: AngularFireStorage) {
-    
+    //all user collection
+    this.usersCollection = this.afs.collection('users');
   }
 
   getUserID() {
@@ -90,8 +93,6 @@ export class UserServiceProvider {
   
   async addUser(user: User) {
     user.password = '';
-    this.usersCollection = await this.afs.collection('users');
-
     this.usersCollection.add(user);
   }
 
@@ -101,13 +102,11 @@ export class UserServiceProvider {
     return await auxCollection.valueChanges();
   }
 
-  async getAllUser() {
-    let users: UserExt[];
-    users = [];
-    this.usersCollection = await this.afs.collection('users');
+  async loadAllUser() {
     await this.usersCollection.valueChanges().subscribe(res => {
-      let array = res as UserExt[];
-      array.map(user => {
+      this.users = [];
+      res.map(data => {
+        let user = data as UserExt;
         if(typeof user.urlImage != 'undefined' && user.urlImage != '') {
           this.getUrlImage(user.urlImage).subscribe(res => {
             user.uriImage = res;
@@ -116,10 +115,13 @@ export class UserServiceProvider {
         else {
           user.uriImage = 'assets/imgs/default_profile.png';
         }
-        users.push(user);
+        this.users.push(user);
       });
     });
-    return users;
+  }
+
+  getAllUser() {
+    return this.users;
   }
 
   uploadImage(file: string) {

@@ -13,19 +13,44 @@ export class ContactPage {
   userDetail: UserExt;
   expertise: any;
 
+  showExperience: boolean;
+  showSkills: boolean;
+  showSalary: boolean;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, private dateService: DateServiceProvider) {
     this.userDetail = this.navParams.get('user');
-    if(this.userDetail.experience.length == 0) {
-      this.userDetail.experience = null;
-    }
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ContactPage');
+    console.log(this.userDetail);
   }
 
   ionViewWillEnter() {
-    this.fixExpertice(this.userDetail);
+    //show salary section
+    if(this.userDetail.jobAvailability == "" || this.userDetail.jobInterested == "" || this.userDetail.jobSalary || this.userDetail.jobSalaryFrecuency) {
+      this.showSalary = false;
+    }
+    else {
+      this.showSalary = true;
+    }
+
+    //show experiences section 
+    if(this.userDetail.experience.length == 0) {
+      this.showExperience = false;
+    }
+    else {
+      this.fixExpertice(this.userDetail);
+      this.showExperience = true;
+    }
+
+    //show skills section
+    if(this.userDetail.skills.length == 0) {
+      this.showSkills = false;
+    }
+    else {
+      this.showSkills = true;
+    }
   }
 
   closePage() {

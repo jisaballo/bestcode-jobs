@@ -37,6 +37,7 @@ export class HomePage {
           
           this.userService.LoadProfile(userID);
           this.notifyService.loadNotification(userID);
+          this.userService.loadAllUser();
         })
       });
       this.LoadProjects();

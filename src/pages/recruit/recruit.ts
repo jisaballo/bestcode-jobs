@@ -23,10 +23,8 @@ export class RecruitPage {
   }
 
   LoadUsers() {
-    this.userService.getAllUser().then(res => {
-      this.users = res;
-      this.filterUser = res;
-    });
+    this.users = this.userService.getAllUser();
+    this.filterUser = this.users;
   }
 
   getUsers(ev: any) {

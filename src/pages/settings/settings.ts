@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ProfilePage } from '../profile/profile';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
-import { UserServiceProvider, User, UserExt } from '../../providers/user-service/user-service';
+import { UserServiceProvider, UserExt } from '../../providers/user-service/user-service';
 import { SupportPage } from '../support/support';
 import { LoginPage } from '../login/login';
 import { App } from 'ionic-angular/components/app/app';

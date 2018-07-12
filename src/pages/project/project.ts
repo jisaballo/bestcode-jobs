@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 
 import { NewProjectPage } from '../new-project/new-project';
 import { ProjectDetailPage } from '../project-detail/project-detail';
-import { ProjectServiceProvider, Project, ProjectExt } from '../../providers/project-service/project-service';
+import { ProjectServiceProvider, ProjectExt } from '../../providers/project-service/project-service';
 import { SettingsPage } from '../settings/settings';
 
 @Component({
