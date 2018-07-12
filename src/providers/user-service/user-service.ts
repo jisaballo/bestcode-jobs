@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import { Base64 } from '@ionic-native/base64';
-import { NotifyServiceProvider } from '../notify-service/notify-service';
 
 export interface User {
   id: string;
@@ -52,10 +51,8 @@ export class UserServiceProvider {
   users: UserExt[];
 
   //own user
-  private profileCollection: AngularFirestoreCollection;
   private profileDoc: AngularFirestoreDocument;
   private profile: UserExt;
-  private userID: string;
 
   constructor(private base64: Base64, private afs: AngularFirestore, public http: HttpClient, private afStorage: AngularFireStorage) {
     //all user collection
@@ -63,7 +60,7 @@ export class UserServiceProvider {
   }
 
   getUserID() {
-    return this.afs.collection('users', ref => ref.where('email','==', 'josesaballo13@gmail.com')).snapshotChanges();
+    return this.afs.collection('users', ref => ref.where('email','==', 'jisaballo@outlook.com')).snapshotChanges();
   }
 
   async LoadProfile(userID: string) {
@@ -96,10 +93,8 @@ export class UserServiceProvider {
     this.usersCollection.add(user);
   }
 
-  async getProjectUser(username: string) {
-    let auxCollection: AngularFirestoreCollection;
-    auxCollection = await this.afs.collection('users', ref => ref.where('email','==', username));
-    return await auxCollection.valueChanges();
+  getProjectUser(userID: string) {
+    return this.usersCollection.doc(userID).valueChanges();
   }
 
   async loadAllUser() {
@@ -143,14 +138,16 @@ export class UserServiceProvider {
     });
   }
 
-  getUrlImage(filePath) {
+  getUrlImage(filePath: string) {
     try {
       const storageRef: AngularFireStorageReference = this.afStorage.ref(filePath);
       return storageRef.getDownloadURL();
     }
-    catch (e){
+    catch(e) {
       console.error(e);
     }
+    
+    //defualt url 'assets/imgs/default_profile.png';
   }
 
   deletePreviousImage(filePath) {

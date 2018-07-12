@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ProjectServiceProvider, Project } from '../../providers/project-service/project-service';
-import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { UserExt, UserServiceProvider } from '../../providers/user-service/user-service';
 
 
 @IonicPage()
@@ -13,7 +13,7 @@ export class NewProjectPage {
 
   project = {} as Project;
   projects : any;
-  user: string;
+  user: UserExt;
   categories: string[];
   subCategories: string[];
   category: string;
@@ -23,8 +23,12 @@ export class NewProjectPage {
   saveButton: string;
   title: string;
 
-  constructor(public authService: AuthServiceProvider, public projectService: ProjectServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
-    this.user = authService.getMyUser();
+  constructor(public userService: UserServiceProvider, public projectService: ProjectServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
+    
+    userService.getProfile().then(res => {
+      this.user = res;
+    });
+
     this.project = this.navParams.get('project');
     if(typeof this.project == 'undefined') {
       this.ifNew = true;
@@ -56,7 +60,7 @@ export class NewProjectPage {
     });
   }
   createProject() {
-    this.project.userID = this.user;
+    this.project.userID = this.user.id;
     this.project.category = this.category;
     this.project.subCategory = this.subCategory;
 

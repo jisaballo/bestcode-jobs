@@ -4,7 +4,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ProjectServiceProvider, ProjectExt } from '../../providers/project-service/project-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { NewProjectPage } from '../new-project/new-project';
-import { User, UserServiceProvider } from '../../providers/user-service/user-service';
+import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { DateServiceProvider } from '../../providers/date-service/date-service';
 import { NotifyServiceProvider } from '../../providers/notify-service/notify-service';
 
@@ -16,11 +16,9 @@ import { NotifyServiceProvider } from '../../providers/notify-service/notify-ser
 export class ProjectDetailPage {
 
   project: ProjectExt;
-  projectUser: User;
   user: string;
   owner: boolean;
   canApply: boolean;
-  urlImageProfile: string;
 
   constructor(public dateService: DateServiceProvider, public userService: UserServiceProvider, 
     public authService: AuthServiceProvider, public projectService: ProjectServiceProvider, 
@@ -52,23 +50,6 @@ export class ProjectDetailPage {
   }
 
   async Load() {
-    //load creator
-    this.userService.getProjectUser(this.project.userID).then(even => {
-      even.subscribe(res => {
-        res.map(data => {
-          this.projectUser = data as User;
-          if(typeof this.projectUser.urlImage != 'undefined') {
-            this.userService.getUrlImage(this.projectUser.urlImage).subscribe(res => {
-              this.urlImageProfile = res;
-            });
-          }
-          else {
-            this.urlImageProfile = 'assets/imgs/default_profile.png';
-          }
-        })
-      })
-    });
-
     //load timeElapsed
     this.project.timeElapsed = this.dateService.differenceTime(this.project.pubDate);
   }

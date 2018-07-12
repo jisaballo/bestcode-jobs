@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Project } from '../project-service/project-service';
-import { UserServiceProvider, User } from '../user-service/user-service';
 
 export interface Notify {
   text: string;
@@ -18,7 +17,7 @@ export class NotifyServiceProvider {
 
   notification: Notify[];
 
-  constructor(private afs: AngularFirestore, private userService: UserServiceProvider, public http: HttpClient) {
+  constructor(private afs: AngularFirestore, public http: HttpClient) {
     console.log('Hello NotifyServiceProvider Provider');
 
     this.notifyCol = this.afs.collection('notification', ref => ref.orderBy('timestamp'));

@@ -1,5 +1,13 @@
 <ion-content>
   <ion-card *ngFor="let project of projects" (click)="projectDetail(project)">
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="{{project.ownerUrlImage}}">
+      </ion-avatar>
+      <h2>{{project.ownerName}}</h2>
+      <p>{{project.ownerProfesion}}</p>
+    </ion-item>
+    <hr>
     <ion-card-header text-wrap>
       <span class="header-project">{{project.name}}</span>
     </ion-card-header>
@@ -12,6 +20,7 @@
           <p><span>{{project.subCategory}}</span></p>
         </ion-col>
       </ion-row>
+      <hr>
       <ion-row>
         <ion-col col-4 text-left><p><ion-icon color="primary" name="checkmark-circle"></ion-icon> {{project.applied}} Aplicados</p></ion-col>
         <ion-col col-3 text-center><p><ion-icon color="primary" name="logo-usd"></ion-icon> {{project.value}}</p></ion-col>

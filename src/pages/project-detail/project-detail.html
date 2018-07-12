@@ -20,14 +20,14 @@
         <ion-col col-5 text-right><p><ion-icon color="primary" name="calendar"></ion-icon> {{project.timeElapsed}}</p></ion-col>
       </ion-row>
     </ion-item>
-    <div padding *ngIf="projectUser">
+    <div padding>
       <div ion-text color="primary">Publicado por</div>
       <ion-item (click)="openProfile()">
         <ion-avatar item-start>
-          <img src="{{urlImageProfile}}">
+          <img src="{{project.ownerUrlImage}}">
         </ion-avatar>
-        <h2>{{projectUser.username}}</h2>
-        <p>{{projectUser.profesion}}</p>
+        <h2>{{project.ownerName}}</h2>
+        <p>{{project.ownerProfesion}}</p>
       </ion-item>
     </div>
   </ion-list>

@@ -1,10 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
-import { User } from '../user-service/user-service';
-import { useAnimation } from '@angular/core/src/animation/dsl';
-import { forEach } from '@firebase/util/dist/src/obj';
-import { app } from 'firebase';
+import { UserExt, UserServiceProvider } from '../user-service/user-service';
 import { DateServiceProvider } from '../date-service/date-service';
 
 export interface Project {
@@ -23,6 +20,9 @@ export interface Project {
 export interface ProjectExt extends Project {
   timeElapsed: string;
   applied: number;
+  ownerUrlImage: string;
+  ownerName: string;
+  ownerProfesion: string;
 }
 
 @Injectable()
@@ -37,7 +37,7 @@ export class ProjectServiceProvider {
 
   categories: string[];
   subCategories: string[][];
-  constructor(private dateService: DateServiceProvider, public afs: AngularFirestore, public http: HttpClient) {
+  constructor(private dateService: DateServiceProvider, private userService: UserServiceProvider, public afs: AngularFirestore, public http: HttpClient) {
   }
 
   async getCategories() {
@@ -77,17 +77,34 @@ export class ProjectServiceProvider {
 
         let data = a.payload.doc.data() as ProjectExt;
         data.id = a.payload.doc.id;
+
         if(typeof data.userApplied != 'undefined') {
           data.applied = data.userApplied.length;
         }
         else {
           data.applied = 0;
         }
+
         data.timeElapsed = this.dateService.differenceTime(data.pubDate);
-        
+
+        //add user reference for project
+        this.userService.getProjectUser(data.userID).subscribe(res => {
+          let user = res as UserExt;
+          data.ownerName = user.username;
+          data.ownerProfesion = user.profesion;
+          data.ownerUrlImage = 'assets/imgs/default_profile.png'; //imagen por defecto
+          if(typeof user.urlImage != 'undefined' && user.urlImage != '') {
+            this.userService.getUrlImage(user.urlImage).subscribe(res => {
+              data.ownerUrlImage = res;
+            });
+          }
+        });
+
         this.projects.push(data);
       })
-    })
+    });
+    
+    //console.log(this.projects);
     return this.projects;
   }
 
@@ -123,6 +140,7 @@ export class ProjectServiceProvider {
       })
     })
     return this.myProjects;
+
   }
   deleteProjectByID(ID: string) {
     this.afs.collection("projects").doc(ID).delete().then(function() {

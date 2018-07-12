@@ -13,8 +13,7 @@ export class NotificationPage {
   user: User;
   notification: Notify[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserServiceProvider, 
-  private notifyService: NotifyServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private notifyService: NotifyServiceProvider) {
   }
 
   ionViewDidLoad() {

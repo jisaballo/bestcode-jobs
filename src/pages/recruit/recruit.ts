@@ -1,13 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { SettingsPage } from '../settings/settings';
-import { UserServiceProvider, User, Experience, Skill, UserExt } from '../../providers/user-service/user-service';
-import { Observable } from 'rxjs/internal/Observable';
+import { UserServiceProvider, User, UserExt } from '../../providers/user-service/user-service';
 import { ContactPage } from '../contact/contact';
 
-interface extUser extends User {
-  uriImage: string;
-}
 @Component({
   selector: 'page-recruit',
   templateUrl: 'recruit.html'
