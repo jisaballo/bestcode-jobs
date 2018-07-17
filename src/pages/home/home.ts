@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { User, UserServiceProvider } from '../../providers/user-service/user-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
-import { ProjectServiceProvider, Project, ProjectExt } from '../../providers/project-service/project-service';
+import { ProjectServiceProvider, ProjectExt } from '../../providers/project-service/project-service';
 import { ProjectPage } from '../project/project';
 import { ProjectDetailPage } from '../project-detail/project-detail';
 import { LoginPage } from '../login/login';
@@ -51,7 +51,7 @@ export class HomePage {
     this.projects = await this.projectService.getProjectsWithID();
   }
 
-  projectDetail(project: Project) {
+  projectDetail(project: ProjectExt) {
     this.navCtrl.push(ProjectDetailPage, {project});
   }
 

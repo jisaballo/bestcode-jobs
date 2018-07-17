@@ -4,7 +4,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ProjectServiceProvider, ProjectExt } from '../../providers/project-service/project-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { NewProjectPage } from '../new-project/new-project';
-import { UserServiceProvider } from '../../providers/user-service/user-service';
+import { UserServiceProvider, UserExt } from '../../providers/user-service/user-service';
 import { DateServiceProvider } from '../../providers/date-service/date-service';
 import { NotifyServiceProvider } from '../../providers/notify-service/notify-service';
 
@@ -16,7 +16,7 @@ import { NotifyServiceProvider } from '../../providers/notify-service/notify-ser
 export class ProjectDetailPage {
 
   project: ProjectExt;
-  user: string;
+  user: UserExt;
   owner: boolean;
   canApply: boolean;
 
@@ -24,28 +24,32 @@ export class ProjectDetailPage {
     public authService: AuthServiceProvider, public projectService: ProjectServiceProvider, 
     public navCtrl: NavController, public navParams: NavParams, private notifyService: NotifyServiceProvider) {
 
-    this.user = authService.getMyUser();
+    this.userService.getProfile().then(res => {
+      this.user = res as UserExt;
+    });
+
     this.project = this.navParams.get('project');
     this.canApply = true;
-    //validar si puede aplicar por este empleo
-    if(typeof this.project.userApplied != 'undefined') {
-      this.project.userApplied.map(data => {
-        if(data == this.user) {
-          this.canApply = false;
-        }
-      });
-    }
   }
 
   ionViewWillEnter() {
 
     this.owner = false;
     this.Load();
-    if(this.project.userID == this.user) {
+    if(this.project.userID == this.user.id) {
       this.owner = true;
     }
     else {
       this.owner = false;
+    }
+
+    //validar si puede aplicar por este empleo
+    if(typeof this.project.userApplied != 'undefined') {
+      this.project.userApplied.map(data => {
+        if(data == this.user.id) {
+          this.canApply = false;
+        }
+      });
     }
   }
 
@@ -70,7 +74,7 @@ export class ProjectDetailPage {
     if(typeof this.project.userApplied === 'undefined') {
       this.project.userApplied = [];
     }
-    this.project.userApplied.push(this.user)
+    this.project.userApplied.push(this.user.id)
     this.projectService.applyProject(this.project);
 
     this.notifyService.applyProject(this.project);

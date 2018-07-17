@@ -41,6 +41,8 @@ import { Crop } from '@ionic-native/crop';
 import { Base64 } from '@ionic-native/base64';
 import { NotifyServiceProvider } from '../providers/notify-service/notify-service';
 
+import { ProjectFirebase } from '../models/project';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -102,6 +104,7 @@ import { NotifyServiceProvider } from '../providers/notify-service/notify-servic
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,
     ProjectServiceProvider,
+    ProjectFirebase,
     UserServiceProvider,
     Camera,
     Crop,

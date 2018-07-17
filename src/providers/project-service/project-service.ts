@@ -4,20 +4,10 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { UserExt, UserServiceProvider } from '../user-service/user-service';
 import { DateServiceProvider } from '../date-service/date-service';
 
-export interface Project {
-  id: string;
-  name: string;
-  description: string;
-  value: string;
-  durationTime: string;
-  pubDate: number;
-  userID: string;
-  category: string;
-  subCategory: string;
-  userApplied: Array<string>;
-}
+import { Project, ProjectFirebase } from '../../models/project';
 
 export interface ProjectExt extends Project {
+  id: string;
   timeElapsed: string;
   applied: number;
   ownerUrlImage: string;
@@ -37,7 +27,7 @@ export class ProjectServiceProvider {
 
   categories: string[];
   subCategories: string[][];
-  constructor(private dateService: DateServiceProvider, private userService: UserServiceProvider, public afs: AngularFirestore, public http: HttpClient) {
+  constructor(private projectFirebase: ProjectFirebase, private dateService: DateServiceProvider, private userService: UserServiceProvider, public afs: AngularFirestore, public http: HttpClient) {
   }
 
   async getCategories() {
@@ -113,7 +103,8 @@ export class ProjectServiceProvider {
     return this.projectDoc.valueChanges();
   }
 
-  addProject(project: Project, ifNew: boolean) {
+  addProject(project: ProjectExt, ifNew: boolean) {
+    console.log(project);
     if(ifNew) {
       //time pub
       let pubDate = new Date().getTime();
@@ -122,7 +113,7 @@ export class ProjectServiceProvider {
       this.projectsCol.add(project);
     }
     else {
-      this.projectsCol.doc(project.id).update(project);
+      this.projectFirebase.updateProject(project);
     }
   }
 
