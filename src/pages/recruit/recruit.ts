@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { UserServiceProvider, User, UserExt } from '../../providers/user-service/user-service';
+import { UserServiceProvider, UserExt } from '../../providers/user-service/user-service';
 import { ContactPage } from '../contact/contact';
 
 @Component({

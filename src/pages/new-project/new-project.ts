@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ProjectServiceProvider, Project } from '../../providers/project-service/project-service';
+import { ProjectServiceProvider, ProjectExt } from '../../providers/project-service/project-service';
 import { UserExt, UserServiceProvider } from '../../providers/user-service/user-service';
 
 
@@ -11,7 +11,7 @@ import { UserExt, UserServiceProvider } from '../../providers/user-service/user-
 })
 export class NewProjectPage {
 
-  project = {} as Project;
+  project = {} as ProjectExt;
   projects : any;
   user: UserExt;
   categories: string[];
@@ -34,8 +34,8 @@ export class NewProjectPage {
       this.ifNew = true;
       this.saveButton = 'Crear';
       this.title = 'Nuevo empleo';
-      this.project = {id: '', name: '', description: '', value: '', durationTime: '', pubDate: 0, userID: ''
-      ,category: '', subCategory: '', userApplied: []};
+      this.project = {id: '', name: '', timeElapsed: '', applied: 0, ownerUrlImage: '', description: '', value: '', durationTime: '', pubDate: 0, userID: ''
+      ,category: '', subCategory: '', userApplied: [], ownerName: '', ownerProfesion: ''};
     }
     else {
       this.ifNew = false;

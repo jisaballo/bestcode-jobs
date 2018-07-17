@@ -44,7 +44,6 @@ export interface Project {
       }
 
       getProjectByUser(user: string) {
-        let userProjects: AngularFirestoreCollection;
         return this.afs.collection('projects', ref => ref.where('userID','==', user)).snapshotChanges();
       }
 

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { App } from 'ionic-angular/components/app/app';
+
 import { ProfilePage } from '../profile/profile';
-import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { UserServiceProvider, UserExt } from '../../providers/user-service/user-service';
 import { SupportPage } from '../support/support';
 import { LoginPage } from '../login/login';
-import { App } from 'ionic-angular/components/app/app';
 import { NotificationPage } from '../notification/notification';
 
 @IonicPage()
@@ -19,7 +19,7 @@ export class SettingsPage {
   urlImageProfile: string;
   notification: number;
 
-  constructor(private app: App,private authService: AuthServiceProvider, public userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private app: App, public userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.notification = 0;
   }
   ionViewWillEnter() {

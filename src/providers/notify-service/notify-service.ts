@@ -1,42 +1,32 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
-import { Project } from '../project-service/project-service';
 
-export interface Notify {
-  text: string;
-  state: boolean;
-  timestamp: number;
+import { ProjectExt } from '../project-service/project-service';
+import { Notify, NotificationFirebase } from '../../models/notification';
+
+export interface NotifyExt extends Notify {
 }
 
 @Injectable()
 export class NotifyServiceProvider {
 
-  notifyCol: AngularFirestoreCollection<any>;
-  notifyDoc: AngularFirestoreDocument<any>;
+  notification: NotifyExt[];
 
-  notification: Notify[];
-
-  constructor(private afs: AngularFirestore, public http: HttpClient) {
+  constructor(public http: HttpClient, private notifyFirebase: NotificationFirebase) {
     console.log('Hello NotifyServiceProvider Provider');
-
-    this.notifyCol = this.afs.collection('notification', ref => ref.orderBy('timestamp'));
   }
 
   async loadNotification(userID: string) {
-    this.notifyDoc = this.notifyCol.doc(userID);
-    await this.notifyDoc.valueChanges().subscribe(res => {
+    await this.notifyFirebase.getAllOwnNotification(userID).subscribe(res => {
       this.notification = [];
       if(typeof res != 'undefined') {
         res['notify'].map(data => {
-          let event = data as Notify;
+          let event = data as NotifyExt;
           this.notification.push(event);
         })
       }
       else {
-        this.notifyDoc.set({
-          notify: []
-        });
+        this.notifyFirebase.updateNotification([]);
       }
     });
     return this.notification;
@@ -46,8 +36,9 @@ export class NotifyServiceProvider {
     return this.notification;
   }
 
-  applyProject(project: Project) {
-    let new_notify: Notify;
+  applyProject(project: ProjectExt) {
+
+    let new_notify: NotifyExt;
     new_notify = {
       text: 'Aplicaste al proyecto ' + project.name,
       state: true,
@@ -55,22 +46,16 @@ export class NotifyServiceProvider {
     };
 
     this.notification.push(new_notify);
-    this.UpdateNotificationDoc();
+    this.notifyFirebase.updateNotification(this.notification);
   }
 
   deleteNotification(index: number) {
     this.notification.splice(index,1);
-    this.UpdateNotificationDoc();
+    this.notifyFirebase.updateNotification(this.notification);
   }
 
   deleteAllNotification() {
     this.notification = [];
-    this.UpdateNotificationDoc();
-  }
-
-  async UpdateNotificationDoc() {
-    this.notifyDoc.update({
-      notify: this.notification
-    });
+    this.notifyFirebase.updateNotification(this.notification);
   }
 }

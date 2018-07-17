@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { UserServiceProvider, User } from '../../providers/user-service/user-service';
-import { NotifyServiceProvider, Notify } from '../../providers/notify-service/notify-service';
+import { User } from '../../providers/user-service/user-service';
+import { NotifyServiceProvider, NotifyExt } from '../../providers/notify-service/notify-service';
 
 @IonicPage()
 @Component({
@@ -11,7 +11,7 @@ import { NotifyServiceProvider, Notify } from '../../providers/notify-service/no
 export class NotificationPage {
 
   user: User;
-  notification: Notify[];
+  notification: NotifyExt[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private notifyService: NotifyServiceProvider) {
   }

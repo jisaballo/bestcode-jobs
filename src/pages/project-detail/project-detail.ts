@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { ProjectServiceProvider, ProjectExt } from '../../providers/project-service/project-service';
-import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { NewProjectPage } from '../new-project/new-project';
 import { UserServiceProvider, UserExt } from '../../providers/user-service/user-service';
 import { DateServiceProvider } from '../../providers/date-service/date-service';

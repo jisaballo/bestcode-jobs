@@ -42,6 +42,7 @@ import { Base64 } from '@ionic-native/base64';
 import { NotifyServiceProvider } from '../providers/notify-service/notify-service';
 
 import { ProjectFirebase } from '../models/project';
+import { NotificationFirebase } from '../models/notification';
 
 @NgModule({
   declarations: [
@@ -110,7 +111,8 @@ import { ProjectFirebase } from '../models/project';
     Crop,
     Base64,
     DateServiceProvider,
-    NotifyServiceProvider
+    NotifyServiceProvider,
+    NotificationFirebase
   ]
 })
 export class AppModule {}
