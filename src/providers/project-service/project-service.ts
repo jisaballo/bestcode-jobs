@@ -126,9 +126,4 @@ export class ProjectServiceProvider {
   deleteProjectByID(ID: string) {
     this.projectFirebase.deleteProject(ID);
   }
-
-  applyProject(project: ProjectExt) {
-    this.afs.collection("projects").doc(project.id).update(project);
-  }
-
 }

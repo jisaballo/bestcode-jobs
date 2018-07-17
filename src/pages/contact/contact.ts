@@ -23,7 +23,6 @@ export class ContactPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ContactPage');
-    console.log(this.userDetail);
   }
 
   ionViewWillEnter() {

@@ -16,6 +16,7 @@ import { NotifyServiceProvider } from '../../providers/notify-service/notify-ser
 export class HomePage {
 
   user: User;
+  userEmail: string;
   message : string;
 
   projects: ProjectExt[];
@@ -23,13 +24,13 @@ export class HomePage {
   constructor(private userService: UserServiceProvider, public projectService: ProjectServiceProvider, 
     private authService: AuthServiceProvider, public navCtrl: NavController, private app: App, private notifyService: NotifyServiceProvider) {
     this.message = 'Fail';
-
+    this.userEmail = this.authService.getUserEmail();
   }
 
   ionViewWillEnter() {
     if(this.authService.authenticated()) {
       
-      this.userService.getUserID().subscribe(res => {
+      this.userService.getUserID(this.userEmail).subscribe(res => {
         res.map(data => {
           let userID = data.payload.doc.id;
           

@@ -11,6 +11,7 @@ export class AuthServiceProvider {
   logged: boolean;
 
   currentUser: User;
+  userEmail: string;
 
   constructor(private afAuth: AngularFireAuth, private afStore: AngularFirestore, public http: HttpClient) {
     this.logged = false;
@@ -20,6 +21,7 @@ export class AuthServiceProvider {
   //register
   async register(email: string, password: string) {
     try {
+      this.userEmail = email;
       const result = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
       if(result) {
         this.currentUser = await this.afAuth.auth.currentUser;
@@ -45,6 +47,7 @@ export class AuthServiceProvider {
         result.push('OK');
         result.push('Succes');
         this.logged = true;
+        this.userEmail = email;
       }
       catch(e) {
         console.log(e.code + ' ' + e.message);
@@ -77,5 +80,9 @@ export class AuthServiceProvider {
   // Could check if current token is still valid
   authenticated() {
     return this.logged;
+  }
+
+  getUserEmail() {
+    return this.userEmail;
   }
 }

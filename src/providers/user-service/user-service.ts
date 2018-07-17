@@ -59,15 +59,15 @@ export class UserServiceProvider {
     this.usersCollection = this.afs.collection('users');
   }
 
-  getUserID() {
-    return this.afs.collection('users', ref => ref.where('email','==', 'jisaballo@outlook.com')).snapshotChanges();
+  getUserID(email: string) {
+    return this.afs.collection('users', ref => ref.where('email','==', email)).snapshotChanges();
   }
 
   async LoadProfile(userID: string) {
     this.profileDoc = await this.afs.collection('users').doc(userID);
     await this.profileDoc.valueChanges().subscribe(res => {
       this.profile = res as UserExt;
-
+      this.profile.id = userID;
       if(typeof this.profile.urlImage != 'undefined' && this.profile.urlImage != '') {
         this.getUrlImage(this.profile.urlImage).subscribe(res => {
           this.profile.uriImage = res;
@@ -76,7 +76,6 @@ export class UserServiceProvider {
       else {
         this.profile.uriImage = 'assets/imgs/default_profile.png';
       }
-
     });
   }
   

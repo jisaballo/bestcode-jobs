@@ -20,8 +20,7 @@ export class ProjectDetailPage {
   owner: boolean;
   canApply: boolean;
 
-  constructor(public dateService: DateServiceProvider, public userService: UserServiceProvider, 
-    public authService: AuthServiceProvider, public projectService: ProjectServiceProvider, 
+  constructor(public dateService: DateServiceProvider, public userService: UserServiceProvider, public projectService: ProjectServiceProvider, 
     public navCtrl: NavController, public navParams: NavParams, private notifyService: NotifyServiceProvider) {
 
     this.userService.getProfile().then(res => {
@@ -74,8 +73,8 @@ export class ProjectDetailPage {
     if(typeof this.project.userApplied === 'undefined') {
       this.project.userApplied = [];
     }
-    this.project.userApplied.push(this.user.id)
-    this.projectService.applyProject(this.project);
+    this.project.userApplied.push(this.user.id);
+    this.projectService.addProject(this.project, false);
 
     this.notifyService.applyProject(this.project);
     this.canApply = false;
