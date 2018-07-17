@@ -16,7 +16,6 @@ import { NotificationPage } from '../notification/notification';
 export class SettingsPage {
 
   user: UserExt;
-  userID: string;
   urlImageProfile: string;
   notification: number;
 
@@ -27,8 +26,6 @@ export class SettingsPage {
     this.Load();
   }
   async Load () {
-    //get user id
-    this.userID = await this.authService.getMyUser();
     //get data from user
     this.user = await this.userService.getProfile();
   }

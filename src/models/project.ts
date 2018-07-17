@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
-import { ProjectExt } from '../providers/project-service/project-service';
 
 export interface Project {
     name: string;
@@ -20,13 +19,13 @@ export interface Project {
     projectsCol: AngularFirestoreCollection;
 
       constructor(public afs: AngularFirestore) {
-        this.projectsCol = this.afs.collection('projects');
+        this.projectsCol = this.afs.collection('projects', ref => ref.orderBy('pubDate', "desc"));
       }
 
-      convertProjects(project: ProjectExt) {
-        let new_project: Project;
+      convertProjects(project: any) {
+        let firebase_project: Project;
         
-        new_project = {
+        firebase_project = {
             name: project.name,
             description: project.description,
             value: project.value,
@@ -37,19 +36,42 @@ export interface Project {
             subCategory: project.subCategory,
             userApplied: project.userApplied
         };
-        return new_project;
+        return firebase_project;
       }
 
-      createProject(parameter: ProjectExt) {
-
+      getAllProject() {
+        return this.projectsCol.snapshotChanges();
       }
 
-      updateProject(parameter: ProjectExt) {
+      getProjectByUser(user: string) {
+        let userProjects: AngularFirestoreCollection;
+        return this.afs.collection('projects', ref => ref.where('userID','==', user)).snapshotChanges();
+      }
+
+      getProjectByID(id: string) {
+        return this.projectsCol.doc(id).valueChanges();
+      }
+
+      createProject(parameter: any) {
         let project: Project = this.convertProjects(parameter);
 
-        console.log(project);
+        let pubDate = new Date().getTime();
+        project.pubDate = pubDate;
+
+        this.projectsCol.add(project);
+      }
+
+      updateProject(parameter: any) {
+        let project: Project = this.convertProjects(parameter);
 
         this.projectsCol.doc(parameter.id).update(project);
-        
+      }
+
+      deleteProject(id: string) {
+        this.afs.collection("projects").doc(id).delete().then(function() {
+          console.log("Document successfully deleted!");
+        }).catch(function(error) {
+          console.error("Error removing document: ", error);
+        });
       }
   }

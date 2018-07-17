@@ -17,7 +17,6 @@ export class HomePage {
 
   user: User;
   message : string;
-  username: string;
 
   projects: ProjectExt[];
   
@@ -29,7 +28,6 @@ export class HomePage {
 
   ionViewWillEnter() {
     if(this.authService.authenticated()) {
-      this.username = this.authService.getMyUser();
       
       this.userService.getUserID().subscribe(res => {
         res.map(data => {

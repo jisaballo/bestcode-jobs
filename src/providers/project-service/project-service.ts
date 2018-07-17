@@ -18,9 +18,7 @@ export interface ProjectExt extends Project {
 @Injectable()
 export class ProjectServiceProvider {
 
-  projectsCol: AngularFirestoreCollection<any>;
   categoryCol: AngularFirestoreCollection<any>;
-  projectDoc: AngularFirestoreDocument<any>;
 
   projects: ProjectExt[];
   myProjects: ProjectExt[];
@@ -61,8 +59,7 @@ export class ProjectServiceProvider {
 
   async getProjectsWithID() {
     this.projects = [];
-    this.projectsCol = await this.afs.collection('projects', ref => ref.orderBy('pubDate', "desc"));
-    await this.projectsCol.snapshotChanges().subscribe(res => {
+    await this.projectFirebase.getAllProject().subscribe(res => {
       res.map(a => {
 
         let data = a.payload.doc.data() as ProjectExt;
@@ -99,28 +96,21 @@ export class ProjectServiceProvider {
   }
 
   getProjectByID(ID: string) {
-    this.projectDoc = this.afs.doc('projects/' + ID);
-    return this.projectDoc.valueChanges();
+    this.projectFirebase.getProjectByID(ID);
   }
 
   addProject(project: ProjectExt, ifNew: boolean) {
-    console.log(project);
     if(ifNew) {
-      //time pub
-      let pubDate = new Date().getTime();
-      project.pubDate = pubDate;
-
-      this.projectsCol.add(project);
+      this.projectFirebase.createProject(project);
     }
     else {
       this.projectFirebase.updateProject(project);
     }
   }
 
-  async getProjectsByUser(user: String) {
+  async getProjectsByUser(user: string) {
     this.myProjects = [];
-    this.projectsCol = await this.afs.collection('projects', ref => ref.where('userID','==', user));
-    await this.projectsCol.snapshotChanges().subscribe(res => {
+    await this.projectFirebase.getProjectByUser(user).subscribe(res => {
       res.map(a => {
 
         let data = a.payload.doc.data() as ProjectExt;
@@ -131,17 +121,13 @@ export class ProjectServiceProvider {
       })
     })
     return this.myProjects;
-
   }
+
   deleteProjectByID(ID: string) {
-    this.afs.collection("projects").doc(ID).delete().then(function() {
-      console.log("Document successfully deleted!");
-    }).catch(function(error) {
-      console.error("Error removing document: ", error);
-    });
+    this.projectFirebase.deleteProject(ID);
   }
 
-  applyProject(project: Project) {
+  applyProject(project: ProjectExt) {
     this.afs.collection("projects").doc(project.id).update(project);
   }
 

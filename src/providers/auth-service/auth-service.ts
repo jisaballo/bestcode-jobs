@@ -8,7 +8,6 @@ import { User } from '@firebase/auth-types';
 export class AuthServiceProvider {
 
   userCollection: AngularFirestoreCollection<any>;
-  myUser: string;
   logged: boolean;
 
   currentUser: User;
@@ -16,7 +15,6 @@ export class AuthServiceProvider {
   constructor(private afAuth: AngularFireAuth, private afStore: AngularFirestore, public http: HttpClient) {
     this.logged = false;
     this.userCollection = this.afStore.collection('users');
-    this.myUser = 'jisaballo@outlook.com';
   }
 
   //register
@@ -79,9 +77,5 @@ export class AuthServiceProvider {
   // Could check if current token is still valid
   authenticated() {
     return this.logged;
-  }
-
-  public getMyUser() {
-    return this.myUser;
   }
 }
