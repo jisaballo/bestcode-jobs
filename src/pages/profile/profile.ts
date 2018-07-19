@@ -21,7 +21,6 @@ export class ProfilePage {
   user: User;
   myUser: string;
   expertise: any;
-  urlImageProfile: string;
   
   constructor(private crop: Crop, public actionSheetCtrl: ActionSheetController, private camera: Camera, public dateService: DateServiceProvider , public authService: AuthServiceProvider, public userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.expertise = [];
@@ -33,15 +32,7 @@ export class ProfilePage {
   async Load() {
     this.user = await this.userService.getProfile();
     this.fixExpertice(this.user);
-    if(this.user.urlImage != '') {
-      this.userService.getUrlImage(this.user.urlImage).subscribe(res => {
-        this.urlImageProfile = res;
-      });
-    }
-    else {
-      this.urlImageProfile = '';
-    }
-    //console.log(this.user.urlImage);
+    //console.log(this.user);
   }
 
   closePage() {

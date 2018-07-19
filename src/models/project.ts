@@ -62,7 +62,6 @@ export interface Project {
 
       updateProject(parameter: any) {
         let project: Project = this.convertProjects(parameter);
-
         this.projectsCol.doc(parameter.id).update(project);
       }
 

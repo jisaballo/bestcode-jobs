@@ -45,7 +45,15 @@ export class NotifyServiceProvider {
       timestamp: new Date().getTime()
     };
 
+    let new_owner_project_notify: NotifyExt;
+    new_owner_project_notify = {
+      text: 'Aplicaron por tu proyecto ' + project.name,
+      state: true,
+      timestamp: new Date().getTime()
+    }
     this.notification.push(new_notify);
+
+    this.notifyFirebase.addNotification(project.userID, new_owner_project_notify);
     this.notifyFirebase.updateNotification(this.notification);
   }
 

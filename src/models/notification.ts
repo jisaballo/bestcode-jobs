@@ -17,6 +17,16 @@ export class NotificationFirebase {
         this.notifyCol = this.afs.collection('notification', ref => ref.orderBy('timestamp'));
     }
 
+    addNotification(id: string, notify: any) {
+        this.notifyCol.doc(id).snapshotChanges().subscribe(res => {
+            let data = res.payload.data();
+            let userNotification = data['notify'] as Notify[];
+            userNotification.push(notify);
+
+            this.notifyCol.doc(id).update({ notify: userNotification });
+        });
+    }
+
     getAllOwnNotification(userID: string) {
         this.notifyDoc = this.notifyCol.doc(userID);
         return this.notifyDoc.valueChanges();

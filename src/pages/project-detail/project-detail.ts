@@ -67,16 +67,21 @@ export class ProjectDetailPage {
   }
 
   applyProject() {
-    this.project.applied = this.project.applied + 1;
+    try {
+      this.project.applied = this.project.applied + 1;
 
-    if(typeof this.project.userApplied === 'undefined') {
-      this.project.userApplied = [];
+      if(typeof this.project.userApplied === 'undefined') {
+        this.project.userApplied = [];
+      }
+      this.project.userApplied.push(this.user.id);
+      this.projectService.addProject(this.project, false);
+
+      this.notifyService.applyProject(this.project);
+      this.canApply = false;
     }
-    this.project.userApplied.push(this.user.id);
-    this.projectService.addProject(this.project, false);
-
-    this.notifyService.applyProject(this.project);
-    this.canApply = false;
+    catch(e) {
+      console.error(e);
+    }
   }
 
 }
