@@ -52,6 +52,10 @@ export class ContactPage {
     }
   }
 
+  ionViewDidLeave() {
+    this.navCtrl.popToRoot();
+  }
+  
   closePage() {
     this.navCtrl.pop();
   }

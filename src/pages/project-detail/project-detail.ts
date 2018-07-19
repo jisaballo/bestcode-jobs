@@ -51,6 +51,10 @@ export class ProjectDetailPage {
     }
   }
 
+  ionViewDidLeave() {
+    this.navCtrl.popToRoot();
+  }
+  
   async Load() {
     //load timeElapsed
     this.project.timeElapsed = this.dateService.differenceTime(this.project.pubDate);

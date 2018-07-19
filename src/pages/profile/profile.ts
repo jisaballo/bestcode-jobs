@@ -21,14 +21,25 @@ export class ProfilePage {
   user: User;
   myUser: string;
   expertise: any;
+  setPop: boolean = true;
   
   constructor(private crop: Crop, public actionSheetCtrl: ActionSheetController, private camera: Camera, public dateService: DateServiceProvider , public authService: AuthServiceProvider, public userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.expertise = [];
+    console.log(this.setPop);
   }
 
-  ionViewWillEnter() {
+  ionViewDidEnter() {
+    console.log('ionViewDidLoad ProfilePage');
     this.Load();
+    this.setPop = true;
   }
+
+  ionViewDidLeave() {
+    if(this.setPop) {
+      this.navCtrl.popToRoot();
+    }
+  }
+  
   async Load() {
     this.user = await this.userService.getProfile();
     this.fixExpertice(this.user);
@@ -40,18 +51,23 @@ export class ProfilePage {
   }
 
   editPersonal(user: User) {
+    this.setPop = false;
     this.navCtrl.push(EditPersonalPage, {user});
   }
   editAbout(user: User) {
+    this.setPop = false;
     this.navCtrl.push(EditAboutmePage, {user});
   }
   editExpertise(user: User) {
+    this.setPop = false;
     this.navCtrl.push(EditExpertisePage, {user});
   }
   editSkills(user: User) {
+    this.setPop = false;
     this.navCtrl.push(EditSkillsPage, {user});
   }
   editJobPreferences(user: User) {
+    this.setPop = false;
     this.navCtrl.push(EditJobPreferencesPage, {user});
   }
   

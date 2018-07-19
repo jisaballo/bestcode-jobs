@@ -24,6 +24,10 @@ export class NotificationPage {
     this.notification = this.notifyService.getNotification();
   }
 
+  ionViewDidLeave() {
+    this.navCtrl.popToRoot();
+  }
+
   closePage() {
     this.navCtrl.pop();
   }
@@ -34,7 +38,7 @@ export class NotificationPage {
   }
 
   deleteAll() {
-    this.notification = [];
     this.notifyService.deleteAllNotification();
+    this.ionViewWillEnter();
   }
 }

@@ -20,16 +20,28 @@ export class EditJobPreferencesPage {
   statusJob = ['Disponible','Abierto a oportunidades','Sin interes por el momento'];
   interested = ['Independiente','Tiempo completo','Tiempo parcial'];
   frecuencyPay = ['Horas','Semanal','Quincenal','Mensual'];
+
+  setPop: boolean = true;
+
   constructor(private userService: UserServiceProvider , public navCtrl: NavController, public navParams: NavParams) {
     this.user = this.navParams.get('user');
-    console.log(this.user);
   }
 
-  saveProfile() {
-    console.log(this.user);
-    this.userService.UpdateProfile(this.user);
+  ionViewDidLeave() {
+    if(this.setPop) {
+      this.navCtrl.pop();
+    }
+  }
+  
+  backButtonClick() {
+    this.setPop = false;
     this.navCtrl.pop();
-    console.log(this.user);
+  }
+  
+  saveProfile() {
+    this.userService.UpdateProfile(this.user);
+    this.setPop = false;
+    this.navCtrl.pop();
   }
 
 }

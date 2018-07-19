@@ -21,14 +21,27 @@ export class EditSkillsPage {
   skillsLevel = ['Principiante','Intermedio','Experto'];
   user: User;
   skills: Skill[];
+  setPop: boolean = true;
+
   constructor(public userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.user = this.navParams.get('user');
     this.skills = this.user.skills;
   }
+
+  ionViewDidLeave() {
+    if(this.setPop) {
+      this.navCtrl.pop();
+    }
+  }
+  
+  backButtonClick() {
+    this.setPop = false;
+    this.navCtrl.pop();
+  }
+
   saveSkill() {
     let new_skill: Skill;
     new_skill = {name: this.skillName, level: this.level};
-    console.log(this.user);
     this.user.skills.push(new_skill);
     this.userService.UpdateProfile(this.user);
   }

@@ -20,6 +20,9 @@ export class EditExpertisePage {
   company: string;
   user: User;
   expertise: any;
+
+  setPop: boolean = true;
+
   constructor(public dateService: DateServiceProvider, public userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.user = this.navParams.get('user');
     this.months = dateService.getMonths();
@@ -27,6 +30,17 @@ export class EditExpertisePage {
     this.fixExpertice(this.user);
   }
 
+  ionViewDidLeave() {
+    if(this.setPop) {
+      this.navCtrl.pop();
+    }
+  }
+  
+  backButtonClick() {
+    this.setPop = false;
+    this.navCtrl.pop();
+  }
+  
   saveProfile() {
     let new_experience: Experience;
     new_experience = {position: '', company: '', monthStart: '', yearStart: '', monthEnd: '', yearEnd: ''};
@@ -41,6 +55,7 @@ export class EditExpertisePage {
     this.user.experience.push(new_experience);
     this.userService.UpdateProfile(this.user);
 
+    this.setPop = false;
     this.navCtrl.pop();
   }
 
