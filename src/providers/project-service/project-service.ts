@@ -5,6 +5,7 @@ import { UserExt, UserServiceProvider } from '../user-service/user-service';
 import { DateServiceProvider } from '../date-service/date-service';
 
 import { Project, ProjectFirebase } from '../../models/project';
+import { NotifyServiceProvider } from '../notify-service/notify-service';
 
 export interface ProjectExt extends Project {
   id: string;
@@ -25,7 +26,7 @@ export class ProjectServiceProvider {
 
   categories: string[];
   subCategories: string[][];
-  constructor(private projectFirebase: ProjectFirebase, private dateService: DateServiceProvider, private userService: UserServiceProvider, public afs: AngularFirestore, public http: HttpClient) {
+  constructor(private projectFirebase: ProjectFirebase, public afs: AngularFirestore, private dateService: DateServiceProvider, private userService: UserServiceProvider, public notifyService: NotifyServiceProvider, public http: HttpClient) {
   }
 
   async getCategories() {
@@ -106,6 +107,8 @@ export class ProjectServiceProvider {
     else {
       this.projectFirebase.updateProject(project);
     }
+    //add notification
+    this.notifyService.applyProject(project);
   }
 
   async getProjectsByUser(user: string) {

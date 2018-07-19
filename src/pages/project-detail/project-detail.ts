@@ -79,8 +79,6 @@ export class ProjectDetailPage {
       }
       this.project.userApplied.push(this.user.id);
       this.projectService.addProject(this.project, false);
-
-      this.notifyService.applyProject(this.project);
       this.canApply = false;
     }
     catch(e) {

@@ -53,7 +53,8 @@ export class NotifyServiceProvider {
     }
     this.notification.push(new_notify);
 
-    this.notifyFirebase.addNotification(project.userID, new_owner_project_notify);
+    //this.notifyFirebase.addNotification(project.userID, new_owner_project_notify);
+    console.log(this.notification);
     this.notifyFirebase.updateNotification(this.notification);
   }
 
