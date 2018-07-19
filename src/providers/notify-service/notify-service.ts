@@ -63,6 +63,7 @@ export class NotifyServiceProvider {
   }
 
   deleteAllNotification() {
+    console.log('delete all');
     this.notification = [];
     this.notifyFirebase.updateNotification(this.notification);
   }

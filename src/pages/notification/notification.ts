@@ -34,6 +34,7 @@ export class NotificationPage {
   }
 
   deleteAll() {
+    this.notification = [];
     this.notifyService.deleteAllNotification();
   }
 }
