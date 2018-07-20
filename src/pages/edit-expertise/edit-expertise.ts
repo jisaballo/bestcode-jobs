@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { User, Experience, UserServiceProvider } from '../../providers/user-service/user-service';
+import { UserExt, ExperienceExt, UserServiceProvider } from '../../providers/user-service/user-service';
 import { DateServiceProvider } from '../../providers/date-service/date-service';
 
 @IonicPage()
@@ -18,7 +18,7 @@ export class EditExpertisePage {
   months: any;
   position: string;
   company: string;
-  user: User;
+  user: UserExt;
   expertise: any;
 
   setPop: boolean = true;
@@ -42,7 +42,7 @@ export class EditExpertisePage {
   }
   
   saveProfile() {
-    let new_experience: Experience;
+    let new_experience: ExperienceExt;
     new_experience = {position: '', company: '', monthStart: '', yearStart: '', monthEnd: '', yearEnd: ''};
 
     new_experience.position = this.position;
@@ -64,7 +64,7 @@ export class EditExpertisePage {
     this.userService.UpdateProfile(this.user);
   }
 
-  fixExpertice(user: User) {
+  fixExpertice(user: UserExt) {
     this.expertise = user.experience.map(data => {
       //console.log(data);
       let position = data.position;

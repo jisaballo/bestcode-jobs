@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
-import { User, Experience, Skill, UserServiceProvider } from '../../providers/user-service/user-service';
+import { UserExt, ExperienceExt, SkillExt, UserServiceProvider } from '../../providers/user-service/user-service';
 import { TabsPage } from '../tabs/tabs';
 import { TermsPage } from '../terms/terms';
 
@@ -12,9 +12,9 @@ import { TermsPage } from '../terms/terms';
 })
 export class RegisterPage {
 
-  user: User;
-  experience: Experience[];
-  skills: Skill[];
+  user: UserExt;
+  experience: ExperienceExt[];
+  skills: SkillExt[];
   alert: any;
 
   email: string;
@@ -23,11 +23,9 @@ export class RegisterPage {
   repassword: string;
 
   constructor(private authService: AuthServiceProvider, private userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
-    //this.experience = [{position: '', company: '', monthStart: '', yearStart: '', monthEnd: '', yearEnd: ''}];
-    //this.skills = [{name:'',level:''}];
     this.experience = [];
     this.skills =[];
-    this.user = {id:'', username:'', urlImage: '', profesion: '', email:'', password:'', phone: '', jobAvailability: '', jobInterested: '', jobSalary: '', jobSalaryFrecuency: '', about: '', country: '', experience: this.experience, skills: this.skills};
+    this.user = {id:'', username:'', uriImage: '', urlImage: '', profesion: '', email:'', password:'', phone: '', jobAvailability: '', jobInterested: '', jobSalary: '', jobSalaryFrecuency: '', about: '', country: '', experience: this.experience, skills: this.skills};
   }
 
   register() {

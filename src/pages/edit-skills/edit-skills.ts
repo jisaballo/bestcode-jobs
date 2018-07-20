@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { UserServiceProvider, User, Skill } from '../../providers/user-service/user-service';
+import { UserServiceProvider, UserExt, SkillExt } from '../../providers/user-service/user-service';
 
 /**
  * Generated class for the EditSkillsPage page.
@@ -19,8 +19,8 @@ export class EditSkillsPage {
   skillName: any;
   level: any;
   skillsLevel = ['Principiante','Intermedio','Experto'];
-  user: User;
-  skills: Skill[];
+  user: UserExt;
+  skills: SkillExt[];
   setPop: boolean = true;
 
   constructor(public userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
@@ -40,7 +40,7 @@ export class EditSkillsPage {
   }
 
   saveSkill() {
-    let new_skill: Skill;
+    let new_skill: SkillExt;
     new_skill = {name: this.skillName, level: this.level};
     this.user.skills.push(new_skill);
     this.userService.UpdateProfile(this.user);

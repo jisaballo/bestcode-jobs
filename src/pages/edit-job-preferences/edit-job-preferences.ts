@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { UserServiceProvider, User } from '../../providers/user-service/user-service';
+import { UserServiceProvider, UserExt } from '../../providers/user-service/user-service';
 
 /**
  * Generated class for the EditJobPreferencesPage page.
@@ -16,7 +16,7 @@ import { UserServiceProvider, User } from '../../providers/user-service/user-ser
 })
 export class EditJobPreferencesPage {
 
-  user: User;
+  user: UserExt;
   statusJob = ['Disponible','Abierto a oportunidades','Sin interes por el momento'];
   interested = ['Independiente','Tiempo completo','Tiempo parcial'];
   frecuencyPay = ['Horas','Semanal','Quincenal','Mensual'];

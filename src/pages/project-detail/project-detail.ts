@@ -5,7 +5,6 @@ import { ProjectServiceProvider, ProjectExt } from '../../providers/project-serv
 import { NewProjectPage } from '../new-project/new-project';
 import { UserServiceProvider, UserExt } from '../../providers/user-service/user-service';
 import { DateServiceProvider } from '../../providers/date-service/date-service';
-import { NotifyServiceProvider } from '../../providers/notify-service/notify-service';
 
 @IonicPage()
 @Component({
@@ -20,7 +19,7 @@ export class ProjectDetailPage {
   canApply: boolean;
 
   constructor(public dateService: DateServiceProvider, public userService: UserServiceProvider, public projectService: ProjectServiceProvider, 
-    public navCtrl: NavController, public navParams: NavParams, private notifyService: NotifyServiceProvider) {
+    public navCtrl: NavController, public navParams: NavParams) {
 
     this.userService.getProfile().then(res => {
       this.user = res as UserExt;

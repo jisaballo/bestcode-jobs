@@ -1,43 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import { Base64 } from '@ionic-native/base64';
-
-export interface User {
-  id: string;
-  username: string;
-  urlImage: string;
-  profesion: string;
-  email: string;
-  password: string;
-  phone: string;
-  about: string;
-  country: string;
-  jobAvailability: string;
-  jobInterested: string;
-  jobSalary: string;
-  jobSalaryFrecuency: string;
-  experience: Array<Experience>;
-  skills: Array<Skill>;
-}
-
-export interface Experience {
-  position: string;
-  company: string;
-  monthStart: string;
-  yearStart: string;
-  monthEnd: string;
-  yearEnd: string;
-}
-
-export interface Skill {
-  name: string;
-  level: string;
-}
+import { UserFirebase, User, Experience, Skill } from '../../models/user';
 
 export interface UserExt extends User {
+  id: string;
+  password: string;
   uriImage: string;
+}
+
+export interface ExperienceExt extends Experience {
+
+}
+
+export interface SkillExt extends Skill {
+  
 }
 
 @Injectable()
@@ -46,26 +24,21 @@ export class UserServiceProvider {
   task: AngularFireUploadTask;
   image: string;
 
-  //all users
-  usersCollection: AngularFirestoreCollection;
   users: UserExt[];
 
   //own user
-  private profileDoc: AngularFirestoreDocument;
+
   private profile: UserExt;
 
-  constructor(private base64: Base64, private afs: AngularFirestore, public http: HttpClient, private afStorage: AngularFireStorage) {
-    //all user collection
-    this.usersCollection = this.afs.collection('users');
+  constructor(private base64: Base64, public http: HttpClient, private afStorage: AngularFireStorage, private userFirebase: UserFirebase) {
   }
 
   getUserID(email: string) {
-    return this.afs.collection('users', ref => ref.where('email','==', email)).snapshotChanges();
+    return this.userFirebase.getUserID(email);
   }
 
   async LoadProfile(userID: string) {
-    this.profileDoc = await this.afs.collection('users').doc(userID);
-    await this.profileDoc.valueChanges().subscribe(res => {
+    await this.userFirebase.LoadProfile(userID).subscribe(res => {
       this.profile = res as UserExt;
       this.profile.id = userID;
       if(typeof this.profile.urlImage != 'undefined' && this.profile.urlImage != '') {
@@ -80,24 +53,23 @@ export class UserServiceProvider {
   }
   
   async UpdateProfile(user: User) {
-    await this.profileDoc.update(user);
+    await this.userFirebase.UpdateProfile(user);
   }
 
   async getProfile() {
     return this.profile;
   }
   
-  async addUser(user: User) {
-    user.password = '';
-    this.usersCollection.add(user);
+  async addUser(user: UserExt) {
+    this.userFirebase.addUser(user);
   }
 
   getProjectUser(userID: string) {
-    return this.usersCollection.doc(userID).valueChanges();
+    return this.userFirebase.getProjectUser(userID);
   }
 
   async loadAllUser() {
-    await this.usersCollection.valueChanges().subscribe(res => {
+    await this.userFirebase.loadAllUser().subscribe(res => {
       this.users = [];
       res.map(data => {
         let user = data as UserExt;

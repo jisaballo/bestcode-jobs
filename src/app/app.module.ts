@@ -43,6 +43,7 @@ import { NotifyServiceProvider } from '../providers/notify-service/notify-servic
 
 import { ProjectFirebase } from '../models/project';
 import { NotificationFirebase } from '../models/notification';
+import { UserFirebase } from '../models/user';
 
 @NgModule({
   declarations: [
@@ -107,6 +108,7 @@ import { NotificationFirebase } from '../models/notification';
     ProjectServiceProvider,
     ProjectFirebase,
     UserServiceProvider,
+    UserFirebase,
     Camera,
     Crop,
     Base64,

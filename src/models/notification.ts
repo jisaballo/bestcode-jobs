@@ -14,7 +14,18 @@ export class NotificationFirebase {
     notifyDoc: AngularFirestoreDocument<any>;
 
     constructor(public afs: AngularFirestore) {
-        this.notifyCol = this.afs.collection('notification', ref => ref.orderBy('timestamp'));
+        this.notifyCol = this.afs.collection('notification');
+    }
+
+    async addNotification(userID : string, new_owner_project_notify: Notify) {
+        let notification: Notify[] = [];
+        await this.notifyCol.doc(userID).valueChanges().subscribe(res => {
+            notification = res['notify'] as Notify[];
+        })
+        
+        notification.push(new_owner_project_notify);
+        await this.notifyCol.doc(userID).update({notify: notification});
+
     }
 
     getAllOwnNotification(userID: string) {

@@ -19,7 +19,7 @@ export class NotifyServiceProvider {
   async loadNotification(userID: string) {
     await this.notifyFirebase.getAllOwnNotification(userID).subscribe(res => {
       this.notification = [];
-      if(typeof res != 'undefined') {
+      if(typeof res['notify'] != 'undefined') {
         res['notify'].map(data => {
           let event = data as NotifyExt;
           this.notification.push(event);
@@ -53,8 +53,9 @@ export class NotifyServiceProvider {
     }
     this.notification.push(new_notify);
 
-    //this.notifyFirebase.addNotification(project.userID, new_owner_project_notify);
-    console.log(this.notification);
+    //notificacion al creador del proyecto
+    this.notifyFirebase.addNotification(project.userID, new_owner_project_notify);
+    //notificacion al usuario
     this.notifyFirebase.updateNotification(this.notification);
   }
 

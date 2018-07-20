@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
 import { TabsPage } from '../tabs/tabs';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
-import { User } from '../../providers/user-service/user-service';
+import { UserExt } from '../../providers/user-service/user-service';
 import { AlertController } from 'ionic-angular';
 
 @IonicPage()
@@ -13,7 +13,7 @@ import { AlertController } from 'ionic-angular';
 })
 export class LoginPage {
 
-  user = {} as User;
+  user = {} as UserExt;
   tabsHideOnSubPages: boolean;
   constructor(private authService: AuthServiceProvider, public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams) {
 
@@ -25,7 +25,7 @@ export class LoginPage {
     
   }
 
-  async login(user: User) {
+  async login(user: UserExt) {
     
     let result = await this.authService.login(user.email, user.password);
     if(result[0]== 'OK') {

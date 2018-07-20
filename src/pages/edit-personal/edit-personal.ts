@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { UserServiceProvider, User } from '../../providers/user-service/user-service';
+import { UserServiceProvider, UserExt } from '../../providers/user-service/user-service';
 
 @IonicPage()
 @Component({
@@ -9,7 +9,7 @@ import { UserServiceProvider, User } from '../../providers/user-service/user-ser
 })
 export class EditPersonalPage {
 
-  user: User;
+  user: UserExt;
   setPop: boolean = true;
 
   constructor(public userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams) {

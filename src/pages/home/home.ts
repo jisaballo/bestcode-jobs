@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { User, UserServiceProvider } from '../../providers/user-service/user-service';
+import { UserExt, UserServiceProvider } from '../../providers/user-service/user-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { ProjectServiceProvider, ProjectExt } from '../../providers/project-service/project-service';
 import { ProjectPage } from '../project/project';
@@ -15,7 +15,7 @@ import { NotifyServiceProvider } from '../../providers/notify-service/notify-ser
 })
 export class HomePage {
 
-  user: User;
+  user: UserExt;
   userEmail: string;
   message : string;
 

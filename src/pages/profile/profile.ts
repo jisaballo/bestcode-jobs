@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
 import { EditPersonalPage } from '../edit-personal/edit-personal';
-import { UserServiceProvider, User } from '../../providers/user-service/user-service';
+import { UserServiceProvider, UserExt } from '../../providers/user-service/user-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { EditAboutmePage } from '../edit-aboutme/edit-aboutme';
 import { EditExpertisePage } from '../edit-expertise/edit-expertise';
@@ -18,7 +18,7 @@ import { Crop } from '@ionic-native/crop';
 })
 export class ProfilePage {
 
-  user: User;
+  user: UserExt;
   myUser: string;
   expertise: any;
   setPop: boolean = true;
@@ -50,28 +50,28 @@ export class ProfilePage {
     this.navCtrl.pop();
   }
 
-  editPersonal(user: User) {
+  editPersonal(user: UserExt) {
     this.setPop = false;
     this.navCtrl.push(EditPersonalPage, {user});
   }
-  editAbout(user: User) {
+  editAbout(user: UserExt) {
     this.setPop = false;
     this.navCtrl.push(EditAboutmePage, {user});
   }
-  editExpertise(user: User) {
+  editExpertise(user: UserExt) {
     this.setPop = false;
     this.navCtrl.push(EditExpertisePage, {user});
   }
-  editSkills(user: User) {
+  editSkills(user: UserExt) {
     this.setPop = false;
     this.navCtrl.push(EditSkillsPage, {user});
   }
-  editJobPreferences(user: User) {
+  editJobPreferences(user: UserExt) {
     this.setPop = false;
     this.navCtrl.push(EditJobPreferencesPage, {user});
   }
   
-  fixExpertice(user: User) {
+  fixExpertice(user: UserExt) {
     this.expertise = user.experience.map(data => {
       //console.log(data);
       let position = data.position;

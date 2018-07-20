@@ -1,13 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { User, UserServiceProvider } from '../../providers/user-service/user-service';
+import { UserExt, UserServiceProvider } from '../../providers/user-service/user-service';
 
-/**
- * Generated class for the EditAboutmePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -16,7 +10,7 @@ import { User, UserServiceProvider } from '../../providers/user-service/user-ser
 })
 export class EditAboutmePage {
 
-  user: User;
+  user: UserExt;
   setPop: boolean = true;
 
   constructor(private userService:UserServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
