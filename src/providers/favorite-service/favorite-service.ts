@@ -1,0 +1,71 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { ProjectExt } from '../project-service/project-service';
+import { FavoriteFirebase, Favorite } from '../../models/favorites';
+
+export interface FavoriteExt extends Favorite {
+
+}
+
+@Injectable()
+export class FavoriteServiceProvider {
+
+  favoritesProject: FavoriteExt[];
+  favoritesUser: FavoriteExt[];
+
+  constructor(public http: HttpClient, private favoriteFirebase: FavoriteFirebase) {
+    console.log('Hello FavoriteServiceProvider Provider');
+  }
+
+  async loadFavorites(userID: string) {
+    await this.favoriteFirebase.loadFavorites(userID).subscribe(res => {
+      this.favoritesProject = [];
+      this.favoritesUser = [];
+      if(typeof res != 'undefined') {
+        if(typeof res['project'] != 'undefined') {
+          res['project'].map(data => {
+            let event = data as FavoriteExt;
+            this.favoritesProject.push(event);
+          })
+        }
+        else {
+          this.favoriteFirebase.updateProject([]);
+        }
+  
+        if(typeof res['user'] != 'undefined') {
+          res['user'].map(data => {
+            let event = data as FavoriteExt;
+            this.favoritesProject.push(event);
+          })
+        }
+        else {
+          this.favoriteFirebase.updateUser([]);
+        } 
+      }
+      else {
+        this.favoriteFirebase.createDocument();
+      }
+    });
+  }
+
+  getFavoriteProject() {
+    return this.favoritesProject;
+  }
+
+  addProjectFavorite(project: ProjectExt) {
+
+    let new_favorite: FavoriteExt;
+    new_favorite = {
+      id: project.id
+    }
+    
+    this.favoritesProject.push(new_favorite);
+    this.favoriteFirebase.updateProject(this.favoritesProject);
+  }
+
+  deleteProjectFavorite(project: ProjectExt) {
+    this.favoritesProject = this.favoritesProject.filter(value => value.id !== project.id);
+    this.favoriteFirebase.updateProject(this.favoritesProject);
+  }
+
+}

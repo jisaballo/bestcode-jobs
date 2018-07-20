@@ -31,19 +31,22 @@ import { NotificationPage } from '../pages/notification/notification';
 import { ContactPage } from '../pages/contact/contact';
 
 import { FIREBASE_CONFIG } from './app.firebase.config';
-import { AuthServiceProvider } from '../providers/auth-service/auth-service';
-import { ProjectServiceProvider } from '../providers/project-service/project-service';
-import { UserServiceProvider } from '../providers/user-service/user-service';
-import { DateServiceProvider } from '../providers/date-service/date-service';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 import { Camera } from '@ionic-native/camera';
 import { Crop } from '@ionic-native/crop';
 import { Base64 } from '@ionic-native/base64';
+
+import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+import { ProjectServiceProvider } from '../providers/project-service/project-service';
+import { UserServiceProvider } from '../providers/user-service/user-service';
+import { DateServiceProvider } from '../providers/date-service/date-service';
 import { NotifyServiceProvider } from '../providers/notify-service/notify-service';
+import { FavoriteServiceProvider } from '../providers/favorite-service/favorite-service';
 
 import { ProjectFirebase } from '../models/project';
 import { NotificationFirebase } from '../models/notification';
 import { UserFirebase } from '../models/user';
+import { FavoriteFirebase } from '../models/favorites';
 
 @NgModule({
   declarations: [
@@ -114,7 +117,9 @@ import { UserFirebase } from '../models/user';
     Base64,
     DateServiceProvider,
     NotifyServiceProvider,
-    NotificationFirebase
+    NotificationFirebase,
+    FavoriteServiceProvider,
+    FavoriteFirebase
   ]
 })
 export class AppModule {}

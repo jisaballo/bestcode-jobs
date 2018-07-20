@@ -8,6 +8,7 @@ import { ProjectDetailPage } from '../project-detail/project-detail';
 import { LoginPage } from '../login/login';
 import { App } from 'ionic-angular/components/app/app';
 import { NotifyServiceProvider } from '../../providers/notify-service/notify-service';
+import { FavoriteServiceProvider } from '../../providers/favorite-service/favorite-service';
 
 @Component({
   selector: 'page-home',
@@ -22,7 +23,8 @@ export class HomePage {
   projects: ProjectExt[];
   
   constructor(private userService: UserServiceProvider, public projectService: ProjectServiceProvider, 
-    private authService: AuthServiceProvider, public navCtrl: NavController, private app: App, private notifyService: NotifyServiceProvider) {
+    private authService: AuthServiceProvider, public navCtrl: NavController, private app: App, 
+    private notifyService: NotifyServiceProvider, private favoriteService: FavoriteServiceProvider) {
     this.message = 'Fail';
     this.userEmail = this.authService.getUserEmail();
   }
@@ -36,6 +38,7 @@ export class HomePage {
           
           this.userService.LoadProfile(userID);
           this.notifyService.loadNotification(userID);
+          this.favoriteService.loadFavorites(userID);
           this.userService.loadAllUser();
         })
       });

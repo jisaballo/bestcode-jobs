@@ -5,6 +5,7 @@ import { ProjectServiceProvider, ProjectExt } from '../../providers/project-serv
 import { NewProjectPage } from '../new-project/new-project';
 import { UserServiceProvider, UserExt } from '../../providers/user-service/user-service';
 import { DateServiceProvider } from '../../providers/date-service/date-service';
+import { FavoriteServiceProvider } from '../../providers/favorite-service/favorite-service';
 
 @IonicPage()
 @Component({
@@ -17,9 +18,12 @@ export class ProjectDetailPage {
   user: UserExt;
   owner: boolean;
   canApply: boolean;
+  setPop: boolean = true;
+  //favorite control
+  isFavorite: boolean = false;
 
   constructor(public dateService: DateServiceProvider, public userService: UserServiceProvider, public projectService: ProjectServiceProvider, 
-    public navCtrl: NavController, public navParams: NavParams) {
+    public navCtrl: NavController, public navParams: NavParams, private favoriteService: FavoriteServiceProvider) {
 
     this.userService.getProfile().then(res => {
       this.user = res as UserExt;
@@ -32,7 +36,7 @@ export class ProjectDetailPage {
   ionViewWillEnter() {
 
     this.owner = false;
-    this.Load();
+    this.project.timeElapsed = this.dateService.differenceTime(this.project.pubDate);
     if(this.project.userID == this.user.id) {
       this.owner = true;
     }
@@ -48,15 +52,22 @@ export class ProjectDetailPage {
         }
       });
     }
+
+    //evaluar favorito
+    this.favoriteService.getFavoriteProject().map(element => {
+      if(element.id == this.project.id) {
+        this.isFavorite = true;
+      }
+    });
   }
 
   ionViewDidLeave() {
     this.navCtrl.popToRoot();
   }
   
-  async Load() {
-    //load timeElapsed
-    this.project.timeElapsed = this.dateService.differenceTime(this.project.pubDate);
+  backButtonClick() {
+    this.setPop = false;
+    this.navCtrl.pop();
   }
 
   editProject(project) {
@@ -82,6 +93,17 @@ export class ProjectDetailPage {
     }
     catch(e) {
       console.error(e);
+    }
+  }
+
+  addFavorite() {
+    if(this.isFavorite) { //eliminar proyecto de favoritos
+      this.isFavorite = false;
+      this.favoriteService.deleteProjectFavorite(this.project);
+    }
+    else { //agregar proyecto a favoritos
+      this.isFavorite = true;
+      this.favoriteService.addProjectFavorite(this.project);
     }
   }
 
