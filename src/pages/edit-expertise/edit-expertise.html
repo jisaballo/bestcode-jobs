@@ -1,15 +1,14 @@
-<ion-header>
-  <ion-navbar hideBackButton>
-    <ion-buttons left>
-      <button ion-button icon-only (click)="backButtonClick()">
-        <ion-icon name="arrow-back"></ion-icon>
+<ion-content>
+  <ion-row>
+    <ion-col col-3>
+      <button ion-button icon-only clear color="dark" (click)="backButtonClick()">
+        <ion-icon name="ios-arrow-back"></ion-icon>
       </button>
-    </ion-buttons>
-    <ion-title>Experiencia</ion-title>
-  </ion-navbar>
-</ion-header>
-
-<ion-content padding>
+    </ion-col>
+    <ion-col col-6 text-center><ion-title>Experiencias</ion-title></ion-col>
+    <ion-col col-3></ion-col>
+  </ion-row>
+  <hr>
   <div>
     <ion-item>
       <ion-label floating>Cargo</ion-label>
@@ -40,7 +39,9 @@
         </ion-select>
       </ion-item>
     </ion-list>
-    <button ion-button block (click)="saveProfile()">Agregar Nueva</button>
+    <div padding>
+        <button ion-button block (click)="saveProfile()">Agregar Nueva</button>
+    </div>
   </div>
 
   <ion-item class="subtitulo">Empleos</ion-item>

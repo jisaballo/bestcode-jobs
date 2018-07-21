@@ -29,6 +29,7 @@ import { SupportPage } from '../pages/support/support';
 import { TermsPage } from '../pages/terms/terms';
 import { NotificationPage } from '../pages/notification/notification';
 import { ContactPage } from '../pages/contact/contact';
+import { FavoritesPage } from '../pages/favorites/favorites';
 
 import { FIREBASE_CONFIG } from './app.firebase.config';
 import { AngularFireStorageModule } from 'angularfire2/storage';
@@ -69,7 +70,8 @@ import { FavoriteFirebase } from '../models/favorites';
     SupportPage,
     TermsPage,
     NotificationPage,
-    ContactPage
+    ContactPage,
+    FavoritesPage
   ],
   imports: [
     BrowserModule,
@@ -101,7 +103,8 @@ import { FavoriteFirebase } from '../models/favorites';
     SupportPage,
     TermsPage,
     NotificationPage,
-    ContactPage
+    ContactPage,
+    FavoritesPage
   ],
   providers: [
     StatusBar,

@@ -73,11 +73,11 @@ export interface User {
     }
 
     getProjectUser(userID: string) {
-        return this.usersCollection.doc(userID).valueChanges();
+        return this.usersCollection.doc(userID).snapshotChanges();
     }
 
     loadAllUser() {
-        return this.usersCollection.valueChanges();
+        return this.usersCollection.snapshotChanges();
     }
 
     LoadProfile(userID: string) {

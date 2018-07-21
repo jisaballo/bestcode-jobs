@@ -77,7 +77,8 @@ export class ProjectServiceProvider {
 
         //add user reference for project
         this.userService.getProjectUser(data.userID).subscribe(res => {
-          let user = res as UserExt;
+          let user = res.payload.data() as UserExt;
+          user.id = res.payload.id;
           data.ownerName = user.username;
           data.ownerProfesion = user.profesion;
           data.ownerUrlImage = 'assets/imgs/default_profile.png'; //imagen por defecto
@@ -97,7 +98,7 @@ export class ProjectServiceProvider {
   }
 
   getProjectByID(ID: string) {
-    this.projectFirebase.getProjectByID(ID);
+    return this.projectFirebase.getProjectByID(ID);
   }
 
   addProject(project: ProjectExt, ifNew: boolean) {

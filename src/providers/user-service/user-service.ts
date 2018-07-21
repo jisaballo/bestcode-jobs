@@ -72,7 +72,8 @@ export class UserServiceProvider {
     await this.userFirebase.loadAllUser().subscribe(res => {
       this.users = [];
       res.map(data => {
-        let user = data as UserExt;
+        let user = data.payload.doc.data() as UserExt;
+        user.id = data.payload.doc.id;
         if(typeof user.urlImage != 'undefined' && user.urlImage != '') {
           this.getUrlImage(user.urlImage).subscribe(res => {
             user.uriImage = res;

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ProjectExt } from '../project-service/project-service';
 import { FavoriteFirebase, Favorite } from '../../models/favorites';
+import { UserExt } from '../user-service/user-service';
 
 export interface FavoriteExt extends Favorite {
 
@@ -35,7 +36,7 @@ export class FavoriteServiceProvider {
         if(typeof res['user'] != 'undefined') {
           res['user'].map(data => {
             let event = data as FavoriteExt;
-            this.favoritesProject.push(event);
+            this.favoritesUser.push(event);
           })
         }
         else {
@@ -68,4 +69,19 @@ export class FavoriteServiceProvider {
     this.favoriteFirebase.updateProject(this.favoritesProject);
   }
 
+  getFavoriteUsers() {
+    return this.favoritesUser;
+  }
+
+  addUserFavorite(user: UserExt) {
+    
+    let new_favorite: FavoriteExt;
+    new_favorite = {
+      id: user.id
+    }
+    
+    this.favoritesUser.push(new_favorite);
+    this.favoriteFirebase.updateUser(this.favoritesUser);
+  }
+  
 }

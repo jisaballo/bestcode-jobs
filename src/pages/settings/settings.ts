@@ -7,6 +7,7 @@ import { UserServiceProvider, UserExt } from '../../providers/user-service/user-
 import { SupportPage } from '../support/support';
 import { LoginPage } from '../login/login';
 import { NotificationPage } from '../notification/notification';
+import { FavoritesPage } from '../favorites/favorites';
 
 @IonicPage()
 @Component({
@@ -36,6 +37,10 @@ export class SettingsPage {
 
   openProfile() {
     this.navCtrl.push(ProfilePage, this.user);
+  }
+
+  openFavorites() {
+    this.navCtrl.push(FavoritesPage);
   }
 
   openSupport() {

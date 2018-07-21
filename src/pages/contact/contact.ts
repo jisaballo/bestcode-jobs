@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UserExt } from '../../providers/user-service/user-service';
 import { DateServiceProvider } from '../../providers/date-service/date-service';
+import { elementAttribute } from '@angular/core/src/render3/instructions';
+import { FavoriteServiceProvider } from '../../providers/favorite-service/favorite-service';
 
 @IonicPage()
 @Component({
@@ -16,8 +18,11 @@ export class ContactPage {
   showExperience: boolean;
   showSkills: boolean;
   showSalary: boolean;
+  setPop: boolean = true;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private dateService: DateServiceProvider) {
+  isFavorite: boolean = false;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private dateService: DateServiceProvider, private favoriteService: FavoriteServiceProvider) {
     this.userDetail = this.navParams.get('user');
   }
 
@@ -26,6 +31,7 @@ export class ContactPage {
   }
 
   ionViewWillEnter() {
+    this.setPop = true;
     //show salary section
     if(this.userDetail.jobAvailability == "" || this.userDetail.jobInterested == "" || this.userDetail.jobSalary || this.userDetail.jobSalaryFrecuency) {
       this.showSalary = false;
@@ -50,13 +56,24 @@ export class ContactPage {
     else {
       this.showSkills = true;
     }
+
+    //evaluar favorito
+    this.favoriteService.getFavoriteUsers().map(element => {
+      console.log(element.id + ' ' + this.userDetail.id);
+      if(element.id == this.userDetail.id) {
+        this.isFavorite = true;
+      }
+    });
   }
 
   ionViewDidLeave() {
-    this.navCtrl.popToRoot();
+    if(this.setPop) {
+      this.navCtrl.popToRoot();
+    }
   }
   
   closePage() {
+    this.setPop = false;
     this.navCtrl.pop();
   }
 
@@ -90,5 +107,16 @@ export class ContactPage {
 
       return {position, company, monthStart, yearStart, monthEnd, yearEnd, time};
     });
+  }
+
+  addFavorite() {
+    if(this.isFavorite) { //eliminar proyecto de favoritos
+      this.isFavorite = false;
+      //this.favoriteService.deleteProjectFavorite(this.userDetail);
+    }
+    else { //agregar proyecto a favoritos
+      this.isFavorite = true;
+      this.favoriteService.addUserFavorite(this.userDetail);
+    }
   }
 }

@@ -1,8 +1,17 @@
 page-edit-skills {
     .subtitulo {
         color: #488aff;
+        margin-left: 4%;
+        margin-right: 4%;
     }
-    .item {
-        padding: 0px;
+    .col {
+        padding: 0;
+    }
+    .title {
+        margin-top: 8%;
+    }
+    .col p label {
+        color: gray;
+        margin: 0;
     }
 }

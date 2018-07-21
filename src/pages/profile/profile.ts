@@ -25,7 +25,6 @@ export class ProfilePage {
   
   constructor(private crop: Crop, public actionSheetCtrl: ActionSheetController, private camera: Camera, public dateService: DateServiceProvider , public authService: AuthServiceProvider, public userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.expertise = [];
-    console.log(this.setPop);
   }
 
   ionViewDidEnter() {
@@ -47,6 +46,7 @@ export class ProfilePage {
   }
 
   closePage() {
+    this.setPop = false;
     this.navCtrl.pop();
   }
 

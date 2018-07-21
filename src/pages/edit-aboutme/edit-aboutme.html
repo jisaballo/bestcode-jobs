@@ -1,15 +1,14 @@
-<ion-header>
-  <ion-navbar hideBackButton>
-    <ion-buttons left>
-      <button ion-button icon-only (click)="backButtonClick()">
-        <ion-icon name="arrow-back"></ion-icon>
-      </button>
-    </ion-buttons>
-    <ion-title>Acerca de mi</ion-title>
-  </ion-navbar>
-</ion-header>
-
 <ion-content>
+  <ion-row>
+    <ion-col col-3>
+      <button ion-button icon-only clear color="dark" (click)="backButtonClick()">
+        <ion-icon name="ios-arrow-back"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col col-6 text-center><ion-title>Acerca de mi</ion-title></ion-col>
+    <ion-col col-3></ion-col>
+  </ion-row>
+  <hr>
   <div padding>
       <ion-textarea rows="10" class="paragraph" [(ngModel)]="user.about"></ion-textarea>
   </div>

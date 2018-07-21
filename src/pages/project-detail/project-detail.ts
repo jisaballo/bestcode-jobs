@@ -6,6 +6,8 @@ import { NewProjectPage } from '../new-project/new-project';
 import { UserServiceProvider, UserExt } from '../../providers/user-service/user-service';
 import { DateServiceProvider } from '../../providers/date-service/date-service';
 import { FavoriteServiceProvider } from '../../providers/favorite-service/favorite-service';
+import { ProfilePage } from '../profile/profile';
+import { ContactPage } from '../contact/contact';
 
 @IonicPage()
 @Component({
@@ -34,7 +36,7 @@ export class ProjectDetailPage {
   }
 
   ionViewWillEnter() {
-
+    this.setPop = true;
     this.owner = false;
     this.project.timeElapsed = this.dateService.differenceTime(this.project.pubDate);
     if(this.project.userID == this.user.id) {
@@ -55,6 +57,7 @@ export class ProjectDetailPage {
 
     //evaluar favorito
     this.favoriteService.getFavoriteProject().map(element => {
+      console.log(element.id + ' ' + this.project.id);
       if(element.id == this.project.id) {
         this.isFavorite = true;
       }
@@ -62,7 +65,9 @@ export class ProjectDetailPage {
   }
 
   ionViewDidLeave() {
-    this.navCtrl.popToRoot();
+    if(this.setPop) {
+      this.navCtrl.popToRoot();
+    }
   }
   
   backButtonClick() {
@@ -104,6 +109,28 @@ export class ProjectDetailPage {
     else { //agregar proyecto a favoritos
       this.isFavorite = true;
       this.favoriteService.addProjectFavorite(this.project);
+    }
+  }
+
+  openProfile() {
+    if(this.owner) {
+      this.setPop = false;
+      this.navCtrl.push(ProfilePage);
+    }
+    else {
+      this.setPop = false;
+      this.userService.getProjectUser(this.project.userID).subscribe(res => {
+        let user = res.payload.data() as UserExt;
+        user.id = res.payload.id;
+
+        user.uriImage = 'assets/imgs/default_profile.png'; //imagen por defecto
+        if(typeof user.urlImage != 'undefined' && user.urlImage != '') {
+          this.userService.getUrlImage(user.urlImage).subscribe(res => {
+            user.uriImage = res;
+          });
+        }
+        this.navCtrl.push(ContactPage, {user});
+      });
     }
   }
 

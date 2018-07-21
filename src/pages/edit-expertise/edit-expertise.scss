@@ -1,8 +1,18 @@
 page-edit-expertise {
     .item {
-        padding: 0px;
+        //padding: 0px;
     }
     .subtitulo {
         color: #488aff;
+    }
+    .col {
+        padding: 0;
+    }
+    .title {
+        margin-top: 8%;
+    }
+    .col p label {
+        color: gray;
+        margin: 0;
     }
 }
