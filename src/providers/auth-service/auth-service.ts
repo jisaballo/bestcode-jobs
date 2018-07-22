@@ -85,4 +85,8 @@ export class AuthServiceProvider {
   getUserEmail() {
     return this.userEmail;
   }
+
+  getCredentials(uID: string) {
+    return this.afStore.collection('credentials', ref => ref.where('token','==', uID)).snapshotChanges();
+  }
 }

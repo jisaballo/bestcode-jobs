@@ -48,6 +48,7 @@ import { ProjectFirebase } from '../models/project';
 import { NotificationFirebase } from '../models/notification';
 import { UserFirebase } from '../models/user';
 import { FavoriteFirebase } from '../models/favorites';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 
 @NgModule({
   declarations: [
@@ -118,6 +119,7 @@ import { FavoriteFirebase } from '../models/favorites';
     Camera,
     Crop,
     Base64,
+    UniqueDeviceID,
     DateServiceProvider,
     NotifyServiceProvider,
     NotificationFirebase,

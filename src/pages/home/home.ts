@@ -31,7 +31,6 @@ export class HomePage {
 
   ionViewWillEnter() {
     if(this.authService.authenticated()) {
-      
       this.userService.getUserID(this.userEmail).subscribe(res => {
         res.map(data => {
           let userID = data.payload.doc.id;
@@ -45,6 +44,7 @@ export class HomePage {
       this.LoadProjects();
     }
     else {
+      console.log('try again');
       this.app.getRootNav().setRoot(LoginPage);
     }
   }

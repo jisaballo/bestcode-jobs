@@ -3,8 +3,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
 import { TabsPage } from '../tabs/tabs';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
-import { UserExt } from '../../providers/user-service/user-service';
+import { UserExt, UserServiceProvider } from '../../providers/user-service/user-service';
 import { AlertController } from 'ionic-angular';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id';
+import { App } from 'ionic-angular/components/app/app';
 
 @IonicPage()
 @Component({
@@ -14,22 +16,31 @@ import { AlertController } from 'ionic-angular';
 export class LoginPage {
 
   user = {} as UserExt;
-  tabsHideOnSubPages: boolean;
-  constructor(private authService: AuthServiceProvider, public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams) {
 
-    //se debe guardar y leer del storage
-    this.user.email = 'jisaballo@outlook.com';
-    this.user.password = 'lolo1986';
-    this.login(this.user);
-    //this.navCtrl.setRoot(TabsPage);
+  constructor(private uniqueDeviceID: UniqueDeviceID, private app: App, private authService: AuthServiceProvider, public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams) {
     
   }
 
+  ionViewWillEnter() {
+    this.uniqueDeviceID.get().then(uuid => {
+      this.authService.getCredentials(uuid).subscribe(res => {
+        res.map(element => {
+          let credentials = element.payload.doc.data();
+          this.user.email = credentials['username'];
+          this.user.password = credentials['password'];
+          this.login(this.user);
+        })
+      })
+    })
+    .catch((error: any) => console.error(error));
+
+  }
   async login(user: UserExt) {
     
     let result = await this.authService.login(user.email, user.password);
     if(result[0]== 'OK') {
-      this.navCtrl.push(TabsPage);
+      //this.navCtrl.push(TabsPage);
+      this.app.getRootNav().setRoot(TabsPage);
     }
     else {
       this.showAlert(result[1]);
