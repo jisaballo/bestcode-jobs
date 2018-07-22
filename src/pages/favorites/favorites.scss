@@ -2,6 +2,10 @@ page-favorites {
     .segmentStyle {
         background-color: #e9e8e6;
     }
+    .item {
+        padding-left: 13px;
+        padding-right: 13px;
+    }
     .col p label {
         color: gray;
         margin: 0;
@@ -11,5 +15,10 @@ page-favorites {
     }
     .title {
         margin-top: 8%;
+    }
+    .category {
+        color: gray;
+        margin-left: 13px;
+        margin-right: 13px;
     }
 }

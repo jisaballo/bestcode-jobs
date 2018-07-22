@@ -1,7 +1,7 @@
 <ion-content>
   <ion-row>
     <ion-col col-3>
-      <button ion-button icon-only clear (click)="closePage()">
+      <button ion-button icon-only color="dark" clear (click)="closePage()">
         <ion-icon name="ios-arrow-back"></ion-icon>
       </button>
     </ion-col>
@@ -21,36 +21,24 @@
   </div>
   
   <div [ngSwitch]="favoritesSegment">
-    <ion-list *ngSwitchCase="'projects'">
-        <ion-card *ngFor="let project of projects" (click)="projectDetail(project)">
-          <ion-item>
-            <ion-avatar item-start>
-              <img src="{{project.ownerUrlImage}}">
-            </ion-avatar>
-            <h2>{{project.ownerName}}</h2>
-            <p>{{project.ownerProfesion}}</p>
-          </ion-item>
-          <hr>
-          <ion-card-header text-wrap>
-            <span class="header-project">{{project.name}}</span>
-          </ion-card-header>
-          <ion-card-content>
-            <ion-row>
-              <ion-col col-7>
-                <ion-label>{{project.category}}</ion-label>
-              </ion-col>
-              <ion-col col-5 text-right>
-                <ion-label>{{project.subCategory}}</ion-label>
-              </ion-col>
-            </ion-row>
-            <hr>
-            <ion-row>
-              <ion-col col-4 text-left><p><ion-icon color="primary" name="checkmark-circle"></ion-icon> {{project.applied}} Aplicados</p></ion-col>
-              <ion-col col-3 text-center><p><ion-icon color="primary" name="logo-usd"></ion-icon> {{project.value}}</p></ion-col>
-              <ion-col col-5 text-right><p><ion-icon color="primary" name="calendar"></ion-icon> {{project.timeElapsed}}</p></ion-col>
-            </ion-row>
-          </ion-card-content>
-        </ion-card>
+    <ion-list no-lines *ngSwitchCase="'projects'">
+      <div *ngFor="let project of projects" (click)="projectDetail(project)">
+        <ion-item>
+          <ion-avatar item-start>
+            <img src="{{project.ownerUrlImage}}">
+          </ion-avatar>
+          <h2>{{project.ownerName}}</h2>
+          <p>{{project.ownerProfesion}}</p>
+        </ion-item>
+        <ion-item text-wrap>
+          <span class="header-project">{{project.name}}</span><br>
+          <p>{{project.description}}</p>
+        </ion-item>
+        <ion-item>
+          <p>Publicado: {{project.timeElapsed}}</p>
+        </ion-item>
+        <hr>
+      </div>
     </ion-list>
   
     <ion-list no-lines *ngSwitchCase="'users'">
@@ -61,7 +49,6 @@
         <h2>{{user.username}}</h2>
         <p>{{user.profesion}}</p>
       </ion-item>
-      <hr>
     </ion-list>
   </div>
 </ion-content>
