@@ -1,0 +1,23 @@
+page-splash {
+    .splash_content {
+        background-image: url('/assets/imgs/login_backgroung.jpg');
+        background-repeat: no-repeat;
+        background-size:cover;
+        height: 100%;
+        width: 100%;
+    }
+    .grid {
+        padding-top: 50%;
+        font-size: 46px;
+        font-family: cursive;
+        color: white;
+        font-weight: bold;
+        font-style: italic;
+    }
+    .spalsh_footer {
+        position: absolute;
+        bottom: 0;
+        height: 30px;
+        width: 100%;
+    }
+}

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UserExt } from '../../providers/user-service/user-service';
 import { DateServiceProvider } from '../../providers/date-service/date-service';
-import { elementAttribute } from '@angular/core/src/render3/instructions';
 import { FavoriteServiceProvider } from '../../providers/favorite-service/favorite-service';
 
 @IonicPage()

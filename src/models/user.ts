@@ -45,7 +45,6 @@ export interface User {
         let firebase_user: User;
 
         firebase_user = {
-            uID: parameter.uID,
             username: parameter.username,
             urlImage: parameter.urlImage,
             profesion: parameter.profesion,

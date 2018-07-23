@@ -14,22 +14,23 @@ import { RecruitPage } from '../pages/recruit/recruit';
 import { ProjectPage } from '../pages/project/project';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
-import { LoginPage } from '../pages/login/login';
-import { RegisterPage } from '../pages/register/register';
-import { NewProjectPage } from '../pages/new-project/new-project';
-import { SettingsPage } from '../pages/settings/settings';
-import { ProjectDetailPage } from '../pages/project-detail/project-detail';
-import { ProfilePage } from '../pages/profile/profile';
-import { EditPersonalPage } from '../pages/edit-personal/edit-personal';
-import { EditAboutmePage } from '../pages/edit-aboutme/edit-aboutme';
-import { EditExpertisePage } from '../pages/edit-expertise/edit-expertise';
-import { EditSkillsPage } from '../pages/edit-skills/edit-skills';
-import { EditJobPreferencesPage } from '../pages/edit-job-preferences/edit-job-preferences';
-import { SupportPage } from '../pages/support/support';
-import { TermsPage } from '../pages/terms/terms';
-import { NotificationPage } from '../pages/notification/notification';
-import { ContactPage } from '../pages/contact/contact';
-import { FavoritesPage } from '../pages/favorites/favorites';
+import { LoginPageModule } from '../pages/login/login.module';
+import { RegisterPageModule } from '../pages/register/register.module';
+import { NewProjectPageModule } from '../pages/new-project/new-project.module';
+import { SettingsPageModule } from '../pages/settings/settings.module';
+import { ProjectDetailPageModule } from '../pages/project-detail/project-detail.module';
+import { ProfilePageModule } from '../pages/profile/profile.module';
+import { EditProfilePageModule } from '../pages/edit-personal/edit-personal.module';
+import { EditAboutmePageModule } from '../pages/edit-aboutme/edit-aboutme.module';
+import { EditExpertisePageModule } from '../pages/edit-expertise/edit-expertise.module';
+import { EditSkillsPageModule } from '../pages/edit-skills/edit-skills.module';
+import { EditJobPreferencesPageModule } from '../pages/edit-job-preferences/edit-job-preferences.module';
+import { SupportPageModule } from '../pages/support/support.module';
+import { TermsPageModule } from '../pages/terms/terms.module';
+import { NotificationPageModule } from '../pages/notification/notification.module';
+import { FavoritesPageModule } from '../pages/favorites/favorites.module';
+import { SplashPageModule } from '../pages/splash/splash.module';
+import { ContactPageModule } from '../pages/contact/contact.module';
 
 import { FIREBASE_CONFIG } from './app.firebase.config';
 import { AngularFireStorageModule } from 'angularfire2/storage';
@@ -56,23 +57,7 @@ import { UniqueDeviceID } from '@ionic-native/unique-device-id';
     RecruitPage,
     ProjectPage,
     HomePage,
-    LoginPage,
-    RegisterPage,
-    SettingsPage,
-    NewProjectPage,
-    TabsPage,
-    ProjectDetailPage,
-    ProfilePage,
-    EditPersonalPage,
-    EditAboutmePage,
-    EditExpertisePage,
-    EditSkillsPage,
-    EditJobPreferencesPage,
-    SupportPage,
-    TermsPage,
-    NotificationPage,
-    ContactPage,
-    FavoritesPage
+    TabsPage
   ],
   imports: [
     BrowserModule,
@@ -82,6 +67,23 @@ import { UniqueDeviceID } from '@ionic-native/unique-device-id';
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
+    ContactPageModule,
+    EditAboutmePageModule,
+    EditExpertisePageModule,
+    EditJobPreferencesPageModule,
+    EditProfilePageModule,
+    EditSkillsPageModule,
+    FavoritesPageModule,
+    LoginPageModule,
+    NewProjectPageModule,
+    NotificationPageModule,
+    ProfilePageModule,
+    ProjectDetailPageModule,
+    RegisterPageModule,
+    SettingsPageModule,
+    SplashPageModule,
+    SupportPageModule,
+    TermsPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -89,23 +91,7 @@ import { UniqueDeviceID } from '@ionic-native/unique-device-id';
     RecruitPage,
     ProjectPage,
     HomePage,
-    LoginPage,
-    RegisterPage,
-    SettingsPage,
-    NewProjectPage,
-    TabsPage,
-    ProjectDetailPage,
-    ProfilePage,
-    EditPersonalPage,
-    EditAboutmePage,
-    EditExpertisePage,
-    EditSkillsPage,
-    EditJobPreferencesPage,
-    SupportPage,
-    TermsPage,
-    NotificationPage,
-    ContactPage,
-    FavoritesPage
+    TabsPage
   ],
   providers: [
     StatusBar,

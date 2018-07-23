@@ -6,7 +6,6 @@ import { ProjectServiceProvider, ProjectExt } from '../../providers/project-serv
 import { ProjectPage } from '../project/project';
 import { ProjectDetailPage } from '../project-detail/project-detail';
 import { LoginPage } from '../login/login';
-import { App } from 'ionic-angular/components/app/app';
 import { NotifyServiceProvider } from '../../providers/notify-service/notify-service';
 import { FavoriteServiceProvider } from '../../providers/favorite-service/favorite-service';
 
@@ -23,7 +22,7 @@ export class HomePage {
   projects: ProjectExt[];
   
   constructor(private userService: UserServiceProvider, public projectService: ProjectServiceProvider, 
-    private authService: AuthServiceProvider, public navCtrl: NavController, private app: App, 
+    private authService: AuthServiceProvider, public navCtrl: NavController,
     private notifyService: NotifyServiceProvider, private favoriteService: FavoriteServiceProvider) {
     this.message = 'Fail';
     this.userEmail = this.authService.getUserEmail();
@@ -44,8 +43,7 @@ export class HomePage {
       this.LoadProjects();
     }
     else {
-      console.log('try again');
-      this.app.getRootNav().setRoot(LoginPage);
+      this.navCtrl.setRoot(LoginPage);
     }
   }
 
