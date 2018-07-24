@@ -1,10 +1,9 @@
 page-splash {
     .splash_content {
-        background-image: url('/assets/imgs/login_backgroung.jpg');
-        background-repeat: no-repeat;
-        background-size:cover;
-        height: 100%;
-        width: 100%;
+        background-image: url('/assets/imgs/background_loading.png');
+        background-size:     cover;                      /* <------ */
+        background-repeat:   no-repeat;
+        background-position: center center;
     }
     .grid {
         padding-top: 50%;

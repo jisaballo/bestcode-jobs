@@ -5,7 +5,6 @@ import { TabsPage } from '../tabs/tabs';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { UserExt } from '../../providers/user-service/user-service';
 import { AlertController } from 'ionic-angular';
-import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 
 @IonicPage()
 @Component({
@@ -16,35 +15,14 @@ export class LoginPage {
 
   user = {} as UserExt;
 
-  constructor(private uniqueDeviceID: UniqueDeviceID, private authService: AuthServiceProvider, public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams) {
+  constructor(private authService: AuthServiceProvider, public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams) {
     
   }
 
   ionViewWillEnter() {
-    this.uniqueDeviceID.get().then(uuid => {
-      this.authService.getCredentials(uuid).subscribe(res => {
-        res.map(element => {
-          let credentials = element.payload.doc.data();
-          this.user.email = credentials['username'];
-          this.user.password = credentials['password'];
-          this.login(this.user);
-        })
-      });
-    })
-    .catch(error => {
-      console.error(error);
-      //for testing
-      let uuid = '8a34a38a-3f37-6950-3556-120896651718';
-      this.authService.getCredentials(uuid).subscribe(res => {
-        res.map(element => {
-          let credentials = element.payload.doc.data();
-          this.user.email = credentials['username'];
-          this.user.password = credentials['password'];
-          this.login(this.user);
-        })
-      });
-    });
+    
   }
+
   async login(user: UserExt) {
     
     let result = await this.authService.login(user.email, user.password);

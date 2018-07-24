@@ -12,10 +12,13 @@ export class AuthServiceProvider {
 
   currentUser: User;
   userEmail: string;
+  public state: boolean;
 
   constructor(private afAuth: AngularFireAuth, private afStore: AngularFirestore, public http: HttpClient) {
     this.logged = false;
+    this.state = false;
     this.userCollection = this.afStore.collection('users');
+    this.userEmail = '';
   }
 
   //register
@@ -50,7 +53,6 @@ export class AuthServiceProvider {
         this.userEmail = email;
       }
       catch(e) {
-        console.log(e.code + ' ' + e.message);
         result.push(e.code);
         if(e.code == 'auth/invalid-email') {
           result.push('Dirección de correo incorrecta');
@@ -62,6 +64,7 @@ export class AuthServiceProvider {
           result.push(e.message);
         }
       }
+      this.state = true;
       return result;
   }
  

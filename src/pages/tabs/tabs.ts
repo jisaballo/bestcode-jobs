@@ -15,8 +15,6 @@ export class TabsPage {
   tab3Root = ProjectPage;
   tab4Root = SettingsPage;
 
-  tab3BadgeCount : number = 0; // default 0
-
   constructor() {
 
   }
