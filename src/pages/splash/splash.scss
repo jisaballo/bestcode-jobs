@@ -1,17 +1,9 @@
 page-splash {
     .splash_content {
-        background-image: url('/assets/imgs/background_loading.png');
+        background-image: url('../assets/imgs/background_loading.png');
         background-size:     cover;                      /* <------ */
         background-repeat:   no-repeat;
         background-position: center center;
-    }
-    .grid {
-        padding-top: 50%;
-        font-size: 46px;
-        font-family: cursive;
-        color: white;
-        font-weight: bold;
-        font-style: italic;
     }
     .spalsh_footer {
         position: absolute;

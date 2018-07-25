@@ -50,6 +50,8 @@ import { NotificationFirebase } from '../models/notification';
 import { UserFirebase } from '../models/user';
 import { FavoriteFirebase } from '../models/favorites';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
+import { LogsServiceProvider } from '../providers/logs-service/logs-service';
+import { LogsFirebase } from '../models/log';
 
 @NgModule({
   declarations: [
@@ -110,7 +112,9 @@ import { UniqueDeviceID } from '@ionic-native/unique-device-id';
     NotifyServiceProvider,
     NotificationFirebase,
     FavoriteServiceProvider,
-    FavoriteFirebase
+    FavoriteFirebase,
+    LogsServiceProvider,
+    LogsFirebase
   ]
 })
 export class AppModule {}

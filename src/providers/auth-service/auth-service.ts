@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth} from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { User } from '@firebase/auth-types';
+import { LogsServiceProvider } from '../logs-service/logs-service';
 
 @Injectable()
 export class AuthServiceProvider {
@@ -14,7 +15,7 @@ export class AuthServiceProvider {
   userEmail: string;
   public state: boolean;
 
-  constructor(private afAuth: AngularFireAuth, private afStore: AngularFirestore, public http: HttpClient) {
+  constructor(private afAuth: AngularFireAuth, private afStore: AngularFirestore, public http: HttpClient, private logsService: LogsServiceProvider) {
     this.logged = false;
     this.state = false;
     this.userCollection = this.afStore.collection('users');
@@ -34,6 +35,8 @@ export class AuthServiceProvider {
       }
     }
     catch(e) {
+      let text = 'code: ' + e['code'] + ' message: ' + e['message'] + ' user: ' + email;
+      this.logsService.addToAuth(text,'error');
       console.error(e);
       return e;
     }
@@ -43,29 +46,31 @@ export class AuthServiceProvider {
   // Normally make a server request and store
   // e.g. the auth token
   async login(email, password) {
-    let result: string[];
-    result = [];
-      try {
-        await this.afAuth.auth.signInWithEmailAndPassword(email, password);
-        result.push('OK');
-        result.push('Succes');
-        this.logged = true;
-        this.userEmail = email;
+    let result: string[] = [];
+    try {
+      await this.afAuth.auth.signInWithEmailAndPassword(email, password);
+      result.push('OK');
+      result.push('Succes');
+      this.logged = true;
+      this.userEmail = email;
+    }
+    catch(e) {
+      let text = 'code: ' + e['code'] + ' message: ' + e['message'] + ' user: ' + email;
+      this.logsService.addToAuth(text,'error');
+
+      result.push(e.code);
+      if(e.code == 'auth/invalid-email') {
+        result.push('Dirección de correo incorrecta');
       }
-      catch(e) {
-        result.push(e.code);
-        if(e.code == 'auth/invalid-email') {
-          result.push('Dirección de correo incorrecta');
-        }
-        else if(e.code == 'auth/user-not-found' || e.code == 'auth/wrong-password') {
-          result.push('Usuario o contraseña incorrecto');
-        }
-        else {
-          result.push(e.message);
-        }
+      else if(e.code == 'auth/user-not-found' || e.code == 'auth/wrong-password') {
+        result.push('Usuario o contraseña incorrecto');
       }
-      this.state = true;
-      return result;
+      else {
+        result.push(e.message);
+      }
+    }
+    this.state = true;
+    return result;
   }
  
   // Logout a user, destroy token and remove
