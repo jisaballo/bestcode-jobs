@@ -95,7 +95,13 @@ export class AuthServiceProvider {
   // every information related to a user
   async logout() {
     try {
-      await this.afAuth.auth.signOut();
+      this.afAuth.auth.signOut().then(res => {
+        console.log(res);
+        this.logged = false;
+        this.storage.remove('email');
+        this.storage.remove('password');
+      })
+      .catch();
     }
     catch(e) {
       console.error(e);

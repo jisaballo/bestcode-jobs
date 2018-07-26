@@ -4,6 +4,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { UserExt, ExperienceExt, SkillExt, UserServiceProvider } from '../../providers/user-service/user-service';
 import { TabsPage } from '../tabs/tabs';
 import { TermsPage } from '../terms/terms';
+import { LoginPage } from '../login/login';
 
 @IonicPage()
 @Component({
@@ -20,7 +21,9 @@ export class RegisterPage {
   email: string;
   username: string;
   password: string;
-  repassword: string;
+
+  passwordType: string = 'password';
+  passwordIcon: string = 'eye-off';
 
   constructor(private authService: AuthServiceProvider, private userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
     this.experience = [];
@@ -37,12 +40,6 @@ export class RegisterPage {
       }
       else {
         this.user.username = this.username;
-      }
-
-      if(this.password != this.repassword){
-        this.showAlert('Contraseña incorrecta','Las contraseñas ingresadas deben ser iguales');
-        this.alert.present();
-        return
       }
       
       const result = this.authService.register(this.user.email, this.user.password);
@@ -64,17 +61,25 @@ export class RegisterPage {
   }
 
   login() {
-    this.navCtrl.pop();
+    this.navCtrl.push(LoginPage);
   }
+
   terms(){
     this.navCtrl.push(TermsPage);
   }
+
   showAlert(titile: string, message: string) {
     this.alert = this.alertCtrl.create({
       title: titile,
       subTitle: message,
       buttons: ['OK']
     });
+  }
+
+  hideShowPassword() {
+    console.log('click');
+    this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
+    this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
   }
 
 }

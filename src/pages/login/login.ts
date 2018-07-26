@@ -15,6 +15,9 @@ export class LoginPage {
 
   user = {} as UserExt;
 
+  passwordType: string = 'password';
+  passwordIcon: string = 'eye-off';
+
   constructor(private authService: AuthServiceProvider, public navCtrl: NavController, 
     public alertCtrl: AlertController, public navParams: NavParams) {
     
@@ -45,6 +48,16 @@ export class LoginPage {
       buttons: ['OK']
     });
     alert.present();
+  }
+
+  hideShowPassword() {
+    console.log('click');
+    this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
+    this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
+  }
+
+  backButtonClick() {
+    this.navCtrl.pop();
   }
 
 }

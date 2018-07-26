@@ -1,11 +1,14 @@
 <ion-content>
   <ion-row>
-    <ion-col col-6>
+    <ion-col col-3>
       <button ion-button icon-only clear color="dark" (click)="backButtonClick()">
         <ion-icon name="ios-arrow-back"></ion-icon>
       </button>
     </ion-col>
-    <ion-col col-6 text-right>
+    <ion-col col-6 text-center>
+      <ion-title>Detallles</ion-title>
+    </ion-col>
+    <ion-col col-3 text-right>
       <div *ngIf="!owner">
         <button ion-button icon-only clear [color]="isFavorite ? 'danger' : 'primary'" (click)="addFavorite()">
           <ion-icon *ngIf="!isFavorite" name="heart-outline"></ion-icon>

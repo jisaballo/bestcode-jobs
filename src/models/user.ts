@@ -91,9 +91,7 @@ export interface User {
     }
 
     UpdateProfile(parameter: any) {
-        console.log(parameter);
         let user: User = this.convertUsers(parameter);
-        console.log(user);
         this.profileDoc.update(user);
     }
   }

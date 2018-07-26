@@ -1,25 +1,28 @@
 <ion-content>
+  <button ion-button icon-only clear color="dark" (click)="backButtonClick()">
+    <ion-icon name="ios-arrow-back"></ion-icon>
+  </button>
+  
   <div class="form_login" padding>
-      
+    <ion-item text-wrap>
+      Introdusca su correo electrónico y contraseña.
+    </ion-item>
     <ion-item>
-      <ion-label stacked color="primary">Correo electronico</ion-label>
+      <ion-label stacked>Correo electronico</ion-label>
       <ion-input type="text" autofocus [(ngModel)]="user.email"></ion-input>
     </ion-item>
   
     <ion-item>
-      <ion-label stacked color="primary">Contraseña</ion-label>
-      <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+      <ion-label stacked>Contraseña</ion-label>
+      <ion-input [type]="passwordType" [(ngModel)]="user.password"></ion-input>
+      <ion-icon (click)='hideShowPassword()' class="icon-eye" item-end [name]="passwordIcon"></ion-icon>
     </ion-item>
 
     <ion-item no-lines>
-      <div item-end ion-button clear>Olvido su contraseña?</div>
+      <p ion-text color="primary">He olvidado mi contraseña?</p>
     </ion-item>
 
-    <button ion-button block color="primary" (click)="login(user)">Ingresar</button>
-
-    <br>
-    
-    <button ion-button block color="light" (click)="register()" icon-start><ion-icon name="mail"></ion-icon>Accede con tu Email</button>
+    <button ion-button block color="primary" (click)="login(user)">Iniciar sesión</button>
     
     <!--<button class="likedin" ion-button full icon-start><ion-icon name="logo-linkedin"></ion-icon>LikedIn</button>
     <button class="facebook" ion-button full icon-start><ion-icon name="logo-facebook"></ion-icon>Facebook</button>-->

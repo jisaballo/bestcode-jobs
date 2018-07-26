@@ -20,12 +20,10 @@ export class EditSkillsPage {
   level: any;
   skillsLevel = ['Principiante','Intermedio','Experto'];
   user: UserExt;
-  skills: SkillExt[];
   setPop: boolean = true;
 
   constructor(public userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.user = this.navParams.get('user');
-    this.skills = this.user.skills;
   }
 
   ionViewDidLeave() {
@@ -43,6 +41,11 @@ export class EditSkillsPage {
     let new_skill: SkillExt;
     new_skill = {name: this.skillName, level: this.level};
     this.user.skills.push(new_skill);
+    this.userService.UpdateProfile(this.user);
+  }
+
+  deleteSkill(id: number) {
+    this.user.skills.splice(id, 1);
     this.userService.UpdateProfile(this.user);
   }
 

@@ -9,6 +9,7 @@ import { UserServiceProvider } from '../../providers/user-service/user-service';
 import { NotifyServiceProvider } from '../../providers/notify-service/notify-service';
 import { FavoriteServiceProvider } from '../../providers/favorite-service/favorite-service';
 import { LogsServiceProvider } from '../../providers/logs-service/logs-service';
+import { RegisterPage } from '../register/register';
 
 @IonicPage()
 @Component({
@@ -35,15 +36,22 @@ export class SplashPage {
       this.authService.autoLogin().then(res => {
         if(res) {
           if(res[0] == 'OK') {
-            this.LoadUserSetting(this.authService.getUserEmail()); 
+            this.LoadUserSetting(this.authService.getUserEmail()).then(() => {
+              this.navCtrl.setRoot(TabsPage);
+            }); 
+          }
+          else {
+            this.navCtrl.setRoot(RegisterPage);
           }
         }
-        this.navCtrl.setRoot(TabsPage);
+        else {
+          this.navCtrl.setRoot(RegisterPage);
+        }
       });
     }
   }
 
-  LoadUserSetting(email: string) {
+  async LoadUserSetting(email: string) {
     //load user
     this.userService.getUserID(email).subscribe(res => {
       res.map(data => {

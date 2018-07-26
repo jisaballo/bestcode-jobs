@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { App } from 'ionic-angular/components/app/app';
 
 import { ProfilePage } from '../profile/profile';
 import { UserServiceProvider, UserExt } from '../../providers/user-service/user-service';
@@ -8,6 +7,7 @@ import { SupportPage } from '../support/support';
 import { LoginPage } from '../login/login';
 import { NotificationPage } from '../notification/notification';
 import { FavoritesPage } from '../favorites/favorites';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
 @IonicPage()
 @Component({
@@ -20,7 +20,8 @@ export class SettingsPage {
   urlImageProfile: string;
   notification: number;
 
-  constructor(private app: App, public userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public userService: UserServiceProvider, public navCtrl: NavController, 
+    public navParams: NavParams, private authService: AuthServiceProvider) {
     this.notification = 0;
   }
   ionViewWillEnter() {
@@ -48,7 +49,10 @@ export class SettingsPage {
   }
 
   logOut() {
-    this.app.getRootNav().setRoot(LoginPage);
+    this.authService.logout().then(res => {
+      console.log(res);
+      this.navCtrl.setRoot(LoginPage);
+    });
   }
 
   incrementBadgeCount() {
@@ -61,5 +65,10 @@ export class SettingsPage {
 
   deleteBadgeCount() {
     this.notification = 0;
+  }
+
+  openPolicy() {
+    var   features = "scrollbars=yes+,innerHeight=400+,innerWidth=800+,screenX=200+,screenY=400";
+    window.open('https://bestcode-a6088.firebaseapp.com/', '_self', features);
   }
 }

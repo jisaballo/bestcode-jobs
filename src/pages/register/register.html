@@ -1,25 +1,22 @@
 <ion-content>
+  
+  <div padding>
+    <ion-item no-lines class="register_title">
+      <ion-title text-center>BestCode Jobs</ion-title>
+    </ion-item>
+  </div>
 
-  <div class="form_login" padding>
+  <div padding>
 
     <ion-item>
-      <ion-label stacked color="primary">Correo electrónico</ion-label>
+      <ion-label stacked>Correo electrónico</ion-label>
       <ion-input type="text" [(ngModel)]="email"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label stacked color="primary">Nombre</ion-label>
-      <ion-input type="text" [(ngModel)]="username"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label stacked color="primary">Contraseña</ion-label>
-      <ion-input type="password" [(ngModel)]="password"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label stacked color="primary">Repetir contraseña</ion-label>
-      <ion-input type="password" [(ngModel)]="repassword"></ion-input>
+      <ion-label stacked>Contraseña</ion-label>
+      <ion-input [type]="passwordType" [(ngModel)]="password"></ion-input>
+      <ion-icon (click)='hideShowPassword()' class="icon-eye" item-end [name]="passwordIcon"></ion-icon>
     </ion-item>
 
     <ion-item ion-text text-wrap>Al crear una cuenta acepto los terminos y condiciones de BestCode Jobs</ion-item>
@@ -28,10 +25,10 @@
       <ion-checkbox color="dark" checked="true"></ion-checkbox>
       <button ion-button item-end clear (click)="terms()">Terminos y Condiciones</button>
     </ion-item>
+
     <button ion-button full (click)="register()">Continuar</button>
-    <ion-item no-lines text-right>
-      <ion-label>Ya tienes cuenta?</ion-label>
-      <button ion-button item-end clear (click)="login()">Ingresar</button>
-    </ion-item>
+
+    <button ion-button full clear (click)="login()">Iniciar sesión</button>
+
   </div>
 </ion-content>

@@ -31,7 +31,7 @@
     <hr>
   </div>
   <ion-list no-lines>
-    <ion-item *ngFor="let skill of skills; let i = index">
+    <ion-item *ngFor="let skill of user.skills; let i = index">
       {{skill.name}}
       <p>Nivel: {{skill.level}}</p>
       <ion-icon color="danger" name="close-circle" item-end (click)="deleteSkill(i)"></ion-icon>
