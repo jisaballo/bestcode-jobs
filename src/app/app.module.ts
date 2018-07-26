@@ -5,6 +5,7 @@ import { MyApp } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -66,6 +67,7 @@ import { LogsFirebase } from '../models/log';
     HttpClientModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
+    IonicStorageModule.forRoot(),
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,

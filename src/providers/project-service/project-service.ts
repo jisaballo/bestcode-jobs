@@ -62,7 +62,6 @@ export class ProjectServiceProvider {
     this.projects = [];
     await this.projectFirebase.getAllProject().subscribe(res => {
       res.map(a => {
-
         let data = a.payload.doc.data() as ProjectExt;
         data.id = a.payload.doc.id;
 
@@ -87,7 +86,7 @@ export class ProjectServiceProvider {
               data.ownerUrlImage = res;
             });
           }
-        });
+        }); 
 
         this.projects.push(data);
       })

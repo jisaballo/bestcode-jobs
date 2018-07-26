@@ -5,6 +5,7 @@ import { TabsPage } from '../tabs/tabs';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { UserExt } from '../../providers/user-service/user-service';
 import { AlertController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -15,7 +16,8 @@ export class LoginPage {
 
   user = {} as UserExt;
 
-  constructor(private authService: AuthServiceProvider, public navCtrl: NavController, public alertCtrl: AlertController, public navParams: NavParams) {
+  constructor(private authService: AuthServiceProvider, public navCtrl: NavController, 
+    public alertCtrl: AlertController, public navParams: NavParams, private storage: Storage) {
     
   }
 
@@ -24,7 +26,6 @@ export class LoginPage {
   }
 
   async login(user: UserExt) {
-    
     let result = await this.authService.login(user.email, user.password);
     if(result[0]== 'OK') {
       this.navCtrl.setRoot(TabsPage);

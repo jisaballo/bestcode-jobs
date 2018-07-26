@@ -63,7 +63,12 @@ export interface User {
     }
 
     getUserID(email: string) {
-        return this.afs.collection('users', ref => ref.where('email','==', email)).snapshotChanges();
+        try {
+            return this.afs.collection('users', ref => ref.where('email','==', email)).snapshotChanges();
+        }
+        catch(e) {
+            console.error(e);
+        }
     }
 
     addUser(parameter: any) {

@@ -4,6 +4,7 @@ import { AngularFireAuth} from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { User } from '@firebase/auth-types';
 import { LogsServiceProvider } from '../logs-service/logs-service';
+import { Storage } from '@ionic/storage';
 
 @Injectable()
 export class AuthServiceProvider {
@@ -13,11 +14,12 @@ export class AuthServiceProvider {
 
   currentUser: User;
   userEmail: string;
-  public state: boolean;
+  public state: boolean = false;
 
-  constructor(private afAuth: AngularFireAuth, private afStore: AngularFirestore, public http: HttpClient, private logsService: LogsServiceProvider) {
+  constructor(private afAuth: AngularFireAuth, private afStore: AngularFirestore, public http: HttpClient, 
+    private logsService: LogsServiceProvider, private storage: Storage) {
+    console.log('Hello AuthServiceProvider Provider');
     this.logged = false;
-    this.state = false;
     this.userCollection = this.afStore.collection('users');
     this.userEmail = '';
   }
@@ -28,6 +30,7 @@ export class AuthServiceProvider {
       this.userEmail = email;
       const result = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
       if(result) {
+        this.saveCredentials(email,password);
         this.currentUser = await this.afAuth.auth.currentUser;
         this.currentUser.sendEmailVerification();
         this.logged = true;
@@ -35,29 +38,45 @@ export class AuthServiceProvider {
       }
     }
     catch(e) {
-      let text = 'code: ' + e['code'] + ' message: ' + e['message'] + ' user: ' + email;
-      this.logsService.addToAuth(text,'error');
       console.error(e);
       return e;
     }
   }
 
+  
+  autoLogin(){
+    return this.storage.get('email').then((email) => {
+      if(email) {
+        return this.storage.get('password').then((password) => {
+          if(password) {
+            return this.login(email,password).then(res => {
+              return res;
+            });
+          }
+        });
+      }
+      else {
+        return null;
+      }
+    });
+  }
+
   // Login a user
   // Normally make a server request and store
   // e.g. the auth token
-  async login(email, password) {
+  async login(email: string, password: string) {
     let result: string[] = [];
     try {
-      await this.afAuth.auth.signInWithEmailAndPassword(email, password);
-      result.push('OK');
-      result.push('Succes');
-      this.logged = true;
-      this.userEmail = email;
+      await this.afAuth.auth.signInWithEmailAndPassword(email, password).then(res => {
+        this.saveCredentials(email, password);
+        result.push('OK');
+        result.push('Succes');
+        this.logged = true;
+        this.userEmail = email;
+      });
     }
     catch(e) {
-      let text = 'code: ' + e['code'] + ' message: ' + e['message'] + ' user: ' + email;
-      this.logsService.addToAuth(text,'error');
-
+      console.log(e);
       result.push(e.code);
       if(e.code == 'auth/invalid-email') {
         result.push('Dirección de correo incorrecta');
@@ -69,7 +88,6 @@ export class AuthServiceProvider {
         result.push(e.message);
       }
     }
-    this.state = true;
     return result;
   }
  
@@ -96,5 +114,18 @@ export class AuthServiceProvider {
 
   getCredentials(uID: string) {
     return this.afStore.collection('credentials', ref => ref.where('token','==', uID)).snapshotChanges();
+  }
+
+  saveCredentials(correo: string, contrasena: string) {
+    this.storage.get('email').then((email) => {
+      if(!email) {
+        this.storage.set('email', correo);
+        this.storage.get('password').then((password) => {
+          if(!password) {
+            this.storage.set('password', contrasena);
+          }
+        });
+      }
+    });
   }
 }

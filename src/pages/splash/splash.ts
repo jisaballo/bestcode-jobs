@@ -12,13 +12,6 @@ import { NotifyServiceProvider } from '../../providers/notify-service/notify-ser
 import { FavoriteServiceProvider } from '../../providers/favorite-service/favorite-service';
 import { LogsServiceProvider } from '../../providers/logs-service/logs-service';
 
-/**
- * Generated class for the SplashPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-splash',
@@ -31,87 +24,50 @@ export class SplashPage {
     private userService: UserServiceProvider, private notifyService: NotifyServiceProvider, private favoriteService: FavoriteServiceProvider,
     private logService: LogsServiceProvider) {
 
-    this.Load();
+    this.OnLoad();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SplashPage');
   }
 
-  ionViewDidEnter() {
-    this.call();
-  }
-
-  call() {
+  /* call() {
     timer(2000).subscribe(() => {
       if(this.authService.state == true) {
         this.navCtrl.setRoot(TabsPage);
       }
       else {
-        this.ionViewDidEnter();
+        this.OnLoad();
       }
     });
+  } */
+
+  OnLoad() {
+    let text: string;
+    if(!this.authService.authenticated()) {
+      this.authService.autoLogin().then(res => {
+        if(res) {
+          if(res[0] == 'OK') {
+            this.LoadUserSetting(this.authService.getUserEmail()); 
+          }
+        }
+        this.navCtrl.setRoot(TabsPage);
+      });
+    }
   }
 
-  Load() {
-    let text: string;
-    
-    this.uniqueDeviceID.get().then(uuid => {
-      text = 'Get phone uuid: ' + uuid;
-      this.logService.addToAuth(text, 'Information');
-      this.authService.getCredentials(uuid).subscribe(res => {
-        res.map(element => {
-          let credentials = element.payload.doc.data();
+  LoadUserSetting(email: string) {
+    //load user
+    this.userService.getUserID(email).subscribe(res => {
+      res.map(data => {
+        let userID = data.payload.doc.id;
 
-          text = 'Get credentials for user: ' + credentials['username'];
-          this.logService.addToAuth(text, 'Information');
-
-          this.authService.login(credentials['username'], credentials['password']).then(res => {
-            if(res[0] == 'OK') {
-              //load user
-              this.userService.getUserID(credentials['username']).subscribe(res => {
-                res.map(data => {
-                  let userID = data.payload.doc.id;
-
-                  this.userService.LoadProfile(userID);
-                  this.notifyService.loadNotification(userID);
-                  this.favoriteService.loadFavorites(userID);
-                  this.logService.loadLogs(userID);
-                  this.userService.loadAllUser();
-                })
-              });
-            }
-          });
-        })
-      });
-    })
-    .catch(error => {
-      text = 'Error trying auto loading ' + error;
-      this.logService.addToAuth(text, 'error');
-      //for testing
-      let uuid = '8a34a38a-3f37-6950-3556-120896651718';
-      this.authService.getCredentials(uuid).subscribe(res => {
-        res.map(element => {
-          let credentials = element.payload.doc.data();
-
-          this.authService.login(credentials['username'], credentials['password']).then(res => {
-            if(res[0] == 'OK') {
-              //load user
-              this.userService.getUserID(credentials['username']).subscribe(res => {
-                res.map(data => {
-                  let userID = data.payload.doc.id;
-                  
-                  this.userService.LoadProfile(userID);
-                  this.notifyService.loadNotification(userID);
-                  this.favoriteService.loadFavorites(userID);
-                  this.logService.loadLogs(userID);
-                  this.userService.loadAllUser();
-                })
-              });
-            }
-          });
-        })
-      });
+        this.userService.LoadProfile(userID);
+        this.notifyService.loadNotification(userID);
+        this.favoriteService.loadFavorites(userID);
+        this.logService.loadLogs(userID);
+        this.userService.loadAllUser();
+      })
     });
   }
 

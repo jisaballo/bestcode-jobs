@@ -12,13 +12,9 @@ import { LoginPage } from '../login/login';
 })
 export class HomePage {
 
-  message : string;
-
   projects: ProjectExt[];
   
-  constructor(public projectService: ProjectServiceProvider, private authService: AuthServiceProvider, 
-    public navCtrl: NavController) {
-    this.message = 'Fail';
+  constructor(public projectService: ProjectServiceProvider, private authService: AuthServiceProvider, public navCtrl: NavController) {
   }
 
   ionViewWillEnter() {
