@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ViewController } from 'ionic-angular/navigation/view-controller';
-import { timer } from 'rxjs/Observable/timer';
 import { TabsPage } from '../tabs/tabs';
-import { UniqueDeviceID } from '@ionic-native/unique-device-id';
 
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { UserServiceProvider } from '../../providers/user-service/user-service';
@@ -22,9 +20,8 @@ export class SplashPage {
   showSplash = true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public splashScreen: SplashScreen, 
-    public viewCtrl: ViewController, private authService: AuthServiceProvider, private uniqueDeviceID: UniqueDeviceID,
-    private userService: UserServiceProvider, private notifyService: NotifyServiceProvider, private favoriteService: FavoriteServiceProvider,
-    private logService: LogsServiceProvider) {
+    public viewCtrl: ViewController, private authService: AuthServiceProvider, private userService: UserServiceProvider, 
+    private notifyService: NotifyServiceProvider, private favoriteService: FavoriteServiceProvider, private logService: LogsServiceProvider) {
 
     this.OnLoad();
   }
@@ -34,7 +31,6 @@ export class SplashPage {
   }
 
   OnLoad() {
-    let text: string;
     if(!this.authService.authenticated()) {
       this.authService.autoLogin().then(res => {
         if(res) {

@@ -5,7 +5,6 @@ import { TabsPage } from '../tabs/tabs';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { UserExt } from '../../providers/user-service/user-service';
 import { AlertController } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -17,7 +16,7 @@ export class LoginPage {
   user = {} as UserExt;
 
   constructor(private authService: AuthServiceProvider, public navCtrl: NavController, 
-    public alertCtrl: AlertController, public navParams: NavParams, private storage: Storage) {
+    public alertCtrl: AlertController, public navParams: NavParams) {
     
   }
 
