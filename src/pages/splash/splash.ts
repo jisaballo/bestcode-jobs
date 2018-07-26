@@ -19,6 +19,8 @@ import { LogsServiceProvider } from '../../providers/logs-service/logs-service';
 })
 export class SplashPage {
 
+  showSplash = true;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public splashScreen: SplashScreen, 
     public viewCtrl: ViewController, private authService: AuthServiceProvider, private uniqueDeviceID: UniqueDeviceID,
     private userService: UserServiceProvider, private notifyService: NotifyServiceProvider, private favoriteService: FavoriteServiceProvider,
@@ -30,17 +32,6 @@ export class SplashPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad SplashPage');
   }
-
-  /* call() {
-    timer(2000).subscribe(() => {
-      if(this.authService.state == true) {
-        this.navCtrl.setRoot(TabsPage);
-      }
-      else {
-        this.OnLoad();
-      }
-    });
-  } */
 
   OnLoad() {
     let text: string;
@@ -67,6 +58,8 @@ export class SplashPage {
         this.favoriteService.loadFavorites(userID);
         this.logService.loadLogs(userID);
         this.userService.loadAllUser();
+
+        this.showSplash = false
       })
     });
   }
