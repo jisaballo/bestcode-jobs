@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,AlertController } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
-import { UserExt, ExperienceExt, SkillExt, UserServiceProvider } from '../../providers/user-service/user-service';
-import { TabsPage } from '../tabs/tabs';
+import { UserExt, ExperienceExt, SkillExt } from '../../providers/user-service/user-service';
 import { TermsPage } from '../terms/terms';
 import { LoginPage } from '../login/login';
 import { NewAccountPage } from '../new-account/new-account';
@@ -25,7 +24,7 @@ export class RegisterPage {
   passwordType: string = 'password';
   passwordIcon: string = 'eye-off';
 
-  constructor(private authService: AuthServiceProvider, private userService: UserServiceProvider, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+  constructor(private authService: AuthServiceProvider, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
     this.experience = [];
     this.skills =[];
     this.user = {id:'', username:'', uriImage: '', urlImage: '', profesion: '', email:'', password:'', phone: '', jobAvailability: '', jobInterested: '', jobSalary: '', jobSalaryFrecuency: '', about: '', country: '', experience: this.experience, skills: this.skills};

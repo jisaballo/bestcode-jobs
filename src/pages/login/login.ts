@@ -33,7 +33,7 @@ export class LoginPage {
       this.navCtrl.setRoot(TabsPage);
     }
     else {
-      this.showAlert(result[1]);
+      this.showAlert('Error', result[1]);
     }
   }
 
@@ -41,9 +41,9 @@ export class LoginPage {
     this.navCtrl.push(RegisterPage);
   }
 
-  showAlert(message: string) {
+  showAlert(title: string, message: string) {
     const alert = this.alertCtrl.create({
-      title: 'Error!',
+      title: title,
       subTitle: message,
       buttons: ['OK']
     });
@@ -61,10 +61,11 @@ export class LoginPage {
 
   resetPassword() {
     if(this.user.email == '' || typeof this.user.email == 'undefined') {
-      this.showAlert('Introduzca su dirección de correo');
+      this.showAlert('Error', 'Introduzca su dirección de correo');
     }
     else {
       this.authService.resetPassword(this.user.email);
+      this.showAlert('Listo', 'Se ha enviado a su correo un link para restablecer su contraseña');
     }
   }
 
