@@ -73,9 +73,8 @@ export class RegisterPage {
   }
 
   hideShowPassword() {
-    console.log('click');
     this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
-    this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
+    this.passwordIcon = this.passwordIcon === 'eye' ? 'eye-off' : 'eye';
   }
 
 }

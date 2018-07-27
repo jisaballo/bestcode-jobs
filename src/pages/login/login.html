@@ -15,7 +15,9 @@
     <ion-item>
       <ion-label stacked>Contraseña</ion-label>
       <ion-input [type]="passwordType" [(ngModel)]="user.password"></ion-input>
-      <ion-icon (click)='hideShowPassword()' class="icon-eye" item-end [name]="passwordIcon"></ion-icon>
+      <button ion-button clear color="dark" item-right (click)='hideShowPassword()'>
+        <ion-icon [name]="passwordIcon"></ion-icon>
+      </button>
     </ion-item>
 
     <ion-item no-lines (click)="resetPassword()">
