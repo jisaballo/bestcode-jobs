@@ -138,4 +138,10 @@ export class AuthServiceProvider {
       }
     });
   }
+
+  resetPassword(email: string) {
+    this.afAuth.auth.sendPasswordResetEmail(email)
+    .then()
+    .catch(e => console.error(e));
+  }
 }

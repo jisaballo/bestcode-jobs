@@ -60,4 +60,13 @@ export class LoginPage {
     this.navCtrl.pop();
   }
 
+  resetPassword() {
+    if(this.user.email == '' || typeof this.user.email == 'undefined') {
+      this.showAlert('Introduzca su dirección de correo');
+    }
+    else {
+      this.authService.resetPassword(this.user.email);
+    }
+  }
+
 }
