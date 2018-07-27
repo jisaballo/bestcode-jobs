@@ -54,17 +54,24 @@ export class SplashPage {
   async LoadUserSetting(email: string) {
     //load user
     this.userService.getUserID(email).subscribe(res => {
-      res.map(data => {
-        let userID = data.payload.doc.id;
-
-        this.userService.LoadProfile(userID);
-        this.notifyService.loadNotification(userID);
-        this.favoriteService.loadFavorites(userID);
-        this.logService.loadLogs(userID);
-        this.userService.loadAllUser();
-
-        this.showSplash = false
-      })
+      if(res.length > 0) {
+        res.map(data => {
+          let userID = data.payload.doc.id;
+  
+          this.userService.LoadProfile(userID);
+          this.notifyService.loadNotification(userID);
+          this.favoriteService.loadFavorites(userID);
+          this.logService.loadLogs(userID);
+          this.userService.loadAllUser();
+  
+          this.showSplash = false
+        })
+      }
+      else {
+        this.authService.deleteUser().then(() => {
+          this.navCtrl.setRoot(RegisterPage);
+        });
+      }
     });
   }
 

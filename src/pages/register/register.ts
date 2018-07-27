@@ -5,6 +5,7 @@ import { UserExt, ExperienceExt, SkillExt, UserServiceProvider } from '../../pro
 import { TabsPage } from '../tabs/tabs';
 import { TermsPage } from '../terms/terms';
 import { LoginPage } from '../login/login';
+import { NewAccountPage } from '../new-account/new-account';
 
 @IonicPage()
 @Component({
@@ -19,7 +20,6 @@ export class RegisterPage {
   alert: any;
 
   email: string;
-  username: string;
   password: string;
 
   passwordType: string = 'password';
@@ -30,20 +30,13 @@ export class RegisterPage {
     this.skills =[];
     this.user = {id:'', username:'', uriImage: '', urlImage: '', profesion: '', email:'', password:'', phone: '', jobAvailability: '', jobInterested: '', jobSalary: '', jobSalaryFrecuency: '', about: '', country: '', experience: this.experience, skills: this.skills};
   }
+  ionViewDidEnter() {
+
+  }
 
   register() {
     try {
-      this.user.email = this.email;
-      this.user.password = this.password;
-      if(this.username == '') {
-        this.user.username = this.user.email.substring(0, this.user.email.lastIndexOf("@"));
-      }
-      else {
-        this.user.username = this.username;
-      }
-      
-      const result = this.authService.register(this.user.email, this.user.password);
-      this.userService.addUser(this.user);
+      const result = this.authService.register(this.email, this.password);
       result.then(a => {
         console.log(a);
         if(a.code == 'auth/email-already-in-use') {
@@ -51,7 +44,10 @@ export class RegisterPage {
           this.alert.present();
         }
         else {
-          this.navCtrl.setRoot(TabsPage);
+          this.user.username = this.user.email.substring(0, this.user.email.lastIndexOf("@"));
+          this.user.email = this.email;
+          let new_user = this.user;
+          this.navCtrl.push(NewAccountPage, {new_user});
         }
       })
     }

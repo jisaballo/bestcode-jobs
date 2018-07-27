@@ -9,8 +9,7 @@ import { Storage } from '@ionic/storage';
 @Injectable()
 export class AuthServiceProvider {
 
-  userCollection: AngularFirestoreCollection<any>;
-  logged: boolean;
+  logged: boolean = false;
 
   currentUser: User;
   userEmail: string;
@@ -20,7 +19,6 @@ export class AuthServiceProvider {
     private logsService: LogsServiceProvider, private storage: Storage) {
     console.log('Hello AuthServiceProvider Provider');
     this.logged = false;
-    this.userCollection = this.afStore.collection('users');
     this.userEmail = '';
   }
 
@@ -43,7 +41,12 @@ export class AuthServiceProvider {
     }
   }
 
-  
+  async deleteUser() {
+    return this.currentUser.delete().then(res => {
+      return res;
+    })
+  }
+
   autoLogin(){
     return this.storage.get('email').then((email) => {
       if(email) {
@@ -72,6 +75,7 @@ export class AuthServiceProvider {
         result.push('OK');
         result.push('Succes');
         this.logged = true;
+        this.currentUser = this.afAuth.auth.currentUser;
         this.userEmail = email;
       });
     }

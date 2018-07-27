@@ -17,13 +17,18 @@ export class NotifyServiceProvider {
   }
 
   async loadNotification(userID: string) {
-    await this.notifyFirebase.getAllOwnNotification(userID).subscribe(res => {
+    await this.notifyFirebase.getAllOwnNotification(userID).then(res => {
       this.notification = [];
-      if(typeof res['notify'] != 'undefined') {
-        res['notify'].map(data => {
-          let event = data as NotifyExt;
-          this.notification.push(event);
-        })
+      if(typeof res != 'undefined') {
+        if(typeof res['notify'] != 'undefined') {
+          res['notify'].map(data => {
+            let event = data as NotifyExt;
+            this.notification.push(event);
+          })
+        }
+        else {
+          this.notifyFirebase.updateNotification([]);
+        }
       }
       else {
         this.notifyFirebase.updateNotification([]);

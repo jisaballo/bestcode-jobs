@@ -1,0 +1,61 @@
+<ion-content padding>
+  <ion-slides pager>
+
+    <ion-slide>
+      <h2>Informacion personal</h2>
+      <span>Ingrese su nombre y profesión, será la primera información que verán los usuarios al ver su perfil.</span>
+      <ion-list>
+        <ion-item>
+          <ion-label stacked>Nombre</ion-label>
+          <ion-input [(ngModel)]="user.username"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Profesión</ion-label>
+          <ion-input [(ngModel)]="user.profesion"></ion-input>
+        </ion-item>
+        
+        <ion-list no-lines>
+          <ion-item>
+            <ion-label>Ubicación</ion-label>
+            <ion-select [(ngModel)]="user.country">
+              <ion-option value="Ecuador">Ecuador</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+      </ion-list>
+      <button ion-button large clear icon-end (click)="goToSlide(1)">
+        Continuar
+        <ion-icon name="ios-arrow-forward"></ion-icon>
+      </button>
+    </ion-slide>
+
+    <ion-slide>
+      <h2>Contacto</h2>
+      <div>
+        <ion-item>
+          <ion-label stacked>Telefono</ion-label>
+          <ion-input [(ngModel)]="user.phone"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label stacked>Correo</ion-label>
+          <ion-input disabled="true" [(ngModel)]="user.email"></ion-input>
+        </ion-item>
+      </div>
+      <button ion-button large clear icon-end (click)="goToSlide(2)">
+        Continuar
+        <ion-icon name="ios-arrow-forward"></ion-icon>
+      </button>
+    </ion-slide>
+    
+    <ion-slide>
+      <h2>Listo...</h2>
+      <p>Antes de finalizar le recomendamos llenar la información sobre sus habilidades y experiencias en 
+        su perfil. Le permitirá que los demás usuarios conoscan su trayectoria laboral.</p>
+      <button ion-button large clear icon-end (click)="createUser()">
+        Finalizar
+        <ion-icon name="ios-arrow-forward"></ion-icon>
+      </button>
+    </ion-slide>
+
+  </ion-slides>
+</ion-content>

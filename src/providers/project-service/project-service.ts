@@ -76,19 +76,20 @@ export class ProjectServiceProvider {
 
         //add user reference for project
         this.userService.getProjectUser(data.userID).subscribe(res => {
-          let user = res.payload.data() as UserExt;
-          user.id = res.payload.id;
-          data.ownerName = user.username;
-          data.ownerProfesion = user.profesion;
-          data.ownerUrlImage = 'assets/imgs/default_profile.png'; //imagen por defecto
-          if(typeof user.urlImage != 'undefined' && user.urlImage != '') {
-            this.userService.getUrlImage(user.urlImage).subscribe(res => {
-              data.ownerUrlImage = res;
-            });
+          if(res.payload.exists) { // el usuario no existe no agrego el proyecto de la lista
+            let user = res.payload.data() as UserExt;
+            user.id = res.payload.id;
+            data.ownerName = user.username;
+            data.ownerProfesion = user.profesion;
+            data.ownerUrlImage = 'assets/imgs/default_profile.png'; //imagen por defecto
+            if(typeof user.urlImage != 'undefined' && user.urlImage != '') {
+              this.userService.getUrlImage(user.urlImage).subscribe(res => {
+                data.ownerUrlImage = res;
+              });
+            }
+            this.projects.push(data);
           }
         }); 
-
-        this.projects.push(data);
       })
     });
     

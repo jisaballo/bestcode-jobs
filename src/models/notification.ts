@@ -28,8 +28,13 @@ export class NotificationFirebase {
 
     }
 
-    getAllOwnNotification(userID: string) {
+    async getAllOwnNotification(userID: string) {
         this.notifyDoc = this.notifyCol.doc(userID);
+        await this.notifyDoc.valueChanges().subscribe(res => {
+            if(typeof res == 'undefined') {
+                this.notifyDoc.set({ notify: []});
+            }
+        });
         return this.notifyDoc.valueChanges();
     }
 

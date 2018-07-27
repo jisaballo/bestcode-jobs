@@ -32,6 +32,7 @@ import { NotificationPageModule } from '../pages/notification/notification.modul
 import { FavoritesPageModule } from '../pages/favorites/favorites.module';
 import { SplashPageModule } from '../pages/splash/splash.module';
 import { ContactPageModule } from '../pages/contact/contact.module';
+import { NewAccountPageModule } from '../pages/new-account/new-account.module';
 
 import { FIREBASE_CONFIG } from './app.firebase.config';
 import { AngularFireStorageModule } from 'angularfire2/storage';
@@ -87,7 +88,8 @@ import { LogsFirebase } from '../models/log';
     SettingsPageModule,
     SplashPageModule,
     SupportPageModule,
-    TermsPageModule
+    TermsPageModule,
+    NewAccountPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
