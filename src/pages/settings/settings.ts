@@ -8,6 +8,7 @@ import { LoginPage } from '../login/login';
 import { NotificationPage } from '../notification/notification';
 import { FavoritesPage } from '../favorites/favorites';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { MessagesPage } from '../messages/messages';
 
 @IonicPage()
 @Component({
@@ -70,5 +71,9 @@ export class SettingsPage {
   openPolicy() {
     var   features = "scrollbars=yes+,innerHeight=400+,innerWidth=800+,screenX=200+,screenY=400";
     window.open('https://bestcode-a6088.firebaseapp.com/', '_self', features);
+  }
+
+  openChat() {
+    this.navCtrl.push(MessagesPage);
   }
 }

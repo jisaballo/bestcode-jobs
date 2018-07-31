@@ -1,7 +1,7 @@
 <ion-content>
   <div *ngIf="user">
     <div class="div_image">
-      <button ion-button icon-only clear color="light" (click)="closePage()">
+      <button ion-button icon-only clear color="dark" (click)="closePage()">
         <ion-icon name="ios-arrow-back"></ion-icon>
       </button>
       <img (click)="modifyPicture()" class="profile_img" src="{{user.uriImage}}">
