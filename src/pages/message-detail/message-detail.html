@@ -1,21 +1,36 @@
-<!--
-  Generated template for the MessageDetailPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>messageDetail</ion-title>
+  <ion-navbar hideBackButton>
+    <ion-buttons left>
+      <button ion-button icon-only (click)="backButtonClick()">
+        <ion-icon name="ios-arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-item no-lines (click)="openProfile()" *ngIf="contact">
+      <ion-avatar item-start>
+        <img src="{{contact.uriImage}}">
+      </ion-avatar>
+      <h2>{{contact.username}}</h2>
+      <p>{{contact.profesion}}</p>
+    </ion-item>
+    <ion-buttons right>
+      <button ion-button icon-only>
+        <ion-icon name="ios-more"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
-
-<ion-content padding>
-
+<ion-content>
+  <ion-list no-lines>
+    <ion-item *ngFor="let message of messages" text-wrap>
+      <ion-avatar item-start>
+        <img src="{{user.uriImage}}">
+      </ion-avatar>
+      <div class="speech-bubble-left">{{message.message}}</div>
+    </ion-item>
+  </ion-list>
 </ion-content>
+
 <ion-footer>
   <ion-toolbar>
     <ion-input [(ngModel)]="newMessage" placeholder="Escribe tu mensaje..."></ion-input>

@@ -75,7 +75,7 @@ export class ProjectServiceProvider {
         data.timeElapsed = this.dateService.differenceTime(data.pubDate);
 
         //add user reference for project
-        this.userService.getProjectUser(data.userID).subscribe(res => {
+        this.userService.getUser(data.userID).subscribe(res => {
           if(res.payload.exists) { // el usuario no existe no agrego el proyecto de la lista
             let user = res.payload.data() as UserExt;
             user.id = res.payload.id;

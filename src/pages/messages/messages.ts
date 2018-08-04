@@ -1,13 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MessageDetailPage } from '../message-detail/message-detail';
-
-/**
- * Generated class for the MessagesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { MessageServiceProvider, chatExt } from '../../providers/message-service/message-service';
+import { UserServiceProvider } from '../../providers/user-service/user-service';
 
 @IonicPage()
 @Component({
@@ -16,14 +11,25 @@ import { MessageDetailPage } from '../message-detail/message-detail';
 })
 export class MessagesPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  chats: chatExt[];
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+    private chatService: MessageServiceProvider, private userService: UserServiceProvider) {
+  }
+
+  ionViewWillEnter() {
+    this.chats = []
+    this.chatService.loadChat().then(response => {
+      this.chats = response;
+      console.log(this.chats);
+    });
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MessagesPage');
   }
 
-  openConversation() {
-    this.navCtrl.push(MessageDetailPage);
+  openConversation(chat: chatExt) {
+    this.navCtrl.push(MessageDetailPage, {chat});
   }
  }

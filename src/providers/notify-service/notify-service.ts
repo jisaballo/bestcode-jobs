@@ -41,7 +41,7 @@ export class NotifyServiceProvider {
     return this.notification;
   }
 
-  applyProject(project: ProjectExt) {
+  async applyProject(project: ProjectExt) {
 
     let new_notify: NotifyExt;
     new_notify = {

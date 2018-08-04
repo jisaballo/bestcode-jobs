@@ -15,6 +15,7 @@ export interface User {
     jobSalaryFrecuency: string;
     experience: Array<Experience>;
     skills: Array<Skill>;
+    chats: string[];
   }
 
   export interface Experience {
@@ -57,7 +58,8 @@ export interface User {
             jobSalary: parameter.jobSalary,
             jobSalaryFrecuency: parameter.jobSalaryFrecuency,
             experience: parameter.experience,
-            skills: parameter.skills
+            skills: parameter.skills,
+            chats: parameter.chats
         }
         return firebase_user;
     }
@@ -77,7 +79,7 @@ export interface User {
         this.usersCollection.add(user);
     }
 
-    getProjectUser(userID: string) {
+    getUser(userID: string) {
         return this.usersCollection.doc(userID).snapshotChanges();
     }
 
@@ -93,5 +95,10 @@ export interface User {
     UpdateProfile(parameter: any) {
         let user: User = this.convertUsers(parameter);
         this.profileDoc.update(user);
+    }
+
+    UpdateUser(parameter: any) {
+        let user: User = this.convertUsers(parameter);
+        this.usersCollection.doc(parameter.id).update(user);
     }
   }

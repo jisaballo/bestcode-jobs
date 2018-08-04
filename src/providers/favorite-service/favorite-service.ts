@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ProjectExt } from '../project-service/project-service';
 import { FavoriteFirebase, Favorite } from '../../models/favorites';
 import { UserExt } from '../user-service/user-service';
+import { Subscription } from 'rxjs/internal/Subscription';
 
 export interface FavoriteExt extends Favorite {
 
@@ -14,12 +15,15 @@ export class FavoriteServiceProvider {
   favoritesProject: FavoriteExt[];
   favoritesUser: FavoriteExt[];
 
+  //
+  favoriteListener: Subscription;
+
   constructor(public http: HttpClient, private favoriteFirebase: FavoriteFirebase) {
     console.log('Hello FavoriteServiceProvider Provider');
   }
 
   async loadFavorites(userID: string) {
-    await this.favoriteFirebase.loadFavorites(userID).subscribe(res => {
+    this.favoriteFirebase.loadFavorites(userID).subscribe(res => {
       this.favoritesProject = [];
       this.favoritesUser = [];
       if(typeof res != 'undefined') {

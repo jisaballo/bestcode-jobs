@@ -15,12 +15,12 @@
 
 <ion-content>
   <ion-list>
-    <ion-item (click)="openConversation()">
+    <ion-item *ngFor="let chat of chats" (click)="openConversation(chat)">
       <ion-avatar item-start>
-        <img src="img/avatar-cher.png">
+        <img src="{{chat.uriImagen}}">
       </ion-avatar>
-      <h2>Cher</h2>
-      <p>Ugh. As if.</p>
+      <h2>{{chat.contactName}}</h2>
+      <p>{{chat.lastMessage}}</p>
     </ion-item>
   </ion-list>
 </ion-content>

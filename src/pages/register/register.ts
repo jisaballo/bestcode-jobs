@@ -27,7 +27,7 @@ export class RegisterPage {
   constructor(private authService: AuthServiceProvider, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
     this.experience = [];
     this.skills =[];
-    this.user = {id:'', username:'', uriImage: '', urlImage: '', profesion: '', email:'', password:'', phone: '', jobAvailability: '', jobInterested: '', jobSalary: '', jobSalaryFrecuency: '', about: '', country: '', experience: this.experience, skills: this.skills};
+    this.user = {id:'', username:'', uriImage: '', urlImage: '', chats: [], profesion: '', email:'', password:'', phone: '', jobAvailability: '', jobInterested: '', jobSalary: '', jobSalaryFrecuency: '', about: '', country: '', experience: this.experience, skills: this.skills};
   }
   ionViewDidEnter() {
 

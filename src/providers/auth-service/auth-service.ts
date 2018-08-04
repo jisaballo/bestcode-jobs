@@ -22,6 +22,10 @@ export class AuthServiceProvider {
     this.userEmail = '';
   }
 
+  OnDestroy() {
+
+  }
+
   //register
   async register(email: string, password: string) {
     try {
@@ -47,7 +51,7 @@ export class AuthServiceProvider {
     })
   }
 
-  autoLogin(){
+  async autoLogin(){
     return this.storage.get('email').then((email) => {
       if(email) {
         return this.storage.get('password').then((password) => {
@@ -120,10 +124,6 @@ export class AuthServiceProvider {
 
   getUserEmail() {
     return this.userEmail;
-  }
-
-  getCredentials(uID: string) {
-    return this.afStore.collection('credentials', ref => ref.where('token','==', uID)).snapshotChanges();
   }
 
   saveCredentials(correo: string, contrasena: string) {

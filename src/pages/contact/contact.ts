@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UserExt } from '../../providers/user-service/user-service';
 import { DateServiceProvider } from '../../providers/date-service/date-service';
 import { FavoriteServiceProvider } from '../../providers/favorite-service/favorite-service';
+import { MessageDetailPage } from '../message-detail/message-detail';
 
 @IonicPage()
 @Component({
@@ -58,7 +59,6 @@ export class ContactPage {
 
     //evaluar favorito
     this.favoriteService.getFavoriteUsers().map(element => {
-      console.log(element.id + ' ' + this.userDetail.id);
       if(element.id == this.userDetail.id) {
         this.isFavorite = true;
       }
@@ -117,5 +117,11 @@ export class ContactPage {
       this.isFavorite = true;
       this.favoriteService.addUserFavorite(this.userDetail);
     }
+  }
+
+  sendMessage() {
+    this.setPop = false;
+    let user = this.userDetail;
+    this.navCtrl.push(MessageDetailPage, {user});
   }
 }

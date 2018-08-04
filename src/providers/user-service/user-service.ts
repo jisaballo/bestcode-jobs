@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import { Base64 } from '@ionic-native/base64';
 import { UserFirebase, User, Experience, Skill } from '../../models/user';
+import { MessageServiceProvider } from '../message-service/message-service';
 
 export interface UserExt extends User {
   id: string;
@@ -38,7 +39,7 @@ export class UserServiceProvider {
   }
 
   async LoadProfile(userID: string) {
-    await this.userFirebase.LoadProfile(userID).subscribe(res => {
+    return await this.userFirebase.LoadProfile(userID).subscribe(res => {
       this.profile = res as UserExt;
       this.profile.id = userID;
       if(typeof this.profile.urlImage != 'undefined' && this.profile.urlImage != '') {
@@ -49,11 +50,16 @@ export class UserServiceProvider {
       else {
         this.profile.uriImage = 'assets/imgs/default_profile.png';
       }
+      return this.profile;
     });
   }
   
-  async UpdateProfile(user: User) {
+  async UpdateProfile(user: UserExt) {
     await this.userFirebase.UpdateProfile(user);
+  }
+
+  async UpdateUser(user: UserExt) {
+    await this.userFirebase.UpdateUser(user);
   }
 
   async getProfile() {
@@ -64,8 +70,8 @@ export class UserServiceProvider {
     this.userFirebase.addUser(user);
   }
 
-  getProjectUser(userID: string) {
-    return this.userFirebase.getProjectUser(userID);
+  getUser(userID: string) {
+    return this.userFirebase.getUser(userID);
   }
 
   async loadAllUser() {

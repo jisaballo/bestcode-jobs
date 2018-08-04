@@ -21,7 +21,7 @@ export class LogsServiceProvider {
     this.logs = [];
   }
 
-  loadLogs(userID) {
+  async loadLogs(userID) {
     this.logsService.loadLogs(userID).subscribe(res => {
       this.logs = [];
       if(typeof res != 'undefined') {

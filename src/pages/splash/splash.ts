@@ -22,7 +22,8 @@ export class SplashPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public splashScreen: SplashScreen, 
     public viewCtrl: ViewController, private authService: AuthServiceProvider, private userService: UserServiceProvider, 
-    private notifyService: NotifyServiceProvider, private favoriteService: FavoriteServiceProvider, private logService: LogsServiceProvider) {
+    private notifyService: NotifyServiceProvider, private favoriteService: FavoriteServiceProvider, 
+    private logService: LogsServiceProvider) {
 
     this.OnLoad();
   }
@@ -63,7 +64,6 @@ export class SplashPage {
           this.favoriteService.loadFavorites(userID);
           this.logService.loadLogs(userID);
           this.userService.loadAllUser();
-  
           this.showSplash = false
         })
       }
