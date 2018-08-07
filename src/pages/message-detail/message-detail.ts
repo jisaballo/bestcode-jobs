@@ -21,7 +21,6 @@ export class MessageDetailPage {
     private chatService: MessageServiceProvider) {
     this.contact = this.navParams.get('user');
     this.chat = this.navParams.get('chat');
-    console.log(this.chat);
 
     this.userService.getProfile().then(res => {
       this.user = res as UserExt;

@@ -31,35 +31,20 @@ export class MessageServiceProvider {
       this.ID.map(id => {
         this.chatFirebase.getChat(id).subscribe(res => {
           if(typeof res != 'undefined') {
-            let chat = res['chats'] as chatExt;
+            let chat = res as chatExt;
             chat.id = id;
             //nameuser
-            if(user.id != chat.members[0]) {
-              this.userService.getUser(chat.members[1]).subscribe(res => {
-                let user = res.payload.data() as UserExt
-                chat.contactName = user.username;
-                
-                chat.uriImagen = 'assets/imgs/default_profile.png'; //imagen por defecto
-                if(typeof user.urlImage != 'undefined' && user.urlImage != '') {
-                  this.userService.getUrlImage(user.urlImage).subscribe(res => {
-                    chat.uriImagen = res;
-                  });
-                }
-              });
-            }
-            else {
-              this.userService.getUser(chat.members[1]).subscribe(res => {
-                let user = res.payload.data() as UserExt
-                chat.contactName = user.username;
-
-                chat.uriImagen = 'assets/imgs/default_profile.png'; //imagen por defecto
-                if(typeof user.urlImage != 'undefined' && user.urlImage != '') {
-                  this.userService.getUrlImage(user.urlImage).subscribe(res => {
-                    chat.uriImagen = res;
-                  });
-                }
-              });
-            }
+            this.userService.getUser(chat.memberID).subscribe(res => {
+              let user = res.payload.data() as UserExt
+              chat.contactName = user.username;
+              
+              chat.uriImagen = 'assets/imgs/default_profile.png'; //imagen por defecto
+              if(typeof user.urlImage != 'undefined' && user.urlImage != '') {
+                this.userService.getUrlImage(user.urlImage).subscribe(res => {
+                  chat.uriImagen = res;
+                });
+              }
+            });
             this.chats.push(chat);
           }
           else {
@@ -68,16 +53,12 @@ export class MessageServiceProvider {
         })
       })
     });
-
     return this.chats;
   }
 
   addMessage(chatID: string, userSend: UserExt, userReceived: UserExt, text: string) {
     if(chatID == '') {
-      let members: string[] = [];
-      members.push(userSend.id);
-      members.push(userReceived.id);
-      let new_chat: chat = { title: '', lastMessage: text, timestamp: new Date().getTime(), members };
+      let new_chat: chat = { title: '', lastMessage: text, timestamp: new Date().getTime(), userID: userSend.id, memberID: userReceived.id };
       let new_message: messageExt = { userName: userSend.id, message: text, timestamp: new Date().getTime() };
 
       this.chatFirebase.addChat(new_chat, new_message).then(chatID => {
@@ -111,6 +92,10 @@ export class MessageServiceProvider {
       }
     })
     return messages;
+  }
+
+  findChatByUser(userID: string, memberID: string) {
+    return this.chatFirebase.findChatByUser(userID, memberID);
   }
 
 }

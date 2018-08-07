@@ -5,7 +5,8 @@ export interface chat {
     title: string;
     lastMessage: string;
     timestamp: number;
-    members: string[];
+    userID: string;
+    memberID: string;
 }
 
 export interface message {
@@ -42,6 +43,11 @@ export class ChatFirebase {
         catch(e) {
             console.error(e);
         }
+    }
+
+    async findChatByUser(userID: string, memberID: string) {
+        return await this.afs.collection('chats', ref => ref.where('member', '==' , memberID)
+        .where('userID', '==', userID)).snapshotChanges();
     }
 
     async updateChat() {
