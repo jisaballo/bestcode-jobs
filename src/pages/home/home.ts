@@ -15,15 +15,16 @@ export class HomePage {
   projects: ProjectExt[];
   
   constructor(public projectService: ProjectServiceProvider, private authService: AuthServiceProvider, public navCtrl: NavController) {
-  }
-
-  ionViewWillEnter() {
     if(this.authService.authenticated()) {
       this.LoadProjects();
     }
     else {
       this.navCtrl.setRoot(LoginPage);
     }
+  }
+
+  ionViewWillEnter() {
+    
   }
 
   async LoadProjects() {

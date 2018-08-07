@@ -76,6 +76,7 @@ export class ProjectDetailPage {
   }
 
   editProject(project) {
+    this.setPop = false;
     delete this.project.timeElapsed;
     this.navCtrl.push(NewProjectPage, {project});
   }
@@ -119,7 +120,7 @@ export class ProjectDetailPage {
     }
     else {
       this.setPop = false;
-      this.userService.getProjectUser(this.project.userID).subscribe(res => {
+      this.userService.getUser(this.project.userID).subscribe(res => {
         let user = res.payload.data() as UserExt;
         user.id = res.payload.id;
 

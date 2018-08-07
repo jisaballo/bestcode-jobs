@@ -72,7 +72,7 @@ export class NewProjectPage {
     this.subCategories = this.projectService.getSubCategories(category);
   }
 
-  closePage() {
+  backButtonClick() {
     this.navCtrl.pop();
   }
 }

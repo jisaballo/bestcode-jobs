@@ -49,7 +49,10 @@ export class MessageDetailPage {
     console.log(this.newMessage);
     let new_message: messageExt = { userName: this.user.username, message: this.newMessage, timestamp: new Date().getTime() }
     this.messages.push(new_message);
+    
+    let chatID = '';
     this.chatService.addMessage('', this.user, this.contact, this.newMessage);
+    
     this.newMessage = '';
   }
 

@@ -44,7 +44,7 @@ export class FavoritesPage {
           project.timeElapsed = this.dateService.differenceTime(project.pubDate);
   
           //add user reference for project
-          this.userService.getProjectUser(project.userID).subscribe(res => {
+          this.userService.getUser(project.userID).subscribe(res => {
             let user = res.payload.data() as UserExt;
             user.id = res.payload.id;
             project.ownerName = user.username;
@@ -69,7 +69,7 @@ export class FavoritesPage {
   LoadUsers() {
     this.users = [];
     this.favoritesUsers.map(element => {
-      this.userService.getProjectUser(element['id']).subscribe(res => {
+      this.userService.getUser(element['id']).subscribe(res => {
         let user = res.payload.data() as UserExt;
         user.id = res.payload.id;
         user.uriImage = 'assets/imgs/default_profile.png'; //imagen por defecto

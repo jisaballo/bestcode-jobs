@@ -1,12 +1,12 @@
 <ion-content>
   <div *ngIf="user">
     <div class="div_image">
-      <button ion-button icon-only clear color="dark" (click)="closePage()">
+      <button ion-button icon-only clear color="light" (click)="closePage()">
         <ion-icon name="ios-arrow-back"></ion-icon>
       </button>
       <img (click)="modifyPicture()" class="profile_img" src="{{user.uriImage}}">
-      <div class="username" text-center>{{user.username}}</div>
-      <div text-center>{{user.profesion}}</div>
+      <div ion-text color="light" class="username" text-center>{{user.username}}</div>
+      <div ion-text color="light" text-center>{{user.profesion}}</div>
     </div>
     <div padding>
       <ion-item class="subtitulo">Personal
