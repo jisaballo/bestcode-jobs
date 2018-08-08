@@ -5,12 +5,14 @@ export interface chat {
     title: string;
     lastMessage: string;
     timestamp: number;
-    userID: string;
-    memberID: string;
+}
+
+export interface members {
+    members: string[];
 }
 
 export interface message {
-    userName: string;
+    userID: string;
     message: string;
     timestamp: number;
 }
@@ -32,12 +34,11 @@ export class ChatFirebase {
         return this.chatsCol.doc(chatID).valueChanges();
     }
 
-    async addChat(chat: chat, message: message) {
+    async addChat(chat: chat) {
         try {
             let new_chatID = this.afs.createId();
-            this.chatsCol.doc(new_chatID).set({chats: chat}).then(() => {
-                this.addMessage(new_chatID, message);
-            });
+            this.chatsCol.doc(new_chatID).set({chats: chat});
+            
             return new_chatID;
         }
         catch(e) {
@@ -46,31 +47,40 @@ export class ChatFirebase {
     }
 
     async findChatByUser(userID: string, memberID: string) {
-        return await this.afs.collection('chats', ref => ref.where('member', '==' , memberID)
-        .where('userID', '==', userID)).snapshotChanges();
+        return await this.afs.collection('chats', ref => ref.where('member1', '==' , memberID).where('userID', '==', userID)).snapshotChanges();
     }
 
     async updateChat() {
 
     }
 
-    async addMessage(messageID: string, message: message) {
-        let messages: message[] = [];
-        try {
-            await this.messagesCol.doc(messageID).valueChanges().subscribe(response => {
-                messages = response['messages'] as message[];
-            })
+    async NewMembers(chatID: string, members: members) {
+        return await this.membersCol.doc(chatID).set(members);
+    }
 
-            messages.push(message);
-            await this.updateMessages(messageID, messages);
+    async GetMembers(chatID: string) {
+        return await this.membersCol.doc(chatID).valueChanges();
+    }
+
+    async NewMessage() {
+        try {
+            let new_messageID = this.afs.createId();
+            this.messagesCol.doc(new_messageID).set({messages: []});
+            
+            return new_messageID;
         }
         catch(e) {
             console.error(e);
         }
     }
 
-    async updateMessages(messageID: string, messages: message[]) {
-        this.messagesCol.doc(messageID).set({messages: messages});
+    async UpdateMessage(messageID: string, messages: message[]) {
+        try {
+            await this.messagesCol.doc(messageID).set({messages: messages});
+        }
+        catch(e) {
+            console.error(e);
+        }
     }
 
     getMessages(messageID: string) {

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MessageDetailPage } from '../message-detail/message-detail';
 import { MessageServiceProvider, chatExt } from '../../providers/message-service/message-service';
-import { UserServiceProvider } from '../../providers/user-service/user-service';
+import { UserServiceProvider, UserExt } from '../../providers/user-service/user-service';
 
 @IonicPage()
 @Component({
@@ -21,7 +21,6 @@ export class MessagesPage {
     this.chats = []
     this.chatService.loadChat().then(response => {
       this.chats = response;
-      console.log(this.chats);
     });
   }
 
@@ -30,6 +29,10 @@ export class MessagesPage {
   }
 
   openConversation(chat: chatExt) {
-    this.navCtrl.push(MessageDetailPage, {chat});
+    this.userService.getUser(chat.contactID).subscribe(res => {
+      let contact = res.payload.data() as UserExt;
+      contact.id = res.payload.id;
+      this.navCtrl.push(MessageDetailPage, {chat, contact});
+    })
   }
  }

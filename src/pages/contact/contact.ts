@@ -5,6 +5,8 @@ import { DateServiceProvider } from '../../providers/date-service/date-service';
 import { FavoriteServiceProvider } from '../../providers/favorite-service/favorite-service';
 import { MessageDetailPage } from '../message-detail/message-detail';
 import { chatExt, MessageServiceProvider } from '../../providers/message-service/message-service';
+import { convertDataToISO } from 'ionic-angular/util/datetime-util';
+import { concat } from 'rxjs/internal/observable/concat';
 
 @IonicPage()
 @Component({
@@ -124,19 +126,26 @@ export class ContactPage {
 
   sendMessage() {
     this.setPop = false;
-    let user = this.userDetail;
+    let contact = this.userDetail;
     this.userService.getProfile().then(res => {
       let ownerUser = res as UserExt;
-      this.chatService.findChatByUser( ownerUser.id, user.id).then(res => {
+      this.chatService.findChatByUser( ownerUser.id, contact.id).then(res => {
         res.subscribe(response => {
-          response.map(element => {
-            let chat = element.payload.doc.data() as chatExt;
-            chat.id = element.payload.doc.id;
-            this.navCtrl.push(MessageDetailPage, {chat});
-          })
+          if(response.length > 0) {
+            response.map(element => {
+              let chat = element.payload.doc.data() as chatExt;
+              chat.id = element.payload.doc.id;
+              this.navCtrl.push(MessageDetailPage, {chat, contact});
+            })
+          }
+          else {
+            //crear un nuevo chat
+            console.log('new chat');
+            let chat: chatExt = { id: '', title: '', lastMessage: '', timestamp: new Date().getTime(), contactID: contact.id, contactName: contact.username, uriImagen: contact.uriImage }
+            this.navCtrl.push(MessageDetailPage, {chat, contact});
+          }
         })
       });
-    //this.navCtrl.push(MessageDetailPage, {user});
     })
   }
 }

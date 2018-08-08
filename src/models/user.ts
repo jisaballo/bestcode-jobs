@@ -15,7 +15,12 @@ export interface User {
     jobSalaryFrecuency: string;
     experience: Array<Experience>;
     skills: Array<Skill>;
-    chats: string[];
+    chats: Conversation[];
+  }
+
+  export interface Conversation {
+    chatID: string;
+    messageID: string;
   }
 
   export interface Experience {

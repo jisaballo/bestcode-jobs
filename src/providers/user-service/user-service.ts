@@ -2,13 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireStorage, AngularFireStorageReference, AngularFireUploadTask } from 'angularfire2/storage';
 import { Base64 } from '@ionic-native/base64';
-import { UserFirebase, User, Experience, Skill } from '../../models/user';
+import { UserFirebase, User, Experience, Skill, Conversation } from '../../models/user';
 import { MessageServiceProvider } from '../message-service/message-service';
 
 export interface UserExt extends User {
   id: string;
   password: string;
   uriImage: string;
+}
+
+export interface ConversationExt extends Conversation {
+
 }
 
 export interface ExperienceExt extends Experience {

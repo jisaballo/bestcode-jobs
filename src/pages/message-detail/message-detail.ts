@@ -19,20 +19,50 @@ export class MessageDetailPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private userService: UserServiceProvider,
     private chatService: MessageServiceProvider) {
-    this.contact = this.navParams.get('user');
     this.chat = this.navParams.get('chat');
-
-    this.userService.getProfile().then(res => {
-      this.user = res as UserExt;
-    });
+    this.contact = this.navParams.get('contact');
   }
 
   ionViewWillEnter() {
+    this.LoadMessages();
+    this.LoadContactUser();
+  }
+
+  LoadMessages() {
     this.messages = [];
-    this.chatService.getMessages(this.chat.id).then(res => {
-      this.messages = res as messageExt[];
-      console.log(this.messages);
-    });
+
+    if(this.chat.id != '') {
+
+      this.userService.getProfile().then(res => {
+        this.user = res as UserExt;
+  
+        this.user.chats.map(chats => {
+          if(chats.chatID == this.chat.id) {
+            this.chatService.getMessages(chats.messageID).subscribe(res => {
+              if(typeof res != 'undefined') {
+                this.messages = res['messages'] as messageExt[];
+              }
+            });   
+          }
+        })
+      });
+    }
+  }
+
+  LoadContactUser() {
+    this.userService.getUser(this.contact.id).subscribe(res => {
+      this.contact = res.payload.data() as UserExt;
+      this.contact.id = res.payload.id;
+
+      if(typeof this.contact.urlImage != 'undefined' && this.contact.urlImage != '') {
+        this.userService.getUrlImage(this.contact.urlImage).subscribe(res => {
+          this.contact.uriImage = res;
+        });
+      }
+      else {
+        this.contact.uriImage = 'assets/imgs/default_profile.png';
+      }
+    })
   }
 
   ionViewDidLoad() {
@@ -45,13 +75,11 @@ export class MessageDetailPage {
   }
 
   addMessage() {
-    console.log(this.newMessage);
-    let new_message: messageExt = { userName: this.user.username, message: this.newMessage, timestamp: new Date().getTime() }
+    let new_message: messageExt = { userID: this.user.id, message: this.newMessage, timestamp: new Date().getTime() }
     this.messages.push(new_message);
-    
-    let chatID = '';
-    this.chatService.addMessage('', this.user, this.contact, this.newMessage);
-    
+
+    this.chatService.sendMessage(this.chat.id, this.user, this.contact, this.messages);
+
     this.newMessage = '';
   }
 
