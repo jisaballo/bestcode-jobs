@@ -66,15 +66,15 @@ export class MessageServiceProvider {
     return this.chats;
   }
 
-  sendMessage(chatID: string, userSend: UserExt, userReceived: UserExt, messages: messageExt[]) {
+  async sendMessage(chat: chatExt, userSend: UserExt, userReceived: UserExt, messages: messageExt[]) {
     try {
 
-      if(chatID == '') {
-        let new_chat: chat = { title: '', lastMessage: '', timestamp: new Date().getTime() };
-  
+      if(chat.id == '') {
+        chat = {id: '', uriImagen: '', contactName: '', contactID: '', title: '', lastMessage: messages[0].message, timestamp: new Date().getTime() };
+
         let members: string[] = [userSend.id, userReceived.id];
-        this.chatFirebase.addChat(new_chat).then(chatID => {
-          
+        await this.chatFirebase.addChat(chat).then(chatID => {
+          chat.id = chatID;
           //add members
           let new_members: members = {members: [userSend.id, userReceived.id]};
           this.chatFirebase.NewMembers(chatID , new_members);
@@ -105,13 +105,22 @@ export class MessageServiceProvider {
       }
       else {
         //add to old chat
-        this.chatFirebase.UpdateMessage(chatID, messages);
+        userSend.chats.map(chat => {
+          if(chat.chatID == chat.chatID) {
+            this.chatFirebase.UpdateMessage(chat.messageID, messages);
+          }
+        })
+        userReceived.chats.map(chat => {
+          if(chat.chatID == chat.chatID) {
+            this.chatFirebase.UpdateMessage(chat.messageID, messages);
+          }
+        })
       }
     }
     catch(e) {
       console.error(e);
     }
-    
+    return chat;
   }
 
   getMessages(messageID: string) {
